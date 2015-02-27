@@ -59,33 +59,8 @@ public class Bandage implements TalesZToolItem{
 
     @Override
     public void handleEvent(InventoryClickEvent event) {
-        /*ItemStack current = event.getCurrentItem();
-        ItemStack cursor = event.getCursor();
 
-        // We want to prevent the player from INCREASING a stack size
-        if (current != null && cursor != null) {
-
-            int maxAmount = 1;
-
-            // They should be able to split "too large" stacks, or move them around.
-            if (cursor.getAmount() == 0 || event.isRightClick()) {
-                return;
-            } else if (!isValid(current, cursor, maxAmount)) {
-                // But never increase a stack above their personal limit
-                event.setCancelled(true);
-            }
-        }*/
-    }/*
-    private boolean isValid(ItemStack current, ItemStack cursor, int maxAmount) {
-
-        int total = current.getAmount() + cursor.getAmount();
-
-        if (current.getType() == Material.COMPASS) {
-            return total <= maxAmount;
-        } else {
-            return true;
-        }
-    }*/
+    }
 
     @Override
     public void handleEvent(PlayerInteractEntityEvent event) {
@@ -95,30 +70,7 @@ public class Bandage implements TalesZToolItem{
     @Override
     public void handleEvent(PlayerInteractEvent event) {
         if(event.getAction().equals(Action.RIGHT_CLICK_AIR)){
-            Player p = event.getPlayer();
-            if(Bleeding.isBleeding(p.getName())){
-                Bleeding.removeBleedingPlayer(p.getName());
-                if(p.getHealth() + 1 <= p.getMaxHealth()){
-                    p.setHealth(p.getHealth() + 1);
-                }
-                else{
-                    p.setHealth(p.getMaxHealth());
-                }
-            }
-            else{
-                if(p.getHealth() + 2 <= p.getMaxHealth()){
-                    p.setHealth(p.getHealth() + 2);
-                }
-                else{
-                    p.setHealth(p.getMaxHealth());
-                }
-            }
-            if(event.getItem().getAmount() > 1){
-                event.getItem().setAmount(event.getItem().getAmount() - 1);
-            }
-            else{
-                event.getPlayer().getInventory().remove(event.getItem());
-            }
+            heal(event.getPlayer());
         }
     }
 
@@ -137,7 +89,7 @@ public class Bandage implements TalesZToolItem{
         event.setCancelled(true);
         if(event.getEntity() instanceof Player){
             Player p = (Player) event.getEntity();
-
+            heal(p);
         }
     }
 

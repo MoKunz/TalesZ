@@ -1,6 +1,5 @@
 package com.talesdev.talesz.listener;
 
-import com.talesdev.talesz.exp.ExpBarUtil;
 import com.talesdev.talesz.thirst.Thirst;
 import com.talesdev.talesz.thirst.ThirstDamage;
 import org.bukkit.ChatColor;
