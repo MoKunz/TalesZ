@@ -6,15 +6,14 @@ import com.talesdev.talesz.bleeding.BleedingCommand;
 import com.talesdev.talesz.bleeding.BleedingUpdateTask;
 import com.talesdev.talesz.exp.ExpCommand;
 import com.talesdev.talesz.item.Bandage;
+import com.talesdev.talesz.item.Button;
 import com.talesdev.talesz.itemsystem.TalesZItemCommand;
-import com.talesdev.talesz.itemsystem.TalesZItemFactory;
 import com.talesdev.talesz.itemsystem.TalesZItemListener;
 import com.talesdev.talesz.itemsystem.TalesZItemRegistry;
-import com.talesdev.talesz.listener.ExpListener;
-import com.talesdev.talesz.listener.ItemListener;
-import com.talesdev.talesz.listener.PlayerJoinListener;
-import com.talesdev.talesz.listener.PlayerRespawnListener;
-import com.talesdev.talesz.thirst.*;
+import com.talesdev.talesz.listener.*;
+import com.talesdev.talesz.thirst.Thirst;
+import com.talesdev.talesz.thirst.ThirstDamageTask;
+import com.talesdev.talesz.thirst.ThirstUpdateTask;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -44,6 +43,7 @@ public class Main extends JavaPlugin{
         getServer().getPluginManager().registerEvents(new ExpListener(),this);
         getServer().getPluginManager().registerEvents(new ItemListener(),this);
         getServer().getPluginManager().registerEvents(new PlayerRespawnListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
         // init item
         initItem();
         // enabled
@@ -86,6 +86,7 @@ public class Main extends JavaPlugin{
     }
     private void initItem(){
         TalesZItemRegistry.registerTalesZItem(new Bandage());
+        TalesZItemRegistry.registerTalesZItem(new Button());
     }
     private void cancelTask(){
         TalesZTask.cancelAll();

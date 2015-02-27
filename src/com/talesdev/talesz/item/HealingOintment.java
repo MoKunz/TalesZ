@@ -1,12 +1,8 @@
 package com.talesdev.talesz.item;
 
-import com.talesdev.talesz.bleeding.Bleeding;
-import com.talesdev.talesz.itemsystem.TalesZItemUtil;
 import com.talesdev.talesz.itemsystem.TalesZToolItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -19,10 +15,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 
 /**
- * Bandage
+ * TalesZToolItem
  * Created by MoKunz on 2/27/2015.
  */
-public class Bandage implements TalesZToolItem{
+public class HealingOintment implements TalesZToolItem {
     @Override
     public void handleEvent(BlockBreakEvent event) {
 
@@ -30,17 +26,17 @@ public class Bandage implements TalesZToolItem{
 
     @Override
     public String getName() {
-        return "Bandage";
+        return null;
     }
 
     @Override
     public Material getType() {
-        return Material.PAPER;
+        return null;
     }
 
     @Override
     public int getAmount() {
-        return 1;
+        return 0;
     }
 
     @Override
@@ -50,8 +46,7 @@ public class Bandage implements TalesZToolItem{
 
     @Override
     public ItemMeta configItemMeta(ItemMeta itemMeta) {
-        itemMeta.setDisplayName(ChatColor.RESET + "Bandage");
-        return itemMeta;
+        return null;
     }
 
     @Override
@@ -71,10 +66,7 @@ public class Bandage implements TalesZToolItem{
 
     @Override
     public void handleEvent(PlayerInteractEvent event) {
-        if(event.getAction().equals(Action.RIGHT_CLICK_AIR)){
-            heal(event.getPlayer());
-            TalesZItemUtil.removeOneItemFromPlayer(event.getPlayer(), event.getItem());
-        }
+
     }
 
     @Override
@@ -89,41 +81,19 @@ public class Bandage implements TalesZToolItem{
 
     @Override
     public void handleEvent(EntityDamageByEntityEvent event) {
-        if(event.getEntity() instanceof Player){
-            event.setCancelled(true);
-            Player p = (Player) event.getEntity();
-            heal(p);
-        }
+
     }
 
     @Override
     public boolean compare(ItemStack itemStack) {
-        if(itemStack.hasItemMeta()){
-            if(itemStack.getItemMeta().hasDisplayName()){
-                if (ChatColor.stripColor(itemStack.getItemMeta().getDisplayName()).equals("Bandage")) {
-                    return true;
+        if (itemStack.getType().equals(Material.INK_SACK) && itemStack.hasItemMeta()) {
+            ItemMeta meta = itemStack.getItemMeta();
+            if (meta.hasDisplayName()) {
+                if (ChatColor.stripColor(meta.getDisplayName()).equals("Healing Ointment")) {
+
                 }
             }
         }
         return false;
-    }
-    private void heal(Player player){
-        if(Bleeding.isBleeding(player.getName())){
-            Bleeding.removeBleedingPlayer(player.getName());
-            if(player.getHealth() + 1 <= player.getMaxHealth()){
-                player.setHealth(player.getHealth() + 1);
-            }
-            else{
-                player.setHealth(player.getMaxHealth());
-            }
-        }
-        else{
-            if(player.getHealth() + 2 <= player.getMaxHealth()){
-                player.setHealth(player.getHealth() + 2);
-            }
-            else{
-                player.setHealth(player.getMaxHealth());
-            }
-        }
     }
 }

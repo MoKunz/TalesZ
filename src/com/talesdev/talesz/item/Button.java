@@ -2,6 +2,8 @@ package com.talesdev.talesz.item;
 
 import com.talesdev.talesz.itemsystem.TalesZToolItem;
 import org.bukkit.Material;
+import org.bukkit.event.Event;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -64,7 +66,10 @@ public class Button implements TalesZToolItem {
 
     @Override
     public void handleEvent(PlayerInteractEvent event) {
-
+        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            IronDoorUtil.open(event.getClickedBlock());
+            event.setUseItemInHand(Event.Result.DENY);
+        }
     }
 
     @Override
@@ -84,6 +89,6 @@ public class Button implements TalesZToolItem {
 
     @Override
     public boolean compare(ItemStack itemStack) {
-        return false;
+        return itemStack.getType().equals(Material.STONE_BUTTON);
     }
 }

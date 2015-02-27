@@ -13,11 +13,10 @@ import org.bukkit.event.entity.PlayerDeathEvent;
  * Created by MoKunz on 2/25/2015.
  */
 public class PlayerDeathListener implements Listener {
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onDeath(PlayerDeathEvent event){
         Bleeding.removeBleedingPlayer(event.getEntity().getName());
         ThirstDamage.removeFromList(event.getEntity().getName());
-
         Thirst.setThirst(event.getEntity().getName(), Thirst.FULL_THIRST);
         Thirst.updateExpBar(event.getEntity());
     }
