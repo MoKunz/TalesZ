@@ -1,11 +1,7 @@
 package com.talesdev.talesz.item;
 
-import com.talesdev.talesz.bleeding.Bleeding;
 import com.talesdev.talesz.itemsystem.TalesZToolItem;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -18,10 +14,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 
 /**
- * Bandage
- * Created by MoKunz on 2/27/2015.
+ * Button
  */
-public class Bandage implements TalesZToolItem{
+public class Button implements TalesZToolItem {
     @Override
     public void handleEvent(BlockBreakEvent event) {
 
@@ -29,12 +24,12 @@ public class Bandage implements TalesZToolItem{
 
     @Override
     public String getName() {
-        return "Bandage";
+        return "Button";
     }
 
     @Override
     public Material getType() {
-        return Material.PAPER;
+        return Material.STONE_BUTTON;
     }
 
     @Override
@@ -49,8 +44,7 @@ public class Bandage implements TalesZToolItem{
 
     @Override
     public ItemMeta configItemMeta(ItemMeta itemMeta) {
-        itemMeta.setDisplayName(ChatColor.RESET + "Bandage");
-        return itemMeta;
+        return null;
     }
 
     @Override
@@ -70,9 +64,7 @@ public class Bandage implements TalesZToolItem{
 
     @Override
     public void handleEvent(PlayerInteractEvent event) {
-        if(event.getAction().equals(Action.RIGHT_CLICK_AIR)){
-            heal(event.getPlayer());
-        }
+
     }
 
     @Override
@@ -87,41 +79,11 @@ public class Bandage implements TalesZToolItem{
 
     @Override
     public void handleEvent(EntityDamageByEntityEvent event) {
-        event.setCancelled(true);
-        if(event.getEntity() instanceof Player){
-            Player p = (Player) event.getEntity();
-            heal(p);
-        }
+
     }
 
     @Override
     public boolean compare(ItemStack itemStack) {
-        if(itemStack.hasItemMeta()){
-            if(itemStack.getItemMeta().hasDisplayName()){
-                if(itemStack.getItemMeta().getDisplayName().equals("Bandage")){
-                    return true;
-                }
-            }
-        }
         return false;
-    }
-    private void heal(Player player){
-        if(Bleeding.isBleeding(player.getName())){
-            Bleeding.removeBleedingPlayer(player.getName());
-            if(player.getHealth() + 1 <= player.getMaxHealth()){
-                player.setHealth(player.getHealth() + 1);
-            }
-            else{
-                player.setHealth(player.getMaxHealth());
-            }
-        }
-        else{
-            if(player.getHealth() + 2 <= player.getMaxHealth()){
-                player.setHealth(player.getHealth() + 2);
-            }
-            else{
-                player.setHealth(player.getMaxHealth());
-            }
-        }
     }
 }
