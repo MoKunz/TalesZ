@@ -59,7 +59,7 @@ public class Bandage implements TalesZToolItem{
 
     @Override
     public void handleEvent(InventoryClickEvent event) {
-        ItemStack current = event.getCurrentItem();
+        /*ItemStack current = event.getCurrentItem();
         ItemStack cursor = event.getCursor();
 
         // We want to prevent the player from INCREASING a stack size
@@ -74,8 +74,8 @@ public class Bandage implements TalesZToolItem{
                 // But never increase a stack above their personal limit
                 event.setCancelled(true);
             }
-        }
-    }
+        }*/
+    }/*
     private boolean isValid(ItemStack current, ItemStack cursor, int maxAmount) {
 
         int total = current.getAmount() + cursor.getAmount();
@@ -85,7 +85,7 @@ public class Bandage implements TalesZToolItem{
         } else {
             return true;
         }
-    }
+    }*/
 
     @Override
     public void handleEvent(PlayerInteractEntityEvent event) {
