@@ -1,5 +1,6 @@
 package com.talesdev.talesz.itemsystem;
 
+import com.talesdev.talesz.bleeding.Bleeding;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,5 +15,15 @@ public class TalesZItemUtil {
         } else {
             p.getInventory().remove(itemStack);
         }
+    }
+
+    public static void heal(Player player, double amount) {
+        Bleeding.removeBleedingPlayer(player.getName());
+        if (player.getHealth() + amount <= player.getMaxHealth()) {
+            player.setHealth(player.getHealth() + amount);
+        } else {
+            player.setHealth(player.getMaxHealth());
+        }
+
     }
 }

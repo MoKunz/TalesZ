@@ -1,8 +1,12 @@
 package com.talesdev.talesz.item;
 
+import com.talesdev.talesz.itemsystem.TalesZItemUtil;
 import com.talesdev.talesz.itemsystem.TalesZToolItem;
 import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.event.Event;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -12,6 +16,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.Dye;
 import org.bukkit.material.MaterialData;
 
 /**
@@ -66,7 +71,10 @@ public class HealingOintment implements TalesZToolItem {
 
     @Override
     public void handleEvent(PlayerInteractEvent event) {
-
+        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            TalesZItemUtil.heal(event.getPlayer(), 10);
+            event.setUseItemInHand(Event.Result.DENY);
+        }
     }
 
     @Override
@@ -90,7 +98,10 @@ public class HealingOintment implements TalesZToolItem {
             ItemMeta meta = itemStack.getItemMeta();
             if (meta.hasDisplayName()) {
                 if (ChatColor.stripColor(meta.getDisplayName()).equals("Healing Ointment")) {
-
+                    Dye dye = (Dye) itemStack.getData();
+                    if (dye.getColor().equals(DyeColor.RED)) {
+                        return true;
+                    }
                 }
             }
         }

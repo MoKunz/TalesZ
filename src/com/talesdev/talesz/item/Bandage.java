@@ -6,6 +6,7 @@ import com.talesdev.talesz.itemsystem.TalesZToolItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -71,7 +72,8 @@ public class Bandage implements TalesZToolItem{
 
     @Override
     public void handleEvent(PlayerInteractEvent event) {
-        if(event.getAction().equals(Action.RIGHT_CLICK_AIR)){
+        if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            event.setUseItemInHand(Event.Result.DENY);
             heal(event.getPlayer());
             TalesZItemUtil.removeOneItemFromPlayer(event.getPlayer(), event.getItem());
         }
@@ -110,20 +112,10 @@ public class Bandage implements TalesZToolItem{
     private void heal(Player player){
         if(Bleeding.isBleeding(player.getName())){
             Bleeding.removeBleedingPlayer(player.getName());
-            if(player.getHealth() + 1 <= player.getMaxHealth()){
-                player.setHealth(player.getHealth() + 1);
-            }
-            else{
-                player.setHealth(player.getMaxHealth());
-            }
+            TalesZItemUtil.heal(player, 1);
         }
         else{
-            if(player.getHealth() + 2 <= player.getMaxHealth()){
-                player.setHealth(player.getHealth() + 2);
-            }
-            else{
-                player.setHealth(player.getMaxHealth());
-            }
+            TalesZItemUtil.heal(player, 2);
         }
     }
 }
