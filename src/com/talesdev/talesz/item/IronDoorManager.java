@@ -3,6 +3,8 @@ package com.talesdev.talesz.item;
 import org.bukkit.block.Block;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Iron Door Manager
@@ -35,19 +37,22 @@ public class IronDoorManager {
      */
     public static void processIronDoor() {
         if (ironDoorHashMap.size() < 1) return;
-        for (Block block : ironDoorHashMap.keySet()) {
-            if (ironDoorHashMap.get(block) <= 0) {
-                IronDoorUtil.closeDoor(block);
-                ironDoorHashMap.remove(block);
+        for (Iterator<Map.Entry<Block, Integer>> it = ironDoorHashMap.entrySet().iterator(); it.hasNext(); ) {
+            Map.Entry<Block, Integer> entry = it.next();
+            if (entry.getValue() <= 0) {
+                IronDoorUtil.closeDoor(entry.getKey());
+                it.remove();
             }
         }
     }
 
     public static void forceProcessIronDoor() {
         if (ironDoorHashMap.size() < 1) return;
-        for (Block block : ironDoorHashMap.keySet()) {
-            IronDoorUtil.closeDoor(block);
-            ironDoorHashMap.remove(block);
+        for (Iterator<Map.Entry<Block, Integer>> it = ironDoorHashMap.entrySet().iterator(); it.hasNext(); ) {
+            Map.Entry<Block, Integer> entry = it.next();
+            if (entry.getValue() <= 0) {
+                it.remove();
+            }
         }
     }
 }
