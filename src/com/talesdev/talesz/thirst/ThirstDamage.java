@@ -25,7 +25,11 @@ public class ThirstDamage {
     public static void update(){
         if(playerList != null && playerList.size() > 0){
             for(String playerName : playerList){
-                Bukkit.getServer().getPlayer(playerName).damage(THIRST_DAMAGE);
+                if (playerName != null) {
+                    if (Bukkit.getServer().getPlayer(playerName) != null) {
+                        Bukkit.getServer().getPlayer(playerName).damage(THIRST_DAMAGE);
+                    }
+                }
             }
         }
     }

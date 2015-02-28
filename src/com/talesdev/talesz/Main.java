@@ -7,6 +7,7 @@ import com.talesdev.talesz.bleeding.BleedingUpdateTask;
 import com.talesdev.talesz.exp.ExpCommand;
 import com.talesdev.talesz.item.Bandage;
 import com.talesdev.talesz.item.Button;
+import com.talesdev.talesz.item.HealingOintment;
 import com.talesdev.talesz.itemsystem.TalesZItemCommand;
 import com.talesdev.talesz.itemsystem.TalesZItemListener;
 import com.talesdev.talesz.itemsystem.TalesZItemRegistry;
@@ -44,6 +45,8 @@ public class Main extends JavaPlugin{
         getServer().getPluginManager().registerEvents(new ItemListener(),this);
         getServer().getPluginManager().registerEvents(new PlayerRespawnListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
+        getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
+        getServer().getPluginManager().registerEvents(new DrinkingListener(), this);
         // init item
         initItem();
         // enabled
@@ -87,6 +90,7 @@ public class Main extends JavaPlugin{
     private void initItem(){
         TalesZItemRegistry.registerTalesZItem(new Bandage());
         TalesZItemRegistry.registerTalesZItem(new Button());
+        TalesZItemRegistry.registerTalesZItem(new HealingOintment());
     }
     private void cancelTask(){
         TalesZTask.cancelAll();

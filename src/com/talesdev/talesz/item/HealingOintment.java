@@ -5,6 +5,7 @@ import com.talesdev.talesz.itemsystem.TalesZToolItem;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -31,32 +32,35 @@ public class HealingOintment implements TalesZToolItem {
 
     @Override
     public String getName() {
-        return null;
+        return "HealimgOintment";
     }
 
     @Override
     public Material getType() {
-        return null;
+        return Material.INK_SACK;
     }
 
     @Override
     public int getAmount() {
-        return 0;
+        return 1;
     }
 
     @Override
-    public long getDurability() {
-        return 0;
+    public short getDurability() {
+        return 1;
     }
 
     @Override
     public ItemMeta configItemMeta(ItemMeta itemMeta) {
-        return null;
+        itemMeta.setDisplayName(ChatColor.RED + "Healing Ointment");
+        return itemMeta;
     }
 
     @Override
     public MaterialData configMaterialData(MaterialData materialData) {
-        return null;
+        Dye dye = (Dye) materialData;
+        dye.setColor(DyeColor.RED);
+        return dye;
     }
 
     @Override
@@ -71,9 +75,10 @@ public class HealingOintment implements TalesZToolItem {
 
     @Override
     public void handleEvent(PlayerInteractEvent event) {
-        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            TalesZItemUtil.heal(event.getPlayer(), 10);
+        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             event.setUseItemInHand(Event.Result.DENY);
+            TalesZItemUtil.heal(event.getPlayer(), 10);
+            TalesZItemUtil.removeOneItemFromPlayer(event.getPlayer(), event.getItem());
         }
     }
 
@@ -89,7 +94,12 @@ public class HealingOintment implements TalesZToolItem {
 
     @Override
     public void handleEvent(EntityDamageByEntityEvent event) {
-
+        if (event.getEntity() instanceof Player) {
+            event.setCancelled(true);
+            Player p = (Player) event.getEntity();
+            TalesZItemUtil.heal(p, 10);
+            TalesZItemUtil.removeOneItemFromPlayer(p, p.getItemInHand());
+        }
     }
 
     @Override
@@ -98,9 +108,8 @@ public class HealingOintment implements TalesZToolItem {
             ItemMeta meta = itemStack.getItemMeta();
             if (meta.hasDisplayName()) {
                 if (ChatColor.stripColor(meta.getDisplayName()).equals("Healing Ointment")) {
-                    Dye dye = (Dye) itemStack.getData();
-                    if (dye.getColor().equals(DyeColor.RED)) {
-                        return true;
+                    if (itemStack.getDurability() == 1) {
+
                     }
                 }
             }

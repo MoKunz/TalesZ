@@ -45,13 +45,13 @@ public class Bandage implements TalesZToolItem{
     }
 
     @Override
-    public long getDurability() {
+    public short getDurability() {
         return 0;
     }
 
     @Override
     public ItemMeta configItemMeta(ItemMeta itemMeta) {
-        itemMeta.setDisplayName(ChatColor.RESET + "Bandage");
+        itemMeta.setDisplayName(ChatColor.GRAY + "Bandage");
         return itemMeta;
     }
 

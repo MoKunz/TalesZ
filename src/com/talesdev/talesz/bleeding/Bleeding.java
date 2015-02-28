@@ -41,6 +41,9 @@ public class Bleeding {
         }
     }
     public static void update(String player,double damage){
+        if (Bukkit.getServer().getPlayer(player) == null) {
+            return;
+        }
         if(Bukkit.getServer().getPlayer(player).isOnline()){
             Bukkit.getServer().getPlayer(player).damage(0.25);
         }

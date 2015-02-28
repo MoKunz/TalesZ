@@ -40,7 +40,7 @@ public class Button implements TalesZToolItem {
     }
 
     @Override
-    public long getDurability() {
+    public short getDurability() {
         return 0;
     }
 

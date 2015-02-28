@@ -21,6 +21,7 @@ public class TalesZItemFactory {
             return new ItemStack(Material.AIR);
         }
         ItemStack itemStack =  new ItemStack(item.getType());
+        itemStack.setDurability(item.getDurability());
         ItemMeta itemMeta = item.configItemMeta(itemStack.getItemMeta());
         MaterialData itemData = item.configMaterialData(itemStack.getData());
         if(itemMeta != null){

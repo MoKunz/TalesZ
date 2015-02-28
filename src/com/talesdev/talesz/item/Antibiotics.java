@@ -1,6 +1,7 @@
 package com.talesdev.talesz.item;
 
-import com.talesdev.talesz.itemsystem.TalesZWeaponsItem;
+import com.talesdev.talesz.itemsystem.TalesZItem;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -13,23 +14,18 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 
 /**
- *
+ * Antibiotics
  * Created by MoKunz on 2/27/2015.
  */
-public class EnderPearl implements TalesZWeaponsItem{
-    @Override
-    public void handleEvent(EntityDamageByEntityEvent event) {
-
-    }
-
+public class Antibiotics implements TalesZItem {
     @Override
     public String getName() {
-        return "EnderPearl";
+        return "Antibiotics";
     }
 
     @Override
     public Material getType() {
-        return Material.ENDER_PEARL;
+        return Material.INK_SACK;
     }
 
     @Override
@@ -39,18 +35,18 @@ public class EnderPearl implements TalesZWeaponsItem{
 
     @Override
     public short getDurability() {
-        return 0;
+        return 10;
     }
 
     @Override
     public ItemMeta configItemMeta(ItemMeta itemMeta) {
-        itemMeta.setDisplayName("Ender Pearl");
+        itemMeta.setDisplayName(ChatColor.GREEN + "Antibiotics");
         return itemMeta;
     }
 
     @Override
     public MaterialData configMaterialData(MaterialData materialData) {
-        return materialData;
+        return null;
     }
 
     @Override
@@ -79,7 +75,24 @@ public class EnderPearl implements TalesZWeaponsItem{
     }
 
     @Override
+    public void handleEvent(EntityDamageByEntityEvent event) {
+
+    }
+
+    @Override
     public boolean compare(ItemStack itemStack) {
+        if (itemStack.getType().equals(Material.INK_SACK)) {
+            if (itemStack.getDurability() == 10) {
+                if (itemStack.hasItemMeta()) {
+                    ItemMeta meta = itemStack.getItemMeta();
+                    if (meta.hasDisplayName()) {
+                        if (ChatColor.stripColor(meta.getDisplayName()).equals("Antibiotics")) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
         return false;
     }
 }

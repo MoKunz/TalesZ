@@ -19,7 +19,8 @@ public interface TalesZItem {
     public String getName();
     public Material getType();
     public int getAmount();
-    public long getDurability();
+
+    public short getDurability();
     public ItemMeta configItemMeta(ItemMeta itemMeta);
     public MaterialData configMaterialData(MaterialData materialData);
     //public Class<? extends ItemMeta> getItemMetaType();
