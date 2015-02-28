@@ -43,8 +43,16 @@ public class DrinkingListener implements Listener {
     }
 
     @EventHandler
-    public void onDrinkMilk(PlayerBucketEmptyEvent emptyEvent) {
-
+    public void onDrinkMilk(PlayerBucketEmptyEvent event) {
+        if (event.getBucket().equals(Material.MILK_BUCKET)) {
+            event.getPlayer().setItemInHand(new ItemStack(Material.AIR));
+            Collection<PotionEffect> effectCollection = event.getPlayer().getActivePotionEffects();
+            for (PotionEffect potionEffect : effectCollection) {
+                if (isDebuffEffect(potionEffect)) {
+                    event.getPlayer().removePotionEffect(potionEffect.getType());
+                }
+            }
+        }
     }
 
     private boolean isDebuffEffect(PotionEffect effect) {

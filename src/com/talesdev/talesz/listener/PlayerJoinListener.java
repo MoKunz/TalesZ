@@ -1,9 +1,9 @@
 package com.talesdev.talesz.listener;
 
-import com.talesdev.talesz.exp.ExpBarUtil;
 import com.talesdev.talesz.Main;
 import com.talesdev.talesz.thirst.Thirst;
 import com.talesdev.talesz.thirst.ThirstDamage;
+import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -20,6 +20,7 @@ import java.util.logging.Level;
 public class PlayerJoinListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent event){
+        event.getPlayer().setGameMode(GameMode.ADVENTURE);
         Thirst.registerNewPlayer(event.getPlayer().getName());
         Thirst.loadData(event.getPlayer().getName());
         Thirst.updateExpBar(event.getPlayer());

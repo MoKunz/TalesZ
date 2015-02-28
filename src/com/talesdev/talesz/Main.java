@@ -75,6 +75,8 @@ public class Main extends JavaPlugin{
         TalesZItemRegistry.registerTalesZItem(new Bandage());
         TalesZItemRegistry.registerTalesZItem(new Button());
         TalesZItemRegistry.registerTalesZItem(new HealingOintment());
+        TalesZItemRegistry.registerTalesZItem(new Sugar());
+        TalesZItemRegistry.registerTalesZItem(new Antibiotics());
     }
     private void cancelTask(){
         TalesZTask.cancelAll();

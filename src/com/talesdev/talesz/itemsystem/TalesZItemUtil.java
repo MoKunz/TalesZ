@@ -2,6 +2,7 @@ package com.talesdev.talesz.itemsystem;
 
 import com.talesdev.talesz.bleeding.Bleeding;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -15,6 +16,10 @@ public class TalesZItemUtil {
         } else {
             p.getInventory().remove(itemStack);
         }
+    }
+
+    public static boolean isActionRightClick(Action action) {
+        return action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK);
     }
     public static void heal(Player player, double amount) {
         Bleeding.removeBleedingPlayer(player.getName());

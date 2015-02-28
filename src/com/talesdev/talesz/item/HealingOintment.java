@@ -109,7 +109,7 @@ public class HealingOintment implements TalesZToolItem {
             if (meta.hasDisplayName()) {
                 if (ChatColor.stripColor(meta.getDisplayName()).equals("Healing Ointment")) {
                     if (itemStack.getDurability() == 1) {
-
+                        return true;
                     }
                 }
             }

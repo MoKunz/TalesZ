@@ -3,6 +3,7 @@ package com.talesdev.talesz.thirst;
 import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Thirst damage
@@ -24,10 +25,16 @@ public class ThirstDamage {
     }
     public static void update(){
         if(playerList != null && playerList.size() > 0){
-            for(String playerName : playerList){
-                if (playerName != null) {
-                    if (Bukkit.getServer().getPlayer(playerName) != null) {
-                        Bukkit.getServer().getPlayer(playerName).damage(THIRST_DAMAGE);
+            // use iterator
+            for (Iterator<String> iterator = playerList.iterator(); iterator.hasNext(); ) {
+                String player = iterator.next();
+                if (Thirst.getThirst(player) > 0) {
+                    iterator.remove();
+                } else {
+                    if (player != null) {
+                        if (Bukkit.getServer().getPlayer(player) != null) {
+                            Bukkit.getServer().getPlayer(player).damage(THIRST_DAMAGE);
+                        }
                     }
                 }
             }
