@@ -67,7 +67,7 @@ public class Main extends JavaPlugin{
     }
     private void initTask(){
         TalesZTask.setTask("thirstTask",getServer().getScheduler().runTaskTimer(this,new ThirstUpdateTask(),0,180));
-        TalesZTask.setTask("thirstDamageTask",getServer().getScheduler().runTaskTimer(this,new ThirstDamageTask(),0,30));
+        TalesZTask.setTask("thirstDamageTask", getServer().getScheduler().runTaskTimer(this, new ThirstDamageTask(), 0, 60));
         TalesZTask.setTask("bleedingTask",getServer().getScheduler().runTaskTimer(this,new BleedingUpdateTask(),0,20));
         TalesZTask.setTask("ironDoorTask", getServer().getScheduler().runTaskTimer(this, new IronDoorUpdateTask(), 0, 20));
     }

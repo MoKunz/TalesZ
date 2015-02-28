@@ -36,6 +36,10 @@ public class BlockBreakListener implements Listener {
             if (!itemStack.getType().equals(Material.IRON_SPADE)) {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(ChatColor.RED + "You need a iron shovel to break this block!");
+            } else {
+                if (block.getType().equals(Material.WEB)) {
+                    event.getPlayer().getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.WEB));
+                }
             }
         } else if (isRestrictedBlockType(RestrictedBlock.AXE, block)) {
             if (!itemStack.getType().equals(Material.STONE_AXE)) {

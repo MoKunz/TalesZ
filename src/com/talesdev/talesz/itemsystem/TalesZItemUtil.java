@@ -16,7 +16,6 @@ public class TalesZItemUtil {
             p.getInventory().remove(itemStack);
         }
     }
-
     public static void heal(Player player, double amount) {
         Bleeding.removeBleedingPlayer(player.getName());
         if (player.getHealth() + amount <= player.getMaxHealth()) {

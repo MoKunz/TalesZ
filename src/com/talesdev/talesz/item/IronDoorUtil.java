@@ -15,14 +15,17 @@ public class IronDoorUtil {
     private static ArrayList<BukkitTask> task = new ArrayList<>();
     public static void open(Block block) {
         if (block.getType() == Material.IRON_DOOR_BLOCK) {
+            Block ironDoorBlock;
             if (block.getData() >= 8) {
-                block = block.getRelative(BlockFace.DOWN);
+                ironDoorBlock = block.getRelative(BlockFace.DOWN);
+            } else {
+                ironDoorBlock = block;
             }
-            if (block.getType() == Material.IRON_DOOR_BLOCK) {
+            if (ironDoorBlock.getType() == Material.IRON_DOOR_BLOCK) {
                 // open
-                if (block.getData() < 4) {
-                    openDoor(block);
-                    IronDoorManager.addToQueue(block);
+                if (ironDoorBlock.getData() < 4) {
+                    openDoor(ironDoorBlock);
+                    IronDoorManager.addToQueue(ironDoorBlock);
                 }
             }
         }

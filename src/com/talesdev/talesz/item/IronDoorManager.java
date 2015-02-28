@@ -51,6 +51,7 @@ public class IronDoorManager {
         for (Iterator<Map.Entry<Block, Integer>> it = ironDoorHashMap.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry<Block, Integer> entry = it.next();
             if (entry.getValue() <= 0) {
+                IronDoorUtil.closeDoor(entry.getKey());
                 it.remove();
             }
         }

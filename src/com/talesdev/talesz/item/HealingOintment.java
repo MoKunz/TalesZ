@@ -32,7 +32,7 @@ public class HealingOintment implements TalesZToolItem {
 
     @Override
     public String getName() {
-        return "HealimgOintment";
+        return "HealingOintment";
     }
 
     @Override
