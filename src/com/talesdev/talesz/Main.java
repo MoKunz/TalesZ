@@ -1,13 +1,9 @@
 package com.talesdev.talesz;
 
-import com.sk89q.worldguard.bukkit.WGBukkit;
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.talesdev.talesz.bleeding.BleedingCommand;
 import com.talesdev.talesz.bleeding.BleedingUpdateTask;
 import com.talesdev.talesz.exp.ExpCommand;
-import com.talesdev.talesz.item.Bandage;
-import com.talesdev.talesz.item.Button;
-import com.talesdev.talesz.item.HealingOintment;
+import com.talesdev.talesz.item.*;
 import com.talesdev.talesz.itemsystem.TalesZItemCommand;
 import com.talesdev.talesz.itemsystem.TalesZItemListener;
 import com.talesdev.talesz.itemsystem.TalesZItemRegistry;
@@ -15,8 +11,6 @@ import com.talesdev.talesz.listener.*;
 import com.talesdev.talesz.thirst.Thirst;
 import com.talesdev.talesz.thirst.ThirstDamageTask;
 import com.talesdev.talesz.thirst.ThirstUpdateTask;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -42,7 +36,7 @@ public class Main extends JavaPlugin{
         getServer().getPluginManager().registerEvents(new TalesZItemListener(),this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new ExpListener(),this);
-        getServer().getPluginManager().registerEvents(new ItemListener(),this);
+        getServer().getPluginManager().registerEvents(new PotionDrinkingListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerRespawnListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
         getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
@@ -54,6 +48,8 @@ public class Main extends JavaPlugin{
     }
     @Override
     public void onDisable(){
+        // close all door
+        IronDoorManager.forceProcessIronDoor();
         // cancel task
         cancelTask();
         // save data to disk
@@ -69,23 +65,11 @@ public class Main extends JavaPlugin{
     public static Main getPlugin(){
         return plugin;
     }
-    public static boolean isWorldGuardLoaded(){
-        Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
-        // WorldGuard may not be loaded
-        if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-    public static WorldGuardPlugin getWorldGuard(){
-        return WGBukkit.getPlugin();
-    }
     private void initTask(){
         TalesZTask.setTask("thirstTask",getServer().getScheduler().runTaskTimer(this,new ThirstUpdateTask(),0,180));
         TalesZTask.setTask("thirstDamageTask",getServer().getScheduler().runTaskTimer(this,new ThirstDamageTask(),0,30));
         TalesZTask.setTask("bleedingTask",getServer().getScheduler().runTaskTimer(this,new BleedingUpdateTask(),0,20));
+        TalesZTask.setTask("ironDoorTask", getServer().getScheduler().runTaskTimer(this, new IronDoorUpdateTask(), 0, 20));
     }
     private void initItem(){
         TalesZItemRegistry.registerTalesZItem(new Bandage());

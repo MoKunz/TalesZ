@@ -1,15 +1,18 @@
 package com.talesdev.talesz.item;
 
-import com.talesdev.talesz.Main;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.scheduler.BukkitTask;
+
+import java.util.ArrayList;
 
 /**
  * Iron door manager
  */
 public class IronDoorUtil {
+    private static ArrayList<BukkitTask> task = new ArrayList<>();
     public static void open(Block block) {
         if (block.getType() == Material.IRON_DOOR_BLOCK) {
             if (block.getData() >= 8) {
@@ -19,13 +22,7 @@ public class IronDoorUtil {
                 // open
                 if (block.getData() < 4) {
                     openDoor(block);
-                    final Block finalBlock = block;
-                    Main.getPlugin().getServer().getScheduler().runTaskLater(Main.getPlugin(), new Runnable() {
-                        @Override
-                        public void run() {
-                            closeDoor(finalBlock);
-                        }
-                    }, 1200);
+                    IronDoorManager.addToQueue(block);
                 }
             }
         }
