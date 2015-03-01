@@ -1,6 +1,7 @@
 package com.talesdev.talesz.listener;
 
 import com.talesdev.talesz.Main;
+import com.talesdev.talesz.PlayerTaskManager;
 import com.talesdev.talesz.bleeding.Bleeding;
 import com.talesdev.talesz.thirst.Thirst;
 import com.talesdev.talesz.thirst.ThirstDamage;
@@ -20,6 +21,7 @@ public class PlayerDeathListener implements Listener {
         Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
             @Override
             public void run() {
+                PlayerTaskManager.getPlayerTask(event.getEntity()).cancel("Sugar");
                 Bleeding.removeBleedingPlayer(event.getEntity().getName());
                 ThirstDamage.removeFromList(event.getEntity().getName());
                 Thirst.setThirst(event.getEntity().getName(), Thirst.FULL_THIRST);

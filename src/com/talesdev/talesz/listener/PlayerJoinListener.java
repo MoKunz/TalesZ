@@ -1,6 +1,7 @@
 package com.talesdev.talesz.listener;
 
 import com.talesdev.talesz.Main;
+import com.talesdev.talesz.PlayerTaskManager;
 import com.talesdev.talesz.thirst.Thirst;
 import com.talesdev.talesz.thirst.ThirstDamage;
 import org.bukkit.GameMode;
@@ -27,6 +28,8 @@ public class PlayerJoinListener implements Listener {
     }
     @EventHandler
     public void onDisconnect(PlayerQuitEvent event){
+        // cancel queued effect
+        PlayerTaskManager.getPlayerTask(event.getPlayer()).cancel("Sugar");
         // save to disk
         try {
             Thirst.saveDataToDisk(event.getPlayer().getName());
