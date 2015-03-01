@@ -33,6 +33,7 @@ public class Main extends JavaPlugin{
         getCommand("xputil").setExecutor(new ExpCommand());
         getCommand("bleeding").setExecutor(new BleedingCommand());
         getCommand("taleszitem").setExecutor(new TalesZItemCommand());
+        getCommand("talesz").setExecutor(new TalesZCommand());
         getServer().getPluginManager().registerEvents(new TalesZItemListener(),this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new ExpListener(),this);

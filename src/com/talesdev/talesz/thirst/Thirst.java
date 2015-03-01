@@ -1,7 +1,7 @@
 package com.talesdev.talesz.thirst;
 
-import com.talesdev.talesz.exp.ExpBarUtil;
 import com.talesdev.talesz.Main;
+import com.talesdev.talesz.exp.ExpBarUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -23,6 +23,7 @@ public class Thirst {
     public static final int FULL_THIRST = 100;
     public static final int THIRST_UPDATE_VALUE = 1;
     public static final String DOT = ".";
+    private static ThirstRule thirstRule;
     /**
      * String : player name
      * Integer : thirst value
@@ -55,6 +56,9 @@ public class Thirst {
         }
         // create new hash map
         thirst = new HashMap<>();
+        // create thirst rule
+        thirstRule = new ThirstRule();
+        thirstRule.loadRule();
     }
     public static void registerNewPlayer(String player){
         resetThirst(player);
@@ -129,5 +133,9 @@ public class Thirst {
     public static void loadData(String playerName){
         int thirst = getConfig().getInt("Thirst" + DOT + playerName);
         setThirst(playerName,thirst);
+    }
+
+    public static ThirstRule getThirstRule() {
+        return thirstRule;
     }
 }
