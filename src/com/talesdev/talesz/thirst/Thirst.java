@@ -3,6 +3,9 @@ package com.talesdev.talesz.thirst;
 import com.talesdev.talesz.Main;
 import com.talesdev.talesz.exp.ExpBarUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -93,8 +96,12 @@ public class Thirst {
     public static void updatePlayer(String player){
         try{
             Player p = Bukkit.getPlayer(player);
+            // get biome data
+            Location loc = p.getLocation();
+            World world = p.getWorld();
+            Biome biome = world.getBiome(loc.getBlockX(), loc.getBlockZ());
             // update data
-            setThirst(player,getThirst(player) - 1);
+            setThirst(player, getThirst(player) - getThirstRule().getRule(biome));
             // update bar
             ExpBarUtil.apply(p, p.getLevel(), (double)getThirst(player));
         }

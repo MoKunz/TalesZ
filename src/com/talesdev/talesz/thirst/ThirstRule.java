@@ -53,23 +53,23 @@ public class ThirstRule {
         // set default if not exist
         if (!configuration.isSet(THIRST_RULE)) {
             configuration.set(THIRST_RULE, null);
-        }
-        if (!configuration.isSet(THIRST_RULE + DOT + DEFAULT_BIOME)) {
-            configuration.set(THIRST_RULE + DOT + DEFAULT_BIOME, 9);
-        }
-        List<String> biomeList = configuration.getStringList(THIRST_RULE);
-        // begin reading
-        System.out.println("[ThirstSystem] Reading thirst rule from " + ruleFileName);
-        if (biomeList != null) {
-            for (String biomeName : biomeList) {
-                if (!biomeName.equals(DEFAULT_BIOME)) {
-                    setRule(Biome.valueOf(biomeName.toUpperCase()), configuration.getInt(THIRST_RULE + DOT + Biome.valueOf(biomeName.toUpperCase())));
-                } else {
-                    defaultRule = configuration.getInt(THIRST_RULE + DOT + DEFAULT_BIOME);
+            if (!configuration.isSet(THIRST_RULE + DOT + DEFAULT_BIOME)) {
+                configuration.set(THIRST_RULE + DOT + DEFAULT_BIOME, 9);
+            }
+            List<String> biomeList = configuration.getStringList(THIRST_RULE);
+            // begin reading
+            System.out.println("[ThirstSystem] Reading thirst rule from " + ruleFileName);
+            if (biomeList != null) {
+                for (String biomeName : biomeList) {
+                    if (!biomeName.equals(DEFAULT_BIOME)) {
+                        setRule(Biome.valueOf(biomeName.toUpperCase()), configuration.getInt(THIRST_RULE + DOT + Biome.valueOf(biomeName.toUpperCase())));
+                    } else {
+                        defaultRule = configuration.getInt(THIRST_RULE + DOT + DEFAULT_BIOME);
+                    }
                 }
             }
+            System.out.println("[ThirstSystem] Completed!");
         }
-        System.out.println("[ThirstSystem] Completed!");
     }
 
     public void saveRule(String ruleFileName) {
