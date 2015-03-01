@@ -18,10 +18,10 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 public class PlayerDeathListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onDeath(PlayerDeathEvent event){
+        PlayerTaskManager.getPlayerTask(event.getEntity()).cancel("Sugar");
         Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
             @Override
             public void run() {
-                PlayerTaskManager.getPlayerTask(event.getEntity()).cancel("Sugar");
                 Bleeding.removeBleedingPlayer(event.getEntity().getName());
                 ThirstDamage.removeFromList(event.getEntity().getName());
                 Thirst.setThirst(event.getEntity().getName(), Thirst.FULL_THIRST);
