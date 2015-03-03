@@ -51,8 +51,8 @@ public class ThirstRule {
             e.printStackTrace();
         }
         // set default if not exist
-        if (!configuration.isSet(THIRST_RULE)) {
-            configuration.set(THIRST_RULE, null);
+//        if (!configuration.isSet(THIRST_RULE)) {
+//            configuration.set(THIRST_RULE, null);
             if (!configuration.isSet(THIRST_RULE + DOT + DEFAULT_BIOME)) {
                 configuration.set(THIRST_RULE + DOT + DEFAULT_BIOME, 9);
             }
