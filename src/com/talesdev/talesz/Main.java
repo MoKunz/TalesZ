@@ -20,11 +20,12 @@ import java.util.logging.Level;
  * Plugin main class
  * Created by MoKunz on 17/10/2557.
  */
-public class Main extends JavaPlugin{
+public class Main extends JavaPlugin {
     // plugin instance
     private static Main plugin;
+
     @Override
-    public void onEnable(){
+    public void onEnable() {
         // instance
         plugin = this;
         // register update task
@@ -34,21 +35,23 @@ public class Main extends JavaPlugin{
         getCommand("bleeding").setExecutor(new BleedingCommand());
         getCommand("taleszitem").setExecutor(new TalesZItemCommand());
         getCommand("talesz").setExecutor(new TalesZCommand());
-        getServer().getPluginManager().registerEvents(new TalesZItemListener(),this);
+        getServer().getPluginManager().registerEvents(new TalesZItemListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-        getServer().getPluginManager().registerEvents(new ExpListener(),this);
+        getServer().getPluginManager().registerEvents(new ExpListener(), this);
         getServer().getPluginManager().registerEvents(new PotionDrinkingListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerRespawnListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
         getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
         getServer().getPluginManager().registerEvents(new DrinkingListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerExpChangeListener(), this);
         // init item
         initItem();
         // enabled
         getLogger().info("TalesZ has been enabled!");
     }
+
     @Override
-    public void onDisable(){
+    public void onDisable() {
         // close all door
         IronDoorManager.forceProcessIronDoor();
         // cancel task
@@ -57,29 +60,33 @@ public class Main extends JavaPlugin{
         try {
             Thirst.saveAll();
         } catch (IOException e) {
-            getLogger().log(Level.SEVERE,"Unable to save thirst data to disk!");
+            getLogger().log(Level.SEVERE, "Unable to save thirst data to disk!");
             e.printStackTrace();
         }
         // disabled
         getLogger().info("TalesZ has been disabled!");
     }
-    public static Main getPlugin(){
+
+    public static Main getPlugin() {
         return plugin;
     }
-    private void initTask(){
-        TalesZTask.setTask("thirstTask",getServer().getScheduler().runTaskTimer(this,new ThirstUpdateTask(),0,180));
+
+    private void initTask() {
+        TalesZTask.setTask("thirstTask", getServer().getScheduler().runTaskTimer(this, new ThirstUpdateTask(), 0, 180));
         TalesZTask.setTask("thirstDamageTask", getServer().getScheduler().runTaskTimer(this, new ThirstDamageTask(), 0, 60));
-        TalesZTask.setTask("bleedingTask",getServer().getScheduler().runTaskTimer(this,new BleedingUpdateTask(),0,20));
+        TalesZTask.setTask("bleedingTask", getServer().getScheduler().runTaskTimer(this, new BleedingUpdateTask(), 0, 20));
         TalesZTask.setTask("ironDoorTask", getServer().getScheduler().runTaskTimer(this, new IronDoorUpdateTask(), 0, 20));
     }
-    private void initItem(){
+
+    private void initItem() {
         TalesZItemRegistry.registerTalesZItem(new Bandage());
         TalesZItemRegistry.registerTalesZItem(new Button());
         TalesZItemRegistry.registerTalesZItem(new HealingOintment());
         TalesZItemRegistry.registerTalesZItem(new Sugar());
         TalesZItemRegistry.registerTalesZItem(new Antibiotics());
     }
-    private void cancelTask(){
+
+    private void cancelTask() {
         TalesZTask.cancelAll();
     }
 }
