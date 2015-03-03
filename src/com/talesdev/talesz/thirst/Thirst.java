@@ -83,6 +83,9 @@ public class Thirst {
         }
     }
     public static int getThirst(String player){
+        if (thirst.get(player) != null) {
+            return 0;
+        }
         return thirst.get(player);
     }
     public static void resetThirst(String player){
