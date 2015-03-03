@@ -69,7 +69,7 @@ public class ThirstRule {
                 }
             }
             System.out.println("[ThirstSystem] Completed!");
-        }
+        //}
     }
 
     public void saveRule(String ruleFileName) {
