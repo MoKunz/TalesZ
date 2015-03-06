@@ -73,6 +73,7 @@ public class Bandage implements TalesZToolItem{
     @Override
     public void handleEvent(PlayerInteractEvent event) {
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            event.setUseInteractedBlock(Event.Result.DENY);
             event.setUseItemInHand(Event.Result.DENY);
             heal(event.getPlayer());
             TalesZItemUtil.removeOneItemFromPlayer(event.getPlayer(), event.getItem());

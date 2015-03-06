@@ -77,6 +77,7 @@ public class HealingOintment implements TalesZToolItem {
     public void handleEvent(PlayerInteractEvent event) {
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             event.setUseItemInHand(Event.Result.DENY);
+            event.setUseInteractedBlock(Event.Result.DENY);
             TalesZItemUtil.heal(event.getPlayer(), 10);
             TalesZItemUtil.removeOneItemFromPlayer(event.getPlayer(), event.getItem());
         }
