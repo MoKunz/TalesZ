@@ -1,6 +1,7 @@
 package com.talesdev.talesz;
 
 import com.talesdev.talesz.thirst.Thirst;
+import com.talesdev.talesz.thirst.ThirstDamage;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
@@ -36,6 +37,8 @@ public class TalesZCommand implements CommandExecutor {
                                 commandSender.sendMessage(ChatColor.RED + "Error : Invalid arguments!");
                             }
                         }
+                    } else if (args[0].equalsIgnoreCase("clearThirstDamage")) {
+                        ThirstDamage.clear();
                     } else {
                         commandSender.sendMessage(ChatColor.YELLOW + command.getUsage());
                     }

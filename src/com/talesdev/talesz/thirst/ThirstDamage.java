@@ -13,7 +13,9 @@ public class ThirstDamage {
     public static final int THIRST_DAMAGE = 2;
     private static ArrayList<String> playerList = new ArrayList<>();
     public static void addToList(String playerName){
-        playerList.add(playerName);
+        if (!contain(playerName)) {
+            playerList.add(playerName);
+        }
     }
     public static void removeFromList(String playerName){
         if(contain(playerName)){
@@ -39,5 +41,9 @@ public class ThirstDamage {
                 }
             }
         }
+    }
+
+    public static void clear() {
+        playerList.clear();
     }
 }

@@ -19,7 +19,7 @@ public class ThirstRule {
     private final String DEFAULT_BIOME = "DEFAULT";
     private YamlConfiguration configuration;
     private HashMap<Biome, Integer> ruleList = new HashMap<>();
-    private int defaultRule = 9;
+    private int defaultRule = 1;
 
     public void setRule(Biome biome, int value) {
         ruleList.put(biome, value);

@@ -64,7 +64,9 @@ public class Thirst {
         thirstRule.loadRule();
     }
     public static void registerNewPlayer(String player){
-        resetThirst(player);
+        if (!thirst.containsKey(player)) {
+            resetThirst(player);
+        }
     }
     public static void unregisterPlayer(String player){
         if(thirst.containsKey(player)){
@@ -75,7 +77,7 @@ public class Thirst {
         // prevent overflow
         if(value <= FULL_THIRST && value > 0){
             ThirstDamage.removeFromList(player);
-            thirst.put(player,value);
+            thirst.put(player, value);
         }
         else{
             ThirstDamage.addToList(player);
@@ -83,7 +85,7 @@ public class Thirst {
         }
     }
     public static int getThirst(String player){
-        if (thirst.get(player) != null) {
+        if (thirst.get(player) == null) {
             return 0;
         }
         return thirst.get(player);
@@ -91,7 +93,7 @@ public class Thirst {
     public static void resetThirst(String player){
         ThirstDamage.removeFromList(player);
         // reset to full thirst
-        thirst.put(player,FULL_THIRST);
+        setThirst(player, FULL_THIRST);
     }
     public static void updateAll(){
         thirst.keySet().forEach(com.talesdev.talesz.thirst.Thirst::updatePlayer);

@@ -44,6 +44,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
         getServer().getPluginManager().registerEvents(new DrinkingListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerExpChangeListener(), this);
+        getServer().getPluginManager().registerEvents(new CreatureSpawnListener(), this);
         // init item
         initItem();
         // enabled

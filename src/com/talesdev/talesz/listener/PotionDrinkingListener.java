@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
  * Created by MoKunz on 2/14/2015.
  */
 public class PotionDrinkingListener implements Listener {
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onDrink(PlayerItemConsumeEvent event){
         Material material = event.getItem().getType();
         if(material.equals(Material.POTION)) {
