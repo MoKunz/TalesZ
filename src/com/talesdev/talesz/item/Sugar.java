@@ -83,7 +83,6 @@ public class Sugar implements TalesZItem {
                     }
                 }, 600L));
             }
-            event.setUseInteractedBlock(Event.Result.DENY);
             event.setUseItemInHand(Event.Result.DENY);
         }
     }

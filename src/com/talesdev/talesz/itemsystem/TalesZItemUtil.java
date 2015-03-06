@@ -1,6 +1,7 @@
 package com.talesdev.talesz.itemsystem;
 
 import com.talesdev.talesz.bleeding.Bleeding;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
@@ -29,5 +30,35 @@ public class TalesZItemUtil {
             player.setHealth(player.getMaxHealth());
         }
 
+    }
+
+    public static MaterialComparator getRightClickableComparator() {
+        return new MaterialComparator(material -> material.equals(Material.DISPENSER) ||
+                material.equals(Material.NOTE_BLOCK) ||
+                material.equals(Material.BED) ||
+                material.equals(Material.CHEST) ||
+                material.equals(Material.WORKBENCH) ||
+                material.equals(Material.FURNACE) ||
+                material.equals(Material.BURNING_FURNACE) ||
+                material.equals(Material.WOODEN_DOOR) ||
+                material.equals(Material.LEVER) ||
+                material.equals(Material.JUKEBOX) ||
+                material.equals(Material.DIODE_BLOCK_OFF) ||
+                material.equals(Material.DIODE_BLOCK_ON) ||
+                material.equals(Material.TRAP_DOOR) ||
+                material.equals(Material.FENCE_GATE) ||
+                material.equals(Material.ENCHANTMENT_TABLE) ||
+                material.equals(Material.BREWING_STAND) ||
+                material.equals(Material.CAULDRON) ||
+                material.equals(Material.ENDER_CHEST) ||
+                material.equals(Material.COMMAND) ||
+                material.equals(Material.BEACON) ||
+                material.equals(Material.ANVIL) ||
+                material.equals(Material.TRAPPED_CHEST) ||
+                material.equals(Material.REDSTONE_COMPARATOR_OFF) ||
+                material.equals(Material.REDSTONE_COMPARATOR_ON) ||
+                material.equals(Material.HOPPER) ||
+                material.equals(Material.DROPPER) ||
+                material.equals(Material.STONE_BUTTON));
     }
 }

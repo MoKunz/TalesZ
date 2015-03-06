@@ -1,13 +1,13 @@
 package com.talesdev.talesz.item;
 
 import com.talesdev.talesz.bleeding.Bleeding;
+import com.talesdev.talesz.itemsystem.MaterialComparator;
 import com.talesdev.talesz.itemsystem.TalesZItemUtil;
 import com.talesdev.talesz.itemsystem.TalesZToolItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -72,7 +72,9 @@ public class Bandage implements TalesZToolItem{
 
     @Override
     public void handleEvent(PlayerInteractEvent event) {
-        if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+        MaterialComparator comparator = TalesZItemUtil.getRightClickableComparator();
+        event.getClickedBlock().getType().isEdible();
+        if (TalesZItemUtil.isActionRightClick(event.getAction()) && comparator.notContainThisMaterial(event.getItem().getType())) {
             event.setUseInteractedBlock(Event.Result.DENY);
             event.setUseItemInHand(Event.Result.DENY);
             heal(event.getPlayer());
