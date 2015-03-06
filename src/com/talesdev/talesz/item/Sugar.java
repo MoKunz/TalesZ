@@ -70,6 +70,10 @@ public class Sugar implements TalesZItem {
 
     @Override
     public void handleEvent(PlayerInteractEvent event) {
+        boolean isRightClickable = false;
+        if (event.getClickedBlock() != null) {
+            isRightClickable = TalesZItemUtil.getRightClickableComparator().notContainThisMaterial(event.getClickedBlock().getType());
+        }
         if (TalesZItemUtil.isActionRightClick(event.getAction())) {
             final Player p = event.getPlayer();
             if (!(p.hasPotionEffect(PotionEffectType.SPEED) || p.hasPotionEffect(PotionEffectType.BLINDNESS) || p.hasPotionEffect(PotionEffectType.SLOW))) {
@@ -82,6 +86,8 @@ public class Sugar implements TalesZItem {
                         p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 0));
                     }
                 }, 600L));
+            } else {
+                p.sendMessage(ChatColor.RED + "You mustn't have any potion effect relate to Sugar Item!");
             }
             event.setUseItemInHand(Event.Result.DENY);
         }

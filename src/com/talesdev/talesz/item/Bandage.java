@@ -73,8 +73,7 @@ public class Bandage implements TalesZToolItem{
     @Override
     public void handleEvent(PlayerInteractEvent event) {
         MaterialComparator comparator = TalesZItemUtil.getRightClickableComparator();
-        event.getClickedBlock().getType().isEdible();
-        if (TalesZItemUtil.isActionRightClick(event.getAction()) && comparator.notContainThisMaterial(event.getItem().getType())) {
+        if (TalesZItemUtil.isActionRightClick(event.getAction()) && comparator.notContainThisMaterial(event.getClickedBlock().getType())) {
             event.setUseInteractedBlock(Event.Result.DENY);
             event.setUseItemInHand(Event.Result.DENY);
             heal(event.getPlayer());

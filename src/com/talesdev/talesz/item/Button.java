@@ -1,5 +1,6 @@
 package com.talesdev.talesz.item;
 
+import com.talesdev.talesz.itemsystem.TalesZItemUtil;
 import com.talesdev.talesz.itemsystem.TalesZToolItem;
 import org.bukkit.Material;
 import org.bukkit.event.Event;
@@ -66,7 +67,8 @@ public class Button implements TalesZToolItem {
 
     @Override
     public void handleEvent(PlayerInteractEvent event) {
-        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) &&
+                TalesZItemUtil.getRightClickableComparator().notContainThisMaterial(event.getClickedBlock().getType())) {
             IronDoorUtil.open(event.getClickedBlock());
             event.setUseItemInHand(Event.Result.DENY);
         }

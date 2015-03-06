@@ -147,6 +147,9 @@ public class Thirst {
         setThirst(playerName,thirst);
     }
 
+    public static boolean thirstDataExist(String playerName) {
+        return getConfig().isSet("Thirst" + DOT + playerName);
+    }
     public static ThirstRule getThirstRule() {
         return thirstRule;
     }

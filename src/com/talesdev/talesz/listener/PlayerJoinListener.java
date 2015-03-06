@@ -21,9 +21,11 @@ import java.util.logging.Level;
 public class PlayerJoinListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent event){
-        event.getPlayer().setGameMode(GameMode.ADVENTURE);
+        event.getPlayer().setGameMode(GameMode.SURVIVAL);
         Thirst.registerNewPlayer(event.getPlayer().getName());
-        Thirst.loadData(event.getPlayer().getName());
+        if (Thirst.thirstDataExist(event.getPlayer().getName())) {
+            Thirst.loadData(event.getPlayer().getName());
+        }
         Thirst.updateExpBar(event.getPlayer());
     }
     @EventHandler

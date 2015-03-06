@@ -59,6 +59,18 @@ public class TalesZItemUtil {
                 material.equals(Material.REDSTONE_COMPARATOR_ON) ||
                 material.equals(Material.HOPPER) ||
                 material.equals(Material.DROPPER) ||
-                material.equals(Material.STONE_BUTTON));
+                material.equals(Material.STONE_BUTTON) ||
+                material.equals(Material.ACACIA_DOOR) ||
+                material.equals(Material.SPRUCE_DOOR) ||
+                material.equals(Material.BIRCH_DOOR) ||
+                material.equals(Material.JUNGLE_DOOR) ||
+                material.equals(Material.DARK_OAK_DOOR) ||
+                material.equals(Material.ACACIA_FENCE_GATE) ||
+                material.equals(Material.SPRUCE_FENCE_GATE) ||
+                material.equals(Material.BIRCH_FENCE_GATE) ||
+                material.equals(Material.JUNGLE_FENCE_GATE) ||
+                material.equals(Material.DARK_OAK_FENCE_GATE) ||
+                material.equals(Material.SPRUCE_FENCE_GATE) ||
+                material.equals(Material.WOOD_BUTTON));
     }
 }
