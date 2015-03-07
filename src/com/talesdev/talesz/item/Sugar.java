@@ -70,11 +70,13 @@ public class Sugar implements TalesZItem {
 
     @Override
     public void handleEvent(PlayerInteractEvent event) {
-        boolean isRightClickable = false;
+        boolean isRightClickable;
         if (event.getClickedBlock() != null) {
             isRightClickable = TalesZItemUtil.getRightClickableComparator().notContainThisMaterial(event.getClickedBlock().getType());
+        } else {
+            isRightClickable = true;
         }
-        if (TalesZItemUtil.isActionRightClick(event.getAction())) {
+        if (TalesZItemUtil.isActionRightClick(event.getAction()) && isRightClickable) {
             final Player p = event.getPlayer();
             if (!(p.hasPotionEffect(PotionEffectType.SPEED) || p.hasPotionEffect(PotionEffectType.BLINDNESS) || p.hasPotionEffect(PotionEffectType.SLOW))) {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 600, 1));

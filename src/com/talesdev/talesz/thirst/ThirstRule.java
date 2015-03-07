@@ -13,29 +13,49 @@ import java.util.HashMap;
  * Created by MoKunz on 3/1/2015.
  */
 public class ThirstRule {
+    // constant
     private final String THIRST_RULE = "ThirstRule";
     private final String DOT = ".";
     private final String DEFAULT_BIOME = "DEFAULT";
+    // config file
     private YamlConfiguration configuration;
-    private HashMap<Biome, Integer> ruleList = new HashMap<>();
-    private int defaultRule = 1;
+    // Biome
+    private HashMap<Biome, Integer> biomeRuleList = new HashMap<>();
+    private int defaultBiomeRule = 1;
+    // Food
+    private int defaultFoodRule = 0;
 
-    public void setRule(Biome biome, int value) {
-        ruleList.put(biome, value);
+    public void setBiomeRule(Biome biome, int value) {
+        biomeRuleList.put(biome, value);
     }
 
-    public void setDefaultRule(int value) {
-        defaultRule = value;
+    public void setDefaultBiomeRule(int value) {
+        defaultBiomeRule = value;
     }
 
-    public int getRule(Biome biome) {
-        if (ruleList.containsKey(biome)) {
-            return ruleList.get(biome);
+    public int getDefaultBiomeRule() {
+        return defaultBiomeRule;
+    }
+
+    public int getBiomeRule(Biome biome) {
+        if (biomeRuleList.containsKey(biome)) {
+            return biomeRuleList.get(biome);
         } else {
-            return defaultRule;
+            return defaultBiomeRule;
         }
     }
 
+    public int getDefaultFoodRule() {
+        return defaultFoodRule;
+    }
+
+    public void setDefaultFoodRule(int value) {
+        defaultFoodRule = value;
+    }
+
+    public void getFoodRule() {
+
+    }
     public void loadRule(String ruleFileName) {
         // load file
         System.out.println("[ThirstSystem] Loading thirst rule from " + ruleFileName);
@@ -63,13 +83,13 @@ public class ThirstRule {
                 if (!biomeName.toString().equals(DEFAULT_BIOME)) {
                     String path = THIRST_RULE + DOT + Biome.valueOf(biomeName.toString().toUpperCase());
                     if (configuration.getInt(path) > 0) {
-                        setRule(Biome.valueOf(biomeName.toString().toUpperCase()), configuration.getInt(path));
+                        setBiomeRule(Biome.valueOf(biomeName.toString().toUpperCase()), configuration.getInt(path));
                     } else {
-                        setRule(Biome.valueOf(biomeName.toString().toUpperCase()), configuration.getInt(THIRST_RULE + DOT + DEFAULT_BIOME));
+                        setBiomeRule(Biome.valueOf(biomeName.toString().toUpperCase()), configuration.getInt(THIRST_RULE + DOT + DEFAULT_BIOME));
                     }
 
                 } else {
-                    defaultRule = configuration.getInt(THIRST_RULE + DOT + DEFAULT_BIOME);
+                    defaultBiomeRule = configuration.getInt(THIRST_RULE + DOT + DEFAULT_BIOME);
                 }
             }
         }
@@ -79,10 +99,10 @@ public class ThirstRule {
 
     public void saveRule(String ruleFileName) {
         // save to configuration object
-        for (Biome biome : ruleList.keySet()) {
-            configuration.set(THIRST_RULE + DOT + biome.toString(), ruleList.get(biome));
+        for (Biome biome : biomeRuleList.keySet()) {
+            configuration.set(THIRST_RULE + DOT + biome.toString(), biomeRuleList.get(biome));
         }
-        configuration.set(THIRST_RULE + DOT + DEFAULT_BIOME, defaultRule);
+        configuration.set(THIRST_RULE + DOT + DEFAULT_BIOME, defaultBiomeRule);
         // save to file
         try {
             configuration.save(new File("plugins/TalesZ/" + ruleFileName));

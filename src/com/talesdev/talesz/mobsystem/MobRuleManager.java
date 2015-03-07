@@ -1,6 +1,7 @@
 package com.talesdev.talesz.mobsystem;
 
 import com.talesdev.talesz.Rule;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 import java.util.HashMap;
@@ -28,5 +29,9 @@ public class MobRuleManager {
         } else {
             return Rule.DENY;
         }
+    }
+
+    public static boolean isAllowToSpawn(Entity entity) {
+        return getRule(entity.getType()).getResult();
     }
 }

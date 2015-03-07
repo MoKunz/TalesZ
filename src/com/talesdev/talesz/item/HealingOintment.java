@@ -7,7 +7,6 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -75,7 +74,11 @@ public class HealingOintment implements TalesZToolItem {
 
     @Override
     public void handleEvent(PlayerInteractEvent event) {
-        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+        boolean isRightClickable = false;
+        if (event.getClickedBlock() != null) {
+            isRightClickable = TalesZItemUtil.getRightClickableComparator().notContainThisMaterial(event.getClickedBlock().getType());
+        }
+        if (TalesZItemUtil.isActionRightClick(event.getAction()) && isRightClickable) {
             event.setUseItemInHand(Event.Result.DENY);
             event.setUseInteractedBlock(Event.Result.DENY);
             TalesZItemUtil.heal(event.getPlayer(), 10);

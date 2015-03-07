@@ -35,7 +35,7 @@ public class TalesZCommand implements CommandExecutor {
                     } else if (args[0].equalsIgnoreCase("getThirstRule")) {
                         try {
                             Biome biome = Biome.valueOf(args[1]);
-                            commandSender.sendMessage("Biome \"" + biome.toString() + "\" : " + Thirst.getThirstRule().getRule(biome));
+                            commandSender.sendMessage("Biome \"" + biome.toString() + "\" : " + Thirst.getThirstRule().getBiomeRule(biome));
                         } catch (IllegalArgumentException exception) {
                             commandSender.sendMessage(ChatColor.RED + "Error : Invalid arguments!");
                         }
@@ -43,7 +43,7 @@ public class TalesZCommand implements CommandExecutor {
                         if (args.length > 2) {
                             try {
                                 Biome biome = Biome.valueOf(args[1]);
-                                Thirst.getThirstRule().setRule(biome, Integer.parseInt(args[2]));
+                                Thirst.getThirstRule().setBiomeRule(biome, Integer.parseInt(args[2]));
                                 Thirst.getThirstRule().saveRule();
                             } catch (IllegalArgumentException exception) {
                                 commandSender.sendMessage(ChatColor.RED + "Error : Invalid arguments!");

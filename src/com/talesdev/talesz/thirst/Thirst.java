@@ -108,7 +108,7 @@ public class Thirst {
             World world = p.getWorld();
             Biome biome = world.getBiome(loc.getBlockX(), loc.getBlockZ());
             // update data
-            setThirst(player, getThirst(player) - getThirstRule().getRule(biome));
+            setThirst(player, getThirst(player) - getThirstRule().getBiomeRule(biome));
             // update bar
             ExpBarUtil.apply(p, p.getLevel(), (double) getThirst(player));
         } catch (Exception e) {
@@ -126,6 +126,7 @@ public class Thirst {
     }
 
     public static void saveAll() throws IOException {
+        // save thirst data
         if (thirst.keySet().size() > 0) {
             for (String playerName : thirst.keySet()) {
                 saveDataToDisk(playerName);
@@ -152,6 +153,7 @@ public class Thirst {
     }
 
     public static void loadData(String playerName) {
+        // load thirst data of specific player
         int thirst = getConfig().getInt("Thirst" + DOT + playerName);
         setThirst(playerName, thirst);
     }

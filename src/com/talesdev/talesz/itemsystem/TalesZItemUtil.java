@@ -5,12 +5,14 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 /**
  * Item Util
  * Created by MoKunz on 2/27/2015.
  */
 public class TalesZItemUtil {
+
     public static void removeOneItemFromPlayer(Player p, ItemStack itemStack) {
         if (itemStack.getAmount() > 1) {
             itemStack.setAmount(itemStack.getAmount() - 1);
@@ -19,6 +21,21 @@ public class TalesZItemUtil {
         }
     }
 
+    public static void removeInventoryItems(PlayerInventory inv, Material type, int amount) {
+        for (ItemStack is : inv.getContents()) {
+            if (is != null && is.getType() == type) {
+                int newAmount = is.getAmount() - amount;
+                if (newAmount > 0) {
+                    is.setAmount(newAmount);
+                    break;
+                } else {
+                    inv.remove(is);
+                    amount = -newAmount;
+                    if (amount == 0) break;
+                }
+            }
+        }
+    }
     public static boolean isValidMaterialString(String material) {
         if (Material.getMaterial(material) != null) {
             return true;

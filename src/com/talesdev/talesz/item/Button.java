@@ -67,10 +67,12 @@ public class Button implements TalesZToolItem {
 
     @Override
     public void handleEvent(PlayerInteractEvent event) {
-        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) &&
-                TalesZItemUtil.getRightClickableComparator().notContainThisMaterial(event.getClickedBlock().getType())) {
-            IronDoorUtil.open(event.getClickedBlock());
-            event.setUseItemInHand(Event.Result.DENY);
+        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            if ((event.getClickedBlock().getType().equals(Material.IRON_DOOR))) {
+                IronDoorUtil.open(event.getClickedBlock());
+                TalesZItemUtil.removeOneItemFromPlayer(event.getPlayer(), event.getItem());
+                event.setUseItemInHand(Event.Result.DENY);
+            }
         }
     }
 
