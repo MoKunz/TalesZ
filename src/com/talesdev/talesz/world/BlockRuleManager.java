@@ -1,6 +1,7 @@
 package com.talesdev.talesz.world;
 
 import com.talesdev.talesz.Main;
+import com.talesdev.talesz.Rule;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -16,13 +17,13 @@ import java.util.logging.Level;
  */
 public class BlockRuleManager {
     // default rule for breaking.
-    private static BlockRule breaking = BlockRule.DENY;
+    private static Rule breaking = Rule.DENY;
     // default rule for placing.
-    private static BlockRule placing = BlockRule.DENY;
+    private static Rule placing = Rule.DENY;
     // HashMap for storing breaking rule.
-    private static HashMap<Material, BlockRule> breakingRuleHashMap = new HashMap<>();
+    private static HashMap<Material, Rule> breakingRuleHashMap = new HashMap<>();
     // HashMap for storing breaking rule.
-    private static HashMap<Material, BlockRule> placingRuleHashMap = new HashMap<>();
+    private static HashMap<Material, Rule> placingRuleHashMap = new HashMap<>();
     // Config file
     private static YamlConfiguration configuration = new YamlConfiguration();
     // Config file location
@@ -33,7 +34,7 @@ public class BlockRuleManager {
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                Main.getPlugin().getLogger().log(Level.INFO, "Creating BlockRule config file success!");
+                Main.getPlugin().getLogger().log(Level.INFO, "Creating Rule config file success!");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -41,7 +42,7 @@ public class BlockRuleManager {
         try {
             configuration.load(file);
         } catch (IOException | InvalidConfigurationException e) {
-            Main.getPlugin().getLogger().log(Level.WARNING, "Error while loading BlockRule config file");
+            Main.getPlugin().getLogger().log(Level.WARNING, "Error while loading Rule config file");
             e.printStackTrace();
         }
     }
@@ -49,7 +50,7 @@ public class BlockRuleManager {
     public static void readConfigFile() {
         if (configuration.isSet("DefaultPlacing")) {
             try {
-                setDefaultPlacingRule(BlockRule.valueOf(configuration.getString("DefaultPlacing")));
+                setDefaultPlacingRule(Rule.valueOf(configuration.getString("DefaultPlacing")));
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             }
@@ -57,7 +58,7 @@ public class BlockRuleManager {
         }
         if (configuration.isSet("DefaultBreaking")) {
             try {
-                setDefaultPlacingRule(BlockRule.valueOf(configuration.getString("DefaultPlacing")));
+                setDefaultPlacingRule(Rule.valueOf(configuration.getString("DefaultPlacing")));
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             }
@@ -67,12 +68,12 @@ public class BlockRuleManager {
         readSection("Placing", placingRuleHashMap);
     }
 
-    private static void readSection(String sectionName, HashMap<Material, BlockRule> rule) {
+    private static void readSection(String sectionName, HashMap<Material, Rule> rule) {
         for (Material material : rule.keySet()) {
             String blockRule = configuration.getString(sectionName + "." + material.toString());
             if (blockRule != null) {
                 try {
-                    rule.put(material, BlockRule.valueOf(blockRule));
+                    rule.put(material, Rule.valueOf(blockRule));
                 } catch (IllegalArgumentException ignored) {
                     Main.getPlugin().getLogger().log(Level.WARNING, "Invalid config value for Material \"" + material.toString() + "\"!");
                 }
@@ -80,12 +81,13 @@ public class BlockRuleManager {
 
         }
     }
-    private static BlockRule readBlockRule(String sectionName, Material blockMaterial) {
+
+    private static Rule readBlockRule(String sectionName, Material blockMaterial) {
         String value = configuration.getString(sectionName + "." + blockMaterial.toString());
         if (value != null) {
-            BlockRule rule;
+            Rule rule;
             try {
-                rule = BlockRule.valueOf(value);
+                rule = Rule.valueOf(value);
                 return rule;
             } catch (Exception e) {
                 Main.getPlugin().getLogger().log(Level.WARNING, "Error while reading config value for Material \"" + blockMaterial.toString() + "\"!");
@@ -95,7 +97,7 @@ public class BlockRuleManager {
                 } else if (sectionName.equalsIgnoreCase("placing")) {
                     return placing;
                 } else {
-                    return BlockRule.DENY;
+                    return Rule.DENY;
                 }
             }
         } else {
@@ -104,12 +106,12 @@ public class BlockRuleManager {
             } else if (sectionName.equalsIgnoreCase("placing")) {
                 return placing;
             } else {
-                return BlockRule.DENY;
+                return Rule.DENY;
             }
         }
     }
 
-    private static void saveSection(String sectionName, HashMap<Material, BlockRule> section) {
+    private static void saveSection(String sectionName, HashMap<Material, Rule> section) {
         if (section != null) {
             for (Material material : section.keySet()) {
                 configuration.set(sectionName + "." + material.toString(), section.get(material).toString());
@@ -129,7 +131,7 @@ public class BlockRuleManager {
         try {
             configuration.save(file);
         } catch (IOException e) {
-            Main.getPlugin().getLogger().log(Level.WARNING, "Error while saving BlockRule config file");
+            Main.getPlugin().getLogger().log(Level.WARNING, "Error while saving Rule config file");
             e.printStackTrace();
         }
     }
@@ -138,23 +140,23 @@ public class BlockRuleManager {
         return configuration;
     }
 
-    public static void setDefaultBreakingRule(BlockRule blockRule) {
-        breaking = blockRule;
+    public static void setDefaultBreakingRule(Rule rule) {
+        breaking = rule;
     }
 
-    public static void setDefaultPlacingRule(BlockRule blockRule) {
-        placing = blockRule;
+    public static void setDefaultPlacingRule(Rule rule) {
+        placing = rule;
     }
 
-    public static void setBreakingRule(Material blockMaterial, BlockRule blockRule) {
-        breakingRuleHashMap.put(blockMaterial, blockRule);
+    public static void setBreakingRule(Material blockMaterial, Rule rule) {
+        breakingRuleHashMap.put(blockMaterial, rule);
     }
 
-    public static void setPlacingRule(Material blockMaterial, BlockRule blockRule) {
-        placingRuleHashMap.put(blockMaterial, blockRule);
+    public static void setPlacingRule(Material blockMaterial, Rule rule) {
+        placingRuleHashMap.put(blockMaterial, rule);
     }
 
-    public static BlockRule getBreakingRule(Material material) {
+    public static Rule getBreakingRule(Material material) {
         if (breakingRuleHashMap.containsKey(material)) {
             return breakingRuleHashMap.get(material);
         } else {
@@ -163,7 +165,7 @@ public class BlockRuleManager {
         }
     }
 
-    public static BlockRule getPlacingRule(Material material) {
+    public static Rule getPlacingRule(Material material) {
         if (placingRuleHashMap.containsKey(material)) {
             return placingRuleHashMap.get(material);
         } else {
