@@ -62,15 +62,43 @@ public class BlockRuleManager {
                 e.printStackTrace();
             }
         }
+        // replace existing config in memory with new one
+        readSection("Breaking", breakingRuleHashMap);
+        readSection("Placing", placingRuleHashMap);
     }
 
+    private static void readSection(String sectionName, HashMap<Material, BlockRule> rule) {
+        for (Material material : rule.keySet()) {
+            String blockRule = configuration.getString(sectionName + "." + material.toString());
+            if (blockRule != null) {
+                try {
+                    rule.put(material, BlockRule.valueOf(blockRule));
+                } catch (IllegalArgumentException ignored) {
+                    Main.getPlugin().getLogger().log(Level.WARNING, "Invalid config value for Material \"" + material.toString() + "\"!");
+                }
+            }
+
+        }
+    }
     private static BlockRule readBlockRule(String sectionName, Material blockMaterial) {
         String value = configuration.getString(sectionName + "." + blockMaterial.toString());
-        BlockRule rule;
-        try {
-            rule = BlockRule.valueOf(value);
-            return rule;
-        } catch (IllegalArgumentException e) {
+        if (value != null) {
+            BlockRule rule;
+            try {
+                rule = BlockRule.valueOf(value);
+                return rule;
+            } catch (Exception e) {
+                Main.getPlugin().getLogger().log(Level.WARNING, "Error while reading config value for Material \"" + blockMaterial.toString() + "\"!");
+                Main.getPlugin().getLogger().log(Level.WARNING, "Plugin will use default value instead!");
+                if (sectionName.equalsIgnoreCase("breaking")) {
+                    return breaking;
+                } else if (sectionName.equalsIgnoreCase("placing")) {
+                    return placing;
+                } else {
+                    return BlockRule.DENY;
+                }
+            }
+        } else {
             if (sectionName.equalsIgnoreCase("breaking")) {
                 return breaking;
             } else if (sectionName.equalsIgnoreCase("placing")) {

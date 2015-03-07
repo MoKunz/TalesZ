@@ -33,12 +33,7 @@ public class Thirst {
      */
     protected static HashMap<String, Integer> thirst;
 
-    static {
-        // create file and directory
-        dir = new File("plugins/TalesZ");
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
+    public static void start() {
         file = new File("plugins/TalesZ/thirst.yml");
         if (!file.exists()) {
             try {
@@ -131,14 +126,16 @@ public class Thirst {
     }
 
     public static void saveAll() throws IOException {
-        for (String playerName : thirst.keySet()) {
-            saveDataToDisk(playerName);
+        if (thirst.keySet().size() > 0) {
+            for (String playerName : thirst.keySet()) {
+                saveDataToDisk(playerName);
+            }
         }
     }
 
     public static void saveDataToDisk(String playerName) throws IOException {
         getConfig().set("Thirst" + DOT + playerName, getThirst(playerName));
-        getConfig().save(file);
+        reload();
     }
 
     public static void reload() {

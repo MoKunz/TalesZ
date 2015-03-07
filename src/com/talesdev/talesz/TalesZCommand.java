@@ -12,6 +12,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import java.io.IOException;
+
 /**
  * TalesZ Main Command
  * Created by MoKunz on 3/1/2015.
@@ -24,6 +26,13 @@ public class TalesZCommand implements CommandExecutor {
                 if (args.length > 0) {
                     if (args[0].equalsIgnoreCase("reloadThirstRule")) {
                         Thirst.getThirstRule().loadRule();
+                    } else if (args[0].equalsIgnoreCase("saveThirst")) {
+                        try {
+                            Thirst.saveAll();
+                        } catch (IOException e) {
+                            commandSender.sendMessage(ChatColor.RED + "Error while saving thirst data. Check console for more details");
+                            e.printStackTrace();
+                        }
                     } else if (args[0].equalsIgnoreCase("getThirstRule")) {
                         try {
                             Biome biome = Biome.valueOf(args[1]);

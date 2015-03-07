@@ -43,6 +43,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerRespawnListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
         getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
+        getServer().getPluginManager().registerEvents(new BlockPlaceListener(), this);
         getServer().getPluginManager().registerEvents(new DrinkingListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerExpChangeListener(), this);
         getServer().getPluginManager().registerEvents(new CreatureSpawnListener(), this);
@@ -51,8 +52,8 @@ public class Main extends JavaPlugin {
         // world system
         BlockRuleManager.start();
         BlockRuleManager.readConfigFile();
-        // thirst rule
-        Thirst.getThirstRule().loadRule();
+        // thirst , thirst rule
+        Thirst.start();
         // enabled
         getLogger().info("TalesZ has been enabled!");
     }
@@ -64,6 +65,8 @@ public class Main extends JavaPlugin {
         // cancel task
         cancelTask();
         // save data to disk
+        // *** thirst rule save method MUST BE CALLED BEFORE Thirst.saveAll() ***
+        Thirst.getThirstRule().saveRule();
         try {
             Thirst.saveAll();
         } catch (IOException e) {
@@ -72,8 +75,6 @@ public class Main extends JavaPlugin {
         }
         // save block rule
         BlockRuleManager.saveConfigFile();
-        // save thirst rule
-        Thirst.getThirstRule().saveRule();
         // disabled
         getLogger().info("TalesZ has been disabled!");
     }
