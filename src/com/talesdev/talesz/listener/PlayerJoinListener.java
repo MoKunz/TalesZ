@@ -20,7 +20,7 @@ import java.util.logging.Level;
  */
 public class PlayerJoinListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onJoin(PlayerJoinEvent event){
+    public void onJoin(PlayerJoinEvent event) {
         event.getPlayer().setGameMode(GameMode.SURVIVAL);
         Thirst.registerNewPlayer(event.getPlayer().getName());
         if (Thirst.thirstDataExist(event.getPlayer().getName())) {
@@ -28,15 +28,16 @@ public class PlayerJoinListener implements Listener {
         }
         Thirst.updateExpBar(event.getPlayer());
     }
+
     @EventHandler
-    public void onDisconnect(PlayerQuitEvent event){
+    public void onDisconnect(PlayerQuitEvent event) {
         // cancel queued effect
         PlayerTaskManager.getPlayerTask(event.getPlayer()).cancel("Sugar");
         // save to disk
         try {
             Thirst.saveDataToDisk(event.getPlayer().getName());
         } catch (IOException e) {
-            Main.getPlugin().getLogger().log(Level.WARNING,"Unable to save data to disk!");
+            Main.getPlugin().getLogger().log(Level.WARNING, "Unable to save data to disk!");
             e.printStackTrace();
         }
         ThirstDamage.removeFromList(event.getPlayer().getName());

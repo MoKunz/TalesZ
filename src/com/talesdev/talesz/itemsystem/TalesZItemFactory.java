@@ -12,31 +12,33 @@ import org.bukkit.material.MaterialData;
 public class TalesZItemFactory {
     /**
      * Create A new TalesZItem from itemsystem registry
+     *
      * @param itemName name of the itemsystem
      * @return ItemStack or null if itemName is not found in the registry
      */
-    public static ItemStack createItem(String itemName){
+    public static ItemStack createItem(String itemName) {
         TalesZItem item = TalesZItemRegistry.getTalesZItem(itemName);
-        if(item == null){
+        if (item == null) {
             return new ItemStack(Material.AIR);
         }
-        ItemStack itemStack =  new ItemStack(item.getType());
+        ItemStack itemStack = new ItemStack(item.getType());
         itemStack.setDurability(item.getDurability());
         ItemMeta itemMeta = item.configItemMeta(itemStack.getItemMeta());
         MaterialData itemData = item.configMaterialData(itemStack.getData());
-        if(itemMeta != null){
+        if (itemMeta != null) {
             itemStack.setItemMeta(itemMeta);
         }
-        if(itemData != null){
+        if (itemData != null) {
             itemStack.setData(itemData);
         }
         return itemStack;
     }
-    public static TalesZItem getTalesZItemFromItemStack(ItemStack itemStack){
-        if(itemStack == null){
+
+    public static TalesZItem getTalesZItemFromItemStack(ItemStack itemStack) {
+        if (itemStack == null) {
             return null;
         }
-        for(TalesZItem item : TalesZItemRegistry.getAllTalesZItem()) {
+        for (TalesZItem item : TalesZItemRegistry.getAllTalesZItem()) {
             if (item.compare(itemStack)) {
                 return item;
             }

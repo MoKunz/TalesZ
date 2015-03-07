@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class IronDoorUtil {
     private static ArrayList<BukkitTask> task = new ArrayList<>();
+
     public static void open(Block block) {
         if (block.getType() == Material.IRON_DOOR_BLOCK) {
             Block ironDoorBlock;

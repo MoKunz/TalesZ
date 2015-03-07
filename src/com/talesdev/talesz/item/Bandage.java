@@ -23,7 +23,7 @@ import org.bukkit.material.MaterialData;
  * Bandage
  * Created by MoKunz on 2/27/2015.
  */
-public class Bandage implements TalesZToolItem{
+public class Bandage implements TalesZToolItem {
     @Override
     public void handleEvent(BlockBreakEvent event) {
 
@@ -93,7 +93,7 @@ public class Bandage implements TalesZToolItem{
 
     @Override
     public void handleEvent(EntityDamageByEntityEvent event) {
-        if(event.getEntity() instanceof Player){
+        if (event.getEntity() instanceof Player) {
             event.setCancelled(true);
             Player p = (Player) event.getEntity();
             heal(p);
@@ -102,8 +102,8 @@ public class Bandage implements TalesZToolItem{
 
     @Override
     public boolean compare(ItemStack itemStack) {
-        if(itemStack.hasItemMeta()){
-            if(itemStack.getItemMeta().hasDisplayName()){
+        if (itemStack.hasItemMeta()) {
+            if (itemStack.getItemMeta().hasDisplayName()) {
                 if (ChatColor.stripColor(itemStack.getItemMeta().getDisplayName()).equals("Bandage")) {
                     return true;
                 }
@@ -111,12 +111,12 @@ public class Bandage implements TalesZToolItem{
         }
         return false;
     }
-    private void heal(Player player){
-        if(Bleeding.isBleeding(player.getName())){
+
+    private void heal(Player player) {
+        if (Bleeding.isBleeding(player.getName())) {
             Bleeding.removeBleedingPlayer(player.getName());
             TalesZItemUtil.heal(player, 1);
-        }
-        else{
+        } else {
             TalesZItemUtil.heal(player, 2);
         }
     }

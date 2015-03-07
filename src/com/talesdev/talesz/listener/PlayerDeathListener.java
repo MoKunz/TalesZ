@@ -17,7 +17,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
  */
 public class PlayerDeathListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onDeath(PlayerDeathEvent event){
+    public void onDeath(PlayerDeathEvent event) {
         PlayerTaskManager.getPlayerTask(event.getEntity()).cancel("Sugar");
         Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
             @Override

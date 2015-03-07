@@ -31,15 +31,16 @@ public class Thirst {
      * String : player name
      * Integer : thirst value
      */
-    protected static HashMap<String,Integer> thirst;
-    static{
+    protected static HashMap<String, Integer> thirst;
+
+    static {
         // create file and directory
         dir = new File("plugins/TalesZ");
-        if(!dir.exists()){
+        if (!dir.exists()) {
             dir.mkdirs();
         }
         file = new File("plugins/TalesZ/thirst.yml");
-        if(!file.exists()){
+        if (!file.exists()) {
             try {
                 file.createNewFile();
             } catch (IOException e) {
@@ -54,8 +55,8 @@ public class Thirst {
             e.printStackTrace();
         }
         // create if not exist
-        if(!configuration.isSet("Thirst")){
-            configuration.set("Thirst",null);
+        if (!configuration.isSet("Thirst")) {
+            configuration.set("Thirst", null);
         }
         // create new hash map
         thirst = new HashMap<>();
@@ -63,43 +64,49 @@ public class Thirst {
         thirstRule = new ThirstRule();
         thirstRule.loadRule();
     }
-    public static void registerNewPlayer(String player){
+
+    public static void registerNewPlayer(String player) {
         if (!thirst.containsKey(player)) {
             resetThirst(player);
         }
     }
-    public static void unregisterPlayer(String player){
-        if(thirst.containsKey(player)){
+
+    public static void unregisterPlayer(String player) {
+        if (thirst.containsKey(player)) {
             thirst.remove(player);
         }
     }
-    public static void setThirst(String player,int value){
+
+    public static void setThirst(String player, int value) {
         // prevent overflow
-        if(value <= FULL_THIRST && value > 0){
+        if (value <= FULL_THIRST && value > 0) {
             ThirstDamage.removeFromList(player);
             thirst.put(player, value);
-        }
-        else{
+        } else {
             ThirstDamage.addToList(player);
-            thirst.put(player,0);
+            thirst.put(player, 0);
         }
     }
-    public static int getThirst(String player){
+
+    public static int getThirst(String player) {
         if (thirst.get(player) == null) {
             return 0;
         }
         return thirst.get(player);
     }
-    public static void resetThirst(String player){
+
+    public static void resetThirst(String player) {
         ThirstDamage.removeFromList(player);
         // reset to full thirst
         setThirst(player, FULL_THIRST);
     }
-    public static void updateAll(){
+
+    public static void updateAll() {
         thirst.keySet().forEach(com.talesdev.talesz.thirst.Thirst::updatePlayer);
     }
-    public static void updatePlayer(String player){
-        try{
+
+    public static void updatePlayer(String player) {
+        try {
             Player p = Bukkit.getPlayer(player);
             // get biome data
             Location loc = p.getLocation();
@@ -108,29 +115,33 @@ public class Thirst {
             // update data
             setThirst(player, getThirst(player) - getThirstRule().getRule(biome));
             // update bar
-            ExpBarUtil.apply(p, p.getLevel(), (double)getThirst(player));
-        }
-        catch(Exception e){
-            Main.getPlugin().getLogger().log(Level.WARNING,"Thirst system encountered a problem while updating thirst of \""+player+"\" !");
+            ExpBarUtil.apply(p, p.getLevel(), (double) getThirst(player));
+        } catch (Exception e) {
+            Main.getPlugin().getLogger().log(Level.WARNING, "Thirst system encountered a problem while updating thirst of \"" + player + "\" !");
             e.printStackTrace();
         }
     }
-    public static void updateExpBar(Player p){
-        ExpBarUtil.apply(p,p.getLevel(),(double) Thirst.getThirst(p.getName()));
+
+    public static void updateExpBar(Player p) {
+        ExpBarUtil.apply(p, p.getLevel(), (double) Thirst.getThirst(p.getName()));
     }
-    public static YamlConfiguration getConfig(){
+
+    public static YamlConfiguration getConfig() {
         return configuration;
     }
+
     public static void saveAll() throws IOException {
-        for(String playerName : thirst.keySet()){
+        for (String playerName : thirst.keySet()) {
             saveDataToDisk(playerName);
         }
     }
+
     public static void saveDataToDisk(String playerName) throws IOException {
-        getConfig().set("Thirst" + DOT + playerName,getThirst(playerName));
+        getConfig().set("Thirst" + DOT + playerName, getThirst(playerName));
         getConfig().save(file);
     }
-    public static void reload(){
+
+    public static void reload() {
         try {
             getConfig().save(file);
         } catch (IOException e) {
@@ -142,14 +153,16 @@ public class Thirst {
             e.printStackTrace();
         }
     }
-    public static void loadData(String playerName){
+
+    public static void loadData(String playerName) {
         int thirst = getConfig().getInt("Thirst" + DOT + playerName);
-        setThirst(playerName,thirst);
+        setThirst(playerName, thirst);
     }
 
     public static boolean thirstDataExist(String playerName) {
         return getConfig().isSet("Thirst" + DOT + playerName);
     }
+
     public static ThirstRule getThirstRule() {
         return thirstRule;
     }

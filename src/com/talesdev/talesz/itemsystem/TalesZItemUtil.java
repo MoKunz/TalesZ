@@ -19,9 +19,17 @@ public class TalesZItemUtil {
         }
     }
 
+    public static boolean isValidMaterialString(String material) {
+        if (Material.getMaterial(material) != null) {
+            return true;
+        }
+        return false;
+    }
+
     public static boolean isActionRightClick(Action action) {
         return action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK);
     }
+
     public static void heal(Player player, double amount) {
         Bleeding.removeBleedingPlayer(player.getName());
         if (player.getHealth() + amount <= player.getMaxHealth()) {

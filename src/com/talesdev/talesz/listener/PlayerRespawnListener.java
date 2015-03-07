@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
  */
 public class PlayerRespawnListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onRespawn(PlayerRespawnEvent event){
+    public void onRespawn(PlayerRespawnEvent event) {
         PlayerTaskManager.getPlayerTask(event.getPlayer()).cancel("Sugar");
         Bleeding.removeBleedingPlayer(event.getPlayer().getName());
         ThirstDamage.removeFromList(event.getPlayer().getName());

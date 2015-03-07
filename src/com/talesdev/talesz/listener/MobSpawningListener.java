@@ -11,7 +11,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
  */
 public class MobSpawningListener implements Listener {
     @EventHandler
-    public void onMobSpawn(CreatureSpawnEvent event){
+    public void onMobSpawn(CreatureSpawnEvent event) {
         LivingEntity entity = event.getEntity();
     }
 }

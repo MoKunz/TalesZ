@@ -1,5 +1,6 @@
 package com.talesdev.talesz.listener;
 
+import com.talesdev.talesz.world.BlockRuleManager;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -21,6 +22,10 @@ public class BlockBreakListener implements Listener {
         }
         Block block = event.getBlock();
         ItemStack itemStack = event.getPlayer().getItemInHand();
+        // restrict block
+        if (!BlockRuleManager.isBreakable(block.getType())) {
+            event.setCancelled(true);
+        }
         // restrict item
         if (isRestrictedBlockType(RestrictedBlock.HOE, block)) {
             if (!itemStack.getType().equals(Material.WOOD_HOE)) {

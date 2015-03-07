@@ -11,6 +11,7 @@ import com.talesdev.talesz.listener.*;
 import com.talesdev.talesz.thirst.Thirst;
 import com.talesdev.talesz.thirst.ThirstDamageTask;
 import com.talesdev.talesz.thirst.ThirstUpdateTask;
+import com.talesdev.talesz.world.BlockRuleManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -47,6 +48,11 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CreatureSpawnListener(), this);
         // init item
         initItem();
+        // world system
+        BlockRuleManager.start();
+        BlockRuleManager.readConfigFile();
+        // thirst rule
+        Thirst.getThirstRule().loadRule();
         // enabled
         getLogger().info("TalesZ has been enabled!");
     }
@@ -64,6 +70,10 @@ public class Main extends JavaPlugin {
             getLogger().log(Level.SEVERE, "Unable to save thirst data to disk!");
             e.printStackTrace();
         }
+        // save block rule
+        BlockRuleManager.saveConfigFile();
+        // save thirst rule
+        Thirst.getThirstRule().saveRule();
         // disabled
         getLogger().info("TalesZ has been disabled!");
     }

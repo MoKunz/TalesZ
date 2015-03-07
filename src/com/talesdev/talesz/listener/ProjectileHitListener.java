@@ -11,11 +11,12 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
  */
 public class ProjectileHitListener implements Listener {
     @EventHandler
-    public void onProjectileLaunch(ProjectileLaunchEvent event){
+    public void onProjectileLaunch(ProjectileLaunchEvent event) {
 
     }
+
     @EventHandler
-    public void onProjectileHit(ProjectileHitEvent event){
+    public void onProjectileHit(ProjectileHitEvent event) {
 
     }
 }

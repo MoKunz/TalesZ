@@ -13,10 +13,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 
 /**
- *
  * Created by MoKunz on 2/27/2015.
  */
-public class EnderPearl implements TalesZWeaponsItem{
+public class EnderPearl implements TalesZWeaponsItem {
     @Override
     public void handleEvent(EntityDamageByEntityEvent event) {
 

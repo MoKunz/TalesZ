@@ -17,18 +17,29 @@ import org.bukkit.material.MaterialData;
  */
 public interface TalesZItem {
     public String getName();
+
     public Material getType();
+
     public int getAmount();
 
     public short getDurability();
+
     public ItemMeta configItemMeta(ItemMeta itemMeta);
+
     public MaterialData configMaterialData(MaterialData materialData);
+
     //public Class<? extends ItemMeta> getItemMetaType();
     public void handleEvent(InventoryClickEvent event);
+
     public void handleEvent(PlayerInteractEntityEvent event);
+
     public void handleEvent(PlayerInteractEvent event);
+
     public void handleEvent(PlayerItemConsumeEvent event);
+
     public void handleEvent(PlayerDropItemEvent event);
+
     public void handleEvent(EntityDamageByEntityEvent event);
+
     public boolean compare(ItemStack itemStack);
 }

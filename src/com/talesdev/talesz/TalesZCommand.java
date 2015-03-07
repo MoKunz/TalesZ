@@ -1,8 +1,12 @@
 package com.talesdev.talesz;
 
+import com.talesdev.talesz.itemsystem.TalesZItemUtil;
 import com.talesdev.talesz.thirst.Thirst;
 import com.talesdev.talesz.thirst.ThirstDamage;
+import com.talesdev.talesz.world.BlockRule;
+import com.talesdev.talesz.world.BlockRuleManager;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -39,9 +43,47 @@ public class TalesZCommand implements CommandExecutor {
                         }
                     } else if (args[0].equalsIgnoreCase("clearThirstDamage")) {
                         ThirstDamage.clear();
+                    } else if (args[0].equalsIgnoreCase("BlockRule")) {
+                        if (args.length > 2) {
+                            if (args[1].equalsIgnoreCase("get") || args[1].equalsIgnoreCase("set")) {
+                                if (TalesZItemUtil.isValidMaterialString(args[2].toUpperCase())) {
+                                    if (args[1].equalsIgnoreCase("get")) {
+                                        commandSender.sendMessage(ChatColor.YELLOW + "Block rule of " + args[2].toUpperCase());
+                                        commandSender.sendMessage(ChatColor.BLUE + "Breaking : " + ChatColor.GREEN + BlockRuleManager.getBreakingRule(Material.getMaterial(args[2].toUpperCase())).toString());
+                                        commandSender.sendMessage(ChatColor.BLUE + "Placing : " + ChatColor.GREEN + BlockRuleManager.getPlacingRule(Material.getMaterial(args[2].toUpperCase())).toString());
+                                    } else if (args[1].equalsIgnoreCase("set") && args.length > 4) {
+                                        if (args[4].equalsIgnoreCase("allow") || args[4].equalsIgnoreCase("deny")) {
+                                            if (args[3].equalsIgnoreCase("breaking")) {
+                                                BlockRuleManager.setBreakingRule(Material.getMaterial(args[2].toUpperCase()), BlockRule.valueOf(args[4].toUpperCase()));
+                                            } else if (args[3].equalsIgnoreCase("placing")) {
+                                                BlockRuleManager.setPlacingRule(Material.getMaterial(args[2].toUpperCase()), BlockRule.valueOf(args[4].toUpperCase()));
+                                            } else {
+                                                commandSender.sendMessage(ChatColor.RED + "Error : Expected argument to be placing or breaking but found \"" + args[3] + "\"!");
+                                            }
+                                        } else {
+                                            commandSender.sendMessage(ChatColor.RED + "Error : Expected argument to be ALLOW or DENY but found \"" + args[4] + "\"!");
+
+                                        }
+                                    }
+                                } else {
+                                    commandSender.sendMessage(ChatColor.RED + "Error : Material \"" + args[2] + "\" not found!");
+                                }
+                            } else {
+                                commandSender.sendMessage(ChatColor.RED + "Error : Invalid arguments.");
+                            }
+                        } else if (args[1].equalsIgnoreCase("load")) {
+                            commandSender.sendMessage(ChatColor.GREEN + "BlockRule Config file reloaded.");
+                            BlockRuleManager.readConfigFile();
+                        } else if (args[1].equalsIgnoreCase("save")) {
+                            BlockRuleManager.saveConfigFile();
+                            commandSender.sendMessage(ChatColor.GREEN + "BlockRule Config file saved.");
+                        } else {
+                            commandSender.sendMessage(ChatColor.RED + "Error : Invalid arguments.");
+                        }
                     } else {
                         commandSender.sendMessage(ChatColor.YELLOW + command.getUsage());
                     }
+
                 } else {
                     commandSender.sendMessage(ChatColor.YELLOW + command.getDescription());
                 }

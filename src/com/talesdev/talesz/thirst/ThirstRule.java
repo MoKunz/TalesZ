@@ -7,7 +7,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Thirst Rule
@@ -53,22 +52,28 @@ public class ThirstRule {
         // set default if not exist
 //        if (!configuration.isSet(THIRST_RULE)) {
 //            configuration.set(THIRST_RULE, null);
-            if (!configuration.isSet(THIRST_RULE + DOT + DEFAULT_BIOME)) {
-                configuration.set(THIRST_RULE + DOT + DEFAULT_BIOME, 9);
-            }
-            List<String> biomeList = configuration.getStringList(THIRST_RULE);
-            // begin reading
-            System.out.println("[ThirstSystem] Reading thirst rule from " + ruleFileName);
-            if (biomeList != null) {
-                for (String biomeName : biomeList) {
-                    if (!biomeName.equals(DEFAULT_BIOME)) {
-                        setRule(Biome.valueOf(biomeName.toUpperCase()), configuration.getInt(THIRST_RULE + DOT + Biome.valueOf(biomeName.toUpperCase())));
+        if (!configuration.isSet(THIRST_RULE + DOT + DEFAULT_BIOME)) {
+            configuration.set(THIRST_RULE + DOT + DEFAULT_BIOME, 9);
+        }
+        Biome[] biomeList = Biome.values();
+        // begin reading
+        System.out.println("[ThirstSystem] Reading thirst rule from " + ruleFileName);
+        if (biomeList != null) {
+            for (Biome biomeName : biomeList) {
+                if (!biomeName.toString().equals(DEFAULT_BIOME)) {
+                    String path = THIRST_RULE + DOT + Biome.valueOf(biomeName.toString().toUpperCase());
+                    if (configuration.getInt(path) > 0) {
+                        setRule(Biome.valueOf(biomeName.toString().toUpperCase()), configuration.getInt(path));
                     } else {
-                        defaultRule = configuration.getInt(THIRST_RULE + DOT + DEFAULT_BIOME);
+                        setRule(Biome.valueOf(biomeName.toString().toUpperCase()), configuration.getInt(THIRST_RULE + DOT + DEFAULT_BIOME));
                     }
+
+                } else {
+                    defaultRule = configuration.getInt(THIRST_RULE + DOT + DEFAULT_BIOME);
                 }
             }
-            System.out.println("[ThirstSystem] Completed!");
+        }
+        System.out.println("[ThirstSystem] Completed!");
         //}
     }
 

@@ -18,7 +18,7 @@ commands:
         permission-message: "§4You don't have permission to use this command."
     talesz:
         description: "TalesZ(MineZ) - A multiplayer zombie survival plugin system.\nAuthor : MoKunz (talesdev.com)"
-        usage: "/talesz spawnItem <player> <itemName>"
+        usage: "/talesz <subcommand> <args>"
         permission: talesz.command.talesz
         permission-message: "§4You don't have permission to use this command."
     taleszitem:
