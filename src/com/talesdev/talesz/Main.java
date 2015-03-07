@@ -39,7 +39,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new TalesZItemListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new ExpListener(), this);
-        getServer().getPluginManager().registerEvents(new PotionDrinkingListener(), this);
+        getServer().getPluginManager().registerEvents(new ItemConsumeListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerRespawnListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
         getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);

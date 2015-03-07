@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
  * Item Listener
  * Created by MoKunz on 2/14/2015.
  */
-public class PotionDrinkingListener implements Listener {
+public class ItemConsumeListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onDrink(PlayerItemConsumeEvent event) {
         Material material = event.getItem().getType();
@@ -30,5 +30,11 @@ public class PotionDrinkingListener implements Listener {
                 });
             }
         }
+        // thirst food
+        Thirst.setThirst(
+                event.getPlayer().getName(), Thirst.getThirst(event.getPlayer().getName()) -
+                        Thirst.getThirstRule().getFoodRule(material)
+        );
+        Thirst.updateExpBar(event.getPlayer());
     }
 }

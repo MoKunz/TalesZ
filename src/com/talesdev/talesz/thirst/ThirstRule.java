@@ -1,5 +1,6 @@
 package com.talesdev.talesz.thirst;
 
+import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -15,8 +16,10 @@ import java.util.HashMap;
 public class ThirstRule {
     // constant
     private final String THIRST_RULE = "ThirstRule";
+    private final String FOOD_RULE = "FoodRule";
     private final String DOT = ".";
     private final String DEFAULT_BIOME = "DEFAULT";
+    private final String DEFAULT_FOOD = "DefaultFoodRule";
     // config file
     private YamlConfiguration configuration;
     // Biome
@@ -24,6 +27,7 @@ public class ThirstRule {
     private int defaultBiomeRule = 1;
     // Food
     private int defaultFoodRule = 0;
+    private HashMap<Material, Integer> foodRuleList = new HashMap<>();
 
     public void setBiomeRule(Biome biome, int value) {
         biomeRuleList.put(biome, value);
@@ -53,9 +57,17 @@ public class ThirstRule {
         defaultFoodRule = value;
     }
 
-    public void getFoodRule() {
-
+    public int getFoodRule(Material food) {
+        if (!foodRuleList.containsKey(food)) {
+            foodRuleList.put(food, readFoodRule(food));
+        }
+        return foodRuleList.get(food);
     }
+
+    public void setFoodRule(Material food, int value) {
+        foodRuleList.put(food, value);
+    }
+
     public void loadRule(String ruleFileName) {
         // load file
         System.out.println("[ThirstSystem] Loading thirst rule from " + ruleFileName);
@@ -70,10 +82,8 @@ public class ThirstRule {
             e.printStackTrace();
         }
         // set default if not exist
-//        if (!configuration.isSet(THIRST_RULE)) {
-//            configuration.set(THIRST_RULE, null);
         if (!configuration.isSet(THIRST_RULE + DOT + DEFAULT_BIOME)) {
-            configuration.set(THIRST_RULE + DOT + DEFAULT_BIOME, 9);
+            configuration.set(THIRST_RULE + DOT + DEFAULT_BIOME, defaultBiomeRule);
         }
         Biome[] biomeList = Biome.values();
         // begin reading
@@ -93,16 +103,32 @@ public class ThirstRule {
                 }
             }
         }
+        // begin food reading
+        if (!configuration.isSet(DEFAULT_FOOD)) {
+            configuration.set(DEFAULT_FOOD, defaultFoodRule);
+        }
+        // don't read until require
         System.out.println("[ThirstSystem] Completed!");
-        //}
     }
 
+    public int readFoodRule(Material material) {
+        if (configuration.isSet(FOOD_RULE + DOT + material.toString())) {
+            return configuration.getInt(FOOD_RULE + DOT + material.toString());
+        } else {
+            return defaultFoodRule;
+        }
+    }
     public void saveRule(String ruleFileName) {
         // save to configuration object
         for (Biome biome : biomeRuleList.keySet()) {
             configuration.set(THIRST_RULE + DOT + biome.toString(), biomeRuleList.get(biome));
         }
         configuration.set(THIRST_RULE + DOT + DEFAULT_BIOME, defaultBiomeRule);
+        // save foos
+        for (Material material : foodRuleList.keySet()) {
+            configuration.set(FOOD_RULE + DOT + material.toString(), foodRuleList.get(material));
+        }
+        configuration.set(DEFAULT_FOOD, defaultFoodRule);
         // save to file
         try {
             configuration.save(new File("plugins/TalesZ/" + ruleFileName));

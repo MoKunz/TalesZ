@@ -51,6 +51,25 @@ public class TalesZCommand implements CommandExecutor {
                         }
                     } else if (args[0].equalsIgnoreCase("clearThirstDamage")) {
                         ThirstDamage.clear();
+                    } else if (args[0].equalsIgnoreCase("FoodRule")) {
+                        if (args.length > 1) {
+                            if (TalesZItemUtil.isValidMaterialString(args[1].toUpperCase())) {
+                                if (args.length > 2) {
+                                    try {
+                                        Thirst.getThirstRule().setFoodRule(Material.getMaterial(args[1].toUpperCase()), Integer.parseInt(args[2]));
+                                        commandSender.sendMessage(ChatColor.GREEN + "Food \"" + args[1].toUpperCase() + "\" set!");
+                                    } catch (NumberFormatException ignored) {
+                                        commandSender.sendMessage(ChatColor.RED + "Error : Invalid number format!");
+                                    }
+                                } else {
+                                    commandSender.sendMessage(ChatColor.YELLOW + "Food \"" + args[1].toUpperCase() + "\" : " + Thirst.getThirstRule().getFoodRule(Material.getMaterial(args[1].toUpperCase())));
+                                }
+                            } else {
+                                commandSender.sendMessage(ChatColor.RED + "Error : Material \"" + args[1] + "\" not found!");
+                            }
+                        } else {
+                            commandSender.sendMessage(ChatColor.RED + "Error : Too few arguments.");
+                        }
                     } else if (args[0].equalsIgnoreCase("Rule")) {
                         if (args.length > 2) {
                             if (args[1].equalsIgnoreCase("get") || args[1].equalsIgnoreCase("set")) {
