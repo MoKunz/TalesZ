@@ -18,6 +18,9 @@ public enum Rule {
     }
 
     public static Rule getRule(String ruleString) {
+        if (ruleString == null) {
+            return Rule.DENY;
+        }
         if (ruleString.equalsIgnoreCase("alllow")) {
             return Rule.ALLOW;
         } else if (ruleString.equalsIgnoreCase("deny")) {

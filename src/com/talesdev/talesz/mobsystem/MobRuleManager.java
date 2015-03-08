@@ -58,6 +58,14 @@ public class MobRuleManager {
         }
     }
 
+    public static Rule readMobRule(EntityType mob) {
+        if (configuration.getString("Mob" + "." + mob.toString()) != null) {
+            return Rule.getRule(configuration.getString("Mob" + "." + mob.toString()).toUpperCase());
+        } else {
+            return Rule.DENY;
+        }
+    }
+
     public static void saveRule() {
         // save to config object
         for (EntityType type : mobRule.keySet()) {
