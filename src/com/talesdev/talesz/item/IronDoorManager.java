@@ -19,7 +19,7 @@ public class IronDoorManager {
      * @param block A bottom iron door block
      */
     public static void addToQueue(Block block) {
-        ironDoorHashMap.put(block, 60);
+        ironDoorHashMap.put(block, 10);
     }
 
     /**
