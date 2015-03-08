@@ -8,6 +8,7 @@ import com.talesdev.talesz.itemsystem.TalesZItemCommand;
 import com.talesdev.talesz.itemsystem.TalesZItemListener;
 import com.talesdev.talesz.itemsystem.TalesZItemRegistry;
 import com.talesdev.talesz.listener.*;
+import com.talesdev.talesz.mobsystem.MobRuleManager;
 import com.talesdev.talesz.thirst.Thirst;
 import com.talesdev.talesz.thirst.ThirstDamageTask;
 import com.talesdev.talesz.thirst.ThirstUpdateTask;
@@ -54,7 +55,8 @@ public class Main extends JavaPlugin {
         BlockRuleManager.readConfigFile();
         // thirst , thirst rule
         Thirst.start();
-        // enabled
+        // mob
+        MobRuleManager.start();
         getLogger().info("TalesZ has been enabled!");
     }
 
@@ -75,6 +77,8 @@ public class Main extends JavaPlugin {
         }
         // save block rule
         BlockRuleManager.saveConfigFile();
+        // save mob rule
+        MobRuleManager.saveConfigFile();
         // disabled
         getLogger().info("TalesZ has been disabled!");
     }

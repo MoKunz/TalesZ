@@ -43,6 +43,12 @@ public class TalesZItemUtil {
         return false;
     }
 
+    public static boolean isValidRuleString(String rule) {
+        if (rule.toUpperCase().equalsIgnoreCase("allow") || rule.toUpperCase().equalsIgnoreCase("deny")) {
+            return true;
+        }
+        return false;
+    }
     public static boolean isActionRightClick(Action action) {
         return action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK);
     }

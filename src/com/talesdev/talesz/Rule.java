@@ -16,4 +16,14 @@ public enum Rule {
     public boolean getResult() {
         return result;
     }
+
+    public static Rule getRule(String ruleString) {
+        if (ruleString.equalsIgnoreCase("alllow")) {
+            return Rule.ALLOW;
+        } else if (ruleString.equalsIgnoreCase("deny")) {
+            return Rule.DENY;
+        } else {
+            return Rule.DENY;
+        }
+    }
 }
