@@ -51,6 +51,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DrinkingListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerExpChangeListener(), this);
         getServer().getPluginManager().registerEvents(new CreatureSpawnListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
         // init item
         initItem();
         // world system

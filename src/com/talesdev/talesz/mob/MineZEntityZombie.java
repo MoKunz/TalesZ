@@ -19,7 +19,6 @@ public class MineZEntityZombie extends EntityZombie {
 
     @Override
     public boolean bQ() {
-        System.out.println("Test NMS Zombie X : " + this.locX + " Y : " + this.locY + " Z : " + this.locZ);
         return true;
     }
 }

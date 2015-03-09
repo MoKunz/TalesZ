@@ -55,14 +55,17 @@ public class TalesZItemUtil {
         return action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK);
     }
 
-    public static void heal(Player player, double amount) {
-        Bleeding.removeBleedingPlayer(player.getName());
+    public static void heal(Player player, double amount, boolean removeBleeding) {
+        if (removeBleeding) Bleeding.removeBleedingPlayer(player.getName());
         if (player.getHealth() + amount <= player.getMaxHealth()) {
             player.setHealth(player.getHealth() + amount);
         } else {
             player.setHealth(player.getMaxHealth());
         }
+    }
 
+    public static void heal(Player player, double amount) {
+        heal(player, amount, true);
     }
 
     public static ItemStack setMaxStackSize(ItemStack itemStack, int maxStackSize) {

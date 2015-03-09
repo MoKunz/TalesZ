@@ -44,7 +44,7 @@ public class ItemConsumeListener implements Listener {
             Thirst.updateExpBar(event.getPlayer());
             // except rotten flesh and spider eye
             if (!(material.equals(Material.ROTTEN_FLESH) || material.equals(Material.SPIDER_EYE))) {
-                TalesZItemUtil.heal(event.getPlayer(), 1.0);
+                TalesZItemUtil.heal(event.getPlayer(), 1.0, false);
             }
         }
     }

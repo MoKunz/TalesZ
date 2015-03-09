@@ -21,12 +21,9 @@ public class Bleeding {
     public static void addBleedingPlayer(String player) {
         if (!bleedingPlayer.contains(player)) {
             bleedingPlayer.add(player);
-            Bukkit.getScheduler().runTaskLater(Main.getPlugin(), new Runnable() {
-                @Override
-                public void run() {
-                    if (Bukkit.getPlayer(player) != null) {
-                        Bukkit.getPlayer(player).sendMessage(ChatColor.RED + "You are now bleeding. Hurry up and find some bandage to stop bleeding!");
-                    }
+            Bukkit.getScheduler().runTaskLater(Main.getPlugin(), () -> {
+                if (Bukkit.getPlayer(player) != null && isBleeding(player)) {
+                    Bukkit.getPlayer(player).sendMessage(ChatColor.RED + "You are now bleeding. Hurry up and find some bandage to stop bleeding!");
                 }
             }, 50L);
         }
