@@ -16,4 +16,10 @@ public class MineZEntityZombie extends EntityZombie {
     protected boolean m_() {
         return true;
     }
+
+    @Override
+    public boolean bQ() {
+        System.out.println("Test NMS Zombie X : " + this.locX + " Y : " + this.locY + " Z : " + this.locZ);
+        return true;
+    }
 }

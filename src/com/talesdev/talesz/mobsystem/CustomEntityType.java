@@ -51,20 +51,22 @@ public enum CustomEntityType {
      * Register our entities.
      */
     public static void registerEntities() {
-        for (CustomEntityType entity : values())
+        for (CustomEntityType entity : values()) {
             a(entity.getCustomClass(), entity.getName(), entity.getID());
-
-// BiomeBase#biomes became private.
+        }
         BiomeBase[] biomes;
         try {
             biomes = (BiomeBase[]) getPrivateStatic(BiomeBase.class, "biomes");
-        } catch (Exception exc) {
-// Unable to fetch.
+        } catch (Exception e) {
             return;
         }
         for (BiomeBase biomeBase : biomes) {
-            if (biomeBase == null)
+            if (biomeBase == null) {
                 break;
+            }
+            if (biomeBase.equals(BiomeBase.HELL)) {
+                continue;
+            }
             // 1.8 field name
             for (String field : new String[]{"aw", "at", "au", "av"})
                 try {
@@ -90,13 +92,13 @@ public enum CustomEntityType {
         for (CustomEntityType entity : values()) {
 // Remove our class references.
             try {
-                ((Map) getPrivateStatic(EntityTypes.class, "d")).remove(entity.getCustomClass());
+                ((Map) getPrivateStatic(EntityTypes.class, "c")).remove(entity.getCustomClass());
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
             try {
-                ((Map) getPrivateStatic(EntityTypes.class, "f")).remove(entity.getCustomClass());
+                ((Map) getPrivateStatic(EntityTypes.class, "e")).remove(entity.getCustomClass());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -121,9 +123,12 @@ public enum CustomEntityType {
         for (BiomeBase biomeBase : biomes) {
             if (biomeBase == null)
                 break;
+            if (biomeBase == BiomeBase.HELL) {
+                continue;
+            }
 
 // The list fields changed names but update the meta regardless.
-            for (String field : new String[]{"as", "at", "au", "av"})
+            for (String field : new String[]{"aw", "at", "au", "av"})
                 try {
                     Field list = BiomeBase.class.getDeclaredField(field);
                     list.setAccessible(true);
