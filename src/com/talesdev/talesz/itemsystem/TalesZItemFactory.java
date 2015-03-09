@@ -1,7 +1,5 @@
 package com.talesdev.talesz.itemsystem;
 
-import com.talesdev.talesz.ReflectionUtils;
-import me.captainbern.bukkittool.BukkitTool;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -37,31 +35,7 @@ public class TalesZItemFactory {
         if (item instanceof MaxStackableInterface) {
             // max stack size
             int maxStackSize = ((MaxStackableInterface) item).getMaxStackSize();
-            if (maxStackSize > 0) {
-                // get item stack class
-                ReflectionUtils.RefClass CBItemStackClass = ReflectionUtils.getRefClass(BukkitTool.getCBClass("inventory.CraftItemStack"));
-                ReflectionUtils.RefClass NMSItemStackClass = ReflectionUtils.getRefClass(BukkitTool.getNMSClass("ItemStack"));
-                ReflectionUtils.RefClass NMSItemClass = ReflectionUtils.getRefClass(BukkitTool.getNMSClass("Item"));
-                // get item stack method
-                ReflectionUtils.RefMethod asNMSCopy = CBItemStackClass.getMethod("asNMSCopy");
-                ReflectionUtils.RefMethod getItem = NMSItemStackClass.getMethod("getItem");
-                ReflectionUtils.RefMethod setItem = NMSItemStackClass.getMethod("setItem");
-                ReflectionUtils.RefMethod asBukkitCopy = CBItemStackClass.getMethod("asBukkitCopy");
-                // max stack field
-                ReflectionUtils.RefField maxStackSizeField = NMSItemClass.getField("maxStackSize");
-                // cb item stack -> nms item stack
-                Object nmsItemStack = asNMSCopy.of(null).call(itemStack);
-                Object nmsItem = getItem.of(nmsItemStack).call();
-                // set max stack size
-                maxStackSizeField.of(nmsItem).set(maxStackSize);
-                // set item
-                setItem.of(nmsItemStack).call(nmsItem);
-                // nms item stack -> bukkit item stack
-                Object bukkitItemStack = asBukkitCopy.of(null).call(nmsItemStack);
-                if (bukkitItemStack instanceof ItemStack) {
-                    itemStack = (ItemStack) bukkitItemStack;
-                }
-            }
+            itemStack = TalesZItemUtil.setMaxStackSize(itemStack, maxStackSize);
         }
         return itemStack;
     }

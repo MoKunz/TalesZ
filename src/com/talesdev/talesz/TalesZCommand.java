@@ -1,6 +1,7 @@
 package com.talesdev.talesz;
 
 import com.talesdev.talesz.itemsystem.TalesZItemUtil;
+import com.talesdev.talesz.mobsystem.MobRuleManager;
 import com.talesdev.talesz.thirst.Thirst;
 import com.talesdev.talesz.thirst.ThirstDamage;
 import com.talesdev.talesz.world.BlockRuleManager;
@@ -10,6 +11,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.io.IOException;
 
@@ -51,6 +53,32 @@ public class TalesZCommand implements CommandExecutor {
                         }
                     } else if (args[0].equalsIgnoreCase("clearThirstDamage")) {
                         ThirstDamage.clear();
+                    } else if (args[0].equalsIgnoreCase("reload")) {
+                        MobRuleManager.start();
+                        BlockRuleManager.readConfigFile();
+                        Thirst.getThirstRule().loadRule();
+                        commandSender.sendMessage(ChatColor.GREEN + "Config reloaded!");
+                    } else if (args[0].equalsIgnoreCase("setMaxStack")) {
+                        if (args.length > 1) {
+                            int maxStackSize = 0;
+                            try {
+                                maxStackSize = Integer.parseInt(args[1]);
+                            } catch (NumberFormatException exception) {
+                                commandSender.sendMessage(ChatColor.RED + "Error : Invalid number format");
+                                return true;
+                            }
+                            if (commandSender instanceof Player) {
+                                Player p = (Player) commandSender;
+                                if (p.getItemInHand() != null && p.getItemInHand().getType() != Material.AIR) {
+                                    p.setItemInHand(TalesZItemUtil.setMaxStackSize(p.getItemInHand(), maxStackSize));
+                                    commandSender.sendMessage(ChatColor.GREEN + "Max stack size changed to " + ChatColor.BLUE + maxStackSize);
+                                } else {
+                                    commandSender.sendMessage(ChatColor.RED + "Error : Item in the hand ");
+                                }
+                            } else {
+                                commandSender.sendMessage(ChatColor.RED + "Error : Invalid sender");
+                            }
+                        }
                     } else if (args[0].equalsIgnoreCase("FoodRule")) {
                         if (args.length > 1) {
                             if (TalesZItemUtil.isValidMaterialString(args[1].toUpperCase())) {
@@ -64,6 +92,10 @@ public class TalesZCommand implements CommandExecutor {
                                 } else {
                                     commandSender.sendMessage(ChatColor.YELLOW + "Food \"" + args[1].toUpperCase() + "\" : " + Thirst.getThirstRule().getFoodRule(Material.getMaterial(args[1].toUpperCase())));
                                 }
+                            } else if (args[1].equalsIgnoreCase("load")) {
+                                commandSender.sendMessage(ChatColor.YELLOW + "Use /talesz reloadthirstrule instead");
+                            } else if (args[1].equalsIgnoreCase("save")) {
+                                commandSender.sendMessage(ChatColor.YELLOW + "Use /talesz savethirst instead");
                             } else {
                                 commandSender.sendMessage(ChatColor.RED + "Error : Material \"" + args[1] + "\" not found!");
                             }

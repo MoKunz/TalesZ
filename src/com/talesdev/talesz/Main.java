@@ -9,6 +9,7 @@ import com.talesdev.talesz.itemsystem.TalesZItemListener;
 import com.talesdev.talesz.itemsystem.TalesZItemRegistry;
 import com.talesdev.talesz.listener.*;
 import com.talesdev.talesz.mob.MineZCustomZombie;
+import com.talesdev.talesz.mobsystem.CustomEntityType;
 import com.talesdev.talesz.mobsystem.MobDecorator;
 import com.talesdev.talesz.mobsystem.MobRuleManager;
 import com.talesdev.talesz.thirst.Thirst;
@@ -60,6 +61,8 @@ public class Main extends JavaPlugin {
         // mob
         MobRuleManager.start();
         MobDecorator.addMobDecorator(new MineZCustomZombie());
+        // nms entity override
+        CustomEntityType.registerEntities();
         getLogger().info("TalesZ has been enabled!");
     }
 
@@ -69,6 +72,8 @@ public class Main extends JavaPlugin {
         IronDoorManager.forceProcessIronDoor();
         // cancel task
         cancelTask();
+        // unregister nms override
+        CustomEntityType.unregisterEntities();
         // save data to disk
         // *** thirst rule save method MUST BE CALLED BEFORE Thirst.saveAll() ***
         Thirst.getThirstRule().saveRule();

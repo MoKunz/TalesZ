@@ -1,5 +1,8 @@
 package com.talesdev.talesz.itemsystem;
 
+import com.talesdev.talesz.Main;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,6 +13,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Listener
@@ -18,9 +22,26 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 public class TalesZItemListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        TalesZItem item = TalesZItemFactory.getTalesZItemFromItemStack(event.getCurrentItem());
-        if (item != null) {
-            item.handleEvent(event);
+        TalesZItem currentItem = TalesZItemFactory.getTalesZItemFromItemStack(event.getCurrentItem());
+        // update inventory
+        ItemStack activeItem = event.getCurrentItem();
+        if ((activeItem == null) || (activeItem.getType() == Material.AIR)) {
+            activeItem = event.getCursor();
+        }
+        if (currentItem instanceof MaxStackableInterface) {
+            if (((MaxStackableInterface) currentItem).getMaxStackSize() > 0) {
+                final Player player = Bukkit.getPlayer(event.getWhoClicked().getName());
+                Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
+                    @Override
+                    public void run() {
+                        player.updateInventory();
+                    }
+                });
+            }
+        }
+        // pass event to item class
+        if (currentItem != null) {
+            currentItem.handleEvent(event);
         }
     }
 

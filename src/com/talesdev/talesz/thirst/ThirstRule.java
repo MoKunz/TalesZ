@@ -1,5 +1,6 @@
 package com.talesdev.talesz.thirst;
 
+import com.talesdev.talesz.item.FoodComparator;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -106,6 +107,9 @@ public class ThirstRule {
         // begin food reading
         if (!configuration.isSet(DEFAULT_FOOD)) {
             configuration.set(DEFAULT_FOOD, defaultFoodRule);
+        }
+        for (Material food : FoodComparator.getAllFood()) {
+            setFoodRule(food, readFoodRule(food));
         }
         // don't read until require
         System.out.println("[ThirstSystem] Completed!");

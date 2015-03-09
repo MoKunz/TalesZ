@@ -1,6 +1,8 @@
 package com.talesdev.talesz.itemsystem;
 
+import com.talesdev.talesz.ReflectionUtils;
 import com.talesdev.talesz.bleeding.Bleeding;
+import me.captainbern.bukkittool.BukkitTool;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
@@ -63,6 +65,34 @@ public class TalesZItemUtil {
 
     }
 
+    public static ItemStack setMaxStackSize(ItemStack itemStack, int maxStackSize) {
+        if (maxStackSize > 0) {
+            // get item stack class
+            ReflectionUtils.RefClass CBItemStackClass = ReflectionUtils.getRefClass(BukkitTool.getCBClass("inventory.CraftItemStack"));
+            ReflectionUtils.RefClass NMSItemStackClass = ReflectionUtils.getRefClass(BukkitTool.getNMSClass("ItemStack"));
+            ReflectionUtils.RefClass NMSItemClass = ReflectionUtils.getRefClass(BukkitTool.getNMSClass("Item"));
+            // get item stack method
+            ReflectionUtils.RefMethod asNMSCopy = CBItemStackClass.getMethod("asNMSCopy", ItemStack.class);
+            ReflectionUtils.RefMethod getItem = NMSItemStackClass.getMethod("getItem");
+            ReflectionUtils.RefMethod setItem = NMSItemStackClass.getMethod("setItem", NMSItemClass);
+            ReflectionUtils.RefMethod asBukkitCopy = CBItemStackClass.getMethod("asBukkitCopy", NMSItemStackClass);
+            // max stack field
+            ReflectionUtils.RefField maxStackSizeField = NMSItemClass.getField("maxStackSize");
+            // cb item stack -> nms item stack
+            Object nmsItemStack = asNMSCopy.of(null).call(itemStack);
+            Object nmsItem = getItem.of(nmsItemStack).call();
+            // set max stack size
+            maxStackSizeField.of(nmsItem).set(maxStackSize);
+            // set item
+            setItem.of(nmsItemStack).call(nmsItem);
+            // nms item stack -> bukkit item stack
+            Object bukkitItemStack = asBukkitCopy.of(null).call(nmsItemStack);
+            if (bukkitItemStack instanceof ItemStack) {
+                itemStack = (ItemStack) bukkitItemStack;
+            }
+        }
+        return itemStack;
+    }
     public static MaterialComparator getRightClickableComparator() {
         return new MaterialComparator(material -> material.equals(Material.DISPENSER) ||
                 material.equals(Material.NOTE_BLOCK) ||

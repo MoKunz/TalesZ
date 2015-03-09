@@ -38,6 +38,13 @@ public class MobRuleManager {
     }
 
     public static void start() {
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         try {
             configuration.load(file);
         } catch (IOException | InvalidConfigurationException e) {
@@ -51,6 +58,7 @@ public class MobRuleManager {
         for (EntityType type : EntityType.values()) {
             if (configuration.getString("Mob" + "." + type.toString()) != null) {
                 if (TalesZItemUtil.isValidRuleString(configuration.getString("Mob" + "." + type.toString()).toUpperCase())) {
+                    //System.out.println(Rule.getRule(configuration.getString("Mob" + "." + type.toString())).toString());
                     setRule(type, Rule.getRule(configuration.getString("Mob" + "." + type.toString())));
                 }
             }
