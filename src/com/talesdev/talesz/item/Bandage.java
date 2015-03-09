@@ -1,6 +1,7 @@
 package com.talesdev.talesz.item;
 
 import com.talesdev.talesz.bleeding.Bleeding;
+import com.talesdev.talesz.itemsystem.MaxStackableInterface;
 import com.talesdev.talesz.itemsystem.TalesZItemUtil;
 import com.talesdev.talesz.itemsystem.TalesZToolItem;
 import org.bukkit.ChatColor;
@@ -22,7 +23,7 @@ import org.bukkit.material.MaterialData;
  * Bandage
  * Created by MoKunz on 2/27/2015.
  */
-public class Bandage implements TalesZToolItem {
+public class Bandage implements TalesZToolItem, MaxStackableInterface {
     @Override
     public void handleEvent(BlockBreakEvent event) {
 
@@ -123,5 +124,10 @@ public class Bandage implements TalesZToolItem {
         } else {
             TalesZItemUtil.heal(player, 2);
         }
+    }
+
+    @Override
+    public int getMaxStackSize() {
+        return 5;
     }
 }

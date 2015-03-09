@@ -21,7 +21,7 @@ public enum Rule {
         if (ruleString == null) {
             return Rule.DENY;
         }
-        if (ruleString.equalsIgnoreCase("alllow")) {
+        if (ruleString.equalsIgnoreCase("allow")) {
             return Rule.ALLOW;
         } else if (ruleString.equalsIgnoreCase("deny")) {
             return Rule.DENY;

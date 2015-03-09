@@ -44,7 +44,7 @@ public class TalesZItemUtil {
     }
 
     public static boolean isValidRuleString(String rule) {
-        if (rule.toUpperCase().equalsIgnoreCase("allow") || rule.toUpperCase().equalsIgnoreCase("deny")) {
+        if (rule.toUpperCase().equalsIgnoreCase("ALLOW") || rule.toUpperCase().equalsIgnoreCase("DENY")) {
             return true;
         }
         return false;

@@ -73,10 +73,7 @@ public class TalesZItemListener implements Listener {
             Player p = (Player) event.getDamager();
             TalesZItem item = TalesZItemFactory.getTalesZItemFromItemStack(p.getItemInHand());
             if (item != null) {
-                if (item instanceof TalesZWeaponsItem) {
-                    TalesZWeaponsItem weaponsItem = (TalesZWeaponsItem) item;
-                    weaponsItem.handleEvent(event);
-                }
+                item.handleEvent(event);
             }
         }
     }

@@ -8,6 +8,8 @@ import com.talesdev.talesz.itemsystem.TalesZItemCommand;
 import com.talesdev.talesz.itemsystem.TalesZItemListener;
 import com.talesdev.talesz.itemsystem.TalesZItemRegistry;
 import com.talesdev.talesz.listener.*;
+import com.talesdev.talesz.mob.MineZCustomZombie;
+import com.talesdev.talesz.mobsystem.MobDecorator;
 import com.talesdev.talesz.mobsystem.MobRuleManager;
 import com.talesdev.talesz.thirst.Thirst;
 import com.talesdev.talesz.thirst.ThirstDamageTask;
@@ -57,6 +59,7 @@ public class Main extends JavaPlugin {
         Thirst.start();
         // mob
         MobRuleManager.start();
+        MobDecorator.addMobDecorator(new MineZCustomZombie());
         getLogger().info("TalesZ has been enabled!");
     }
 

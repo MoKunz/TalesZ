@@ -31,11 +31,10 @@ public class MobRuleManager {
     }
 
     public static Rule getRule(EntityType type) {
-        if (mobRule.containsKey(type)) {
-            return mobRule.get(type);
-        } else {
-            return Rule.DENY;
+        if (!mobRule.containsKey(type)) {
+            setRule(type, readMobRule(type));
         }
+        return mobRule.get(type);
     }
 
     public static void start() {
