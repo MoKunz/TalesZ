@@ -24,25 +24,25 @@ public class ThirstRule {
     // config file
     private YamlConfiguration configuration;
     // Biome
-    private HashMap<Biome, Integer> biomeRuleList = new HashMap<>();
-    private int defaultBiomeRule = 1;
+    private HashMap<Biome, Double> biomeRuleList = new HashMap<>();
+    private double defaultBiomeRule = 1;
     // Food
-    private int defaultFoodRule = 0;
-    private HashMap<Material, Integer> foodRuleList = new HashMap<>();
+    private double defaultFoodRule = 0;
+    private HashMap<Material, Double> foodRuleList = new HashMap<>();
 
-    public void setBiomeRule(Biome biome, int value) {
+    public void setBiomeRule(Biome biome, double value) {
         biomeRuleList.put(biome, value);
     }
 
-    public void setDefaultBiomeRule(int value) {
+    public void setDefaultBiomeRule(double value) {
         defaultBiomeRule = value;
     }
 
-    public int getDefaultBiomeRule() {
+    public double getDefaultBiomeRule() {
         return defaultBiomeRule;
     }
 
-    public int getBiomeRule(Biome biome) {
+    public double getBiomeRule(Biome biome) {
         if (biomeRuleList.containsKey(biome)) {
             return biomeRuleList.get(biome);
         } else {
@@ -50,22 +50,22 @@ public class ThirstRule {
         }
     }
 
-    public int getDefaultFoodRule() {
+    public double getDefaultFoodRule() {
         return defaultFoodRule;
     }
 
-    public void setDefaultFoodRule(int value) {
+    public void setDefaultFoodRule(double value) {
         defaultFoodRule = value;
     }
 
-    public int getFoodRule(Material food) {
+    public double getFoodRule(Material food) {
         if (!foodRuleList.containsKey(food)) {
             foodRuleList.put(food, readFoodRule(food));
         }
         return foodRuleList.get(food);
     }
 
-    public void setFoodRule(Material food, int value) {
+    public void setFoodRule(Material food, double value) {
         foodRuleList.put(food, value);
     }
 
@@ -93,14 +93,14 @@ public class ThirstRule {
             for (Biome biomeName : biomeList) {
                 if (!biomeName.toString().equals(DEFAULT_BIOME)) {
                     String path = THIRST_RULE + DOT + Biome.valueOf(biomeName.toString().toUpperCase());
-                    if (configuration.getInt(path) > 0) {
-                        setBiomeRule(Biome.valueOf(biomeName.toString().toUpperCase()), configuration.getInt(path));
+                    if (configuration.getDouble(path) > 0) {
+                        setBiomeRule(Biome.valueOf(biomeName.toString().toUpperCase()), configuration.getDouble(path));
                     } else {
-                        setBiomeRule(Biome.valueOf(biomeName.toString().toUpperCase()), configuration.getInt(THIRST_RULE + DOT + DEFAULT_BIOME));
+                        setBiomeRule(Biome.valueOf(biomeName.toString().toUpperCase()), configuration.getDouble(THIRST_RULE + DOT + DEFAULT_BIOME));
                     }
 
                 } else {
-                    defaultBiomeRule = configuration.getInt(THIRST_RULE + DOT + DEFAULT_BIOME);
+                    defaultBiomeRule = configuration.getDouble(THIRST_RULE + DOT + DEFAULT_BIOME);
                 }
             }
         }
@@ -115,9 +115,9 @@ public class ThirstRule {
         System.out.println("[ThirstSystem] Completed!");
     }
 
-    public int readFoodRule(Material material) {
+    public double readFoodRule(Material material) {
         if (configuration.isSet(FOOD_RULE + DOT + material.toString())) {
-            return configuration.getInt(FOOD_RULE + DOT + material.toString());
+            return configuration.getDouble(FOOD_RULE + DOT + material.toString());
         } else {
             return defaultFoodRule;
         }

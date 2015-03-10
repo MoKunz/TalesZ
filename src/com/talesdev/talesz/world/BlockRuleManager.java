@@ -39,15 +39,15 @@ public class BlockRuleManager {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void readConfigFile() {
         try {
             configuration.load(file);
         } catch (IOException | InvalidConfigurationException e) {
             Main.getPlugin().getLogger().log(Level.WARNING, "Error while loading Rule config file");
             e.printStackTrace();
         }
-    }
-
-    public static void readConfigFile() {
         if (configuration.isSet("DefaultPlacing")) {
             try {
                 setDefaultPlacingRule(Rule.valueOf(configuration.getString("DefaultPlacing")));

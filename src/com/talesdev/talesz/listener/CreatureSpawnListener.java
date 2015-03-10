@@ -25,10 +25,7 @@ public class CreatureSpawnListener implements Listener {
     @EventHandler
     public void onEntityCombust(EntityCombustEvent event) {
         if (event.getEntity() instanceof Zombie) {
-            Zombie zombie = (Zombie) event.getEntity();
-            if (zombie.hasMetadata("MineZCustomZombie")) {
-                event.setCancelled(true);
-            }
+            event.setCancelled(true);
         }
     }
 }

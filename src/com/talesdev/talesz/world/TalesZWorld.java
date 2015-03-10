@@ -1,4 +1,4 @@
-package com.talesdev.talesz;
+package com.talesdev.talesz.world;
 
 import java.util.ArrayList;
 import java.util.List;

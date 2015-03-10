@@ -26,10 +26,12 @@ public class TalesZCommand implements CommandExecutor {
             if (args != null) {
                 if (args.length > 0) {
                     if (args[0].equalsIgnoreCase("reloadThirstRule")) {
+                        commandSender.sendMessage(ChatColor.GREEN + "Thirst data reloaded!");
                         Thirst.getThirstRule().loadRule();
                     } else if (args[0].equalsIgnoreCase("saveThirst")) {
                         try {
                             Thirst.saveAll();
+                            commandSender.sendMessage(ChatColor.GREEN + "Thirst data saved!");
                         } catch (IOException e) {
                             commandSender.sendMessage(ChatColor.RED + "Error while saving thirst data. Check console for more details");
                             e.printStackTrace();
@@ -47,11 +49,15 @@ public class TalesZCommand implements CommandExecutor {
                                 Biome biome = Biome.valueOf(args[1]);
                                 Thirst.getThirstRule().setBiomeRule(biome, Integer.parseInt(args[2]));
                                 Thirst.getThirstRule().saveRule();
+                                commandSender.sendMessage(ChatColor.GREEN + "ThirstRule of biome " +
+                                                ChatColor.BLUE + args[1] + ChatColor.GREEN + " set to " + Integer.parseInt(args[2]) + "!"
+                                );
                             } catch (IllegalArgumentException exception) {
                                 commandSender.sendMessage(ChatColor.RED + "Error : Invalid arguments!");
                             }
                         }
                     } else if (args[0].equalsIgnoreCase("clearThirstDamage")) {
+                        commandSender.sendMessage(ChatColor.GREEN + "Thirst damage queue cleared!");
                         ThirstDamage.clear();
                     } else if (args[0].equalsIgnoreCase("reload")) {
                         MobRuleManager.start();
@@ -85,6 +91,7 @@ public class TalesZCommand implements CommandExecutor {
                                 if (args.length > 2) {
                                     try {
                                         Thirst.getThirstRule().setFoodRule(Material.getMaterial(args[1].toUpperCase()), Integer.parseInt(args[2]));
+                                        Thirst.getThirstRule().saveRule();
                                         commandSender.sendMessage(ChatColor.GREEN + "Food \"" + args[1].toUpperCase() + "\" set!");
                                     } catch (NumberFormatException ignored) {
                                         commandSender.sendMessage(ChatColor.RED + "Error : Invalid number format!");
@@ -114,8 +121,16 @@ public class TalesZCommand implements CommandExecutor {
                                         if (args[4].equalsIgnoreCase("allow") || args[4].equalsIgnoreCase("deny")) {
                                             if (args[3].equalsIgnoreCase("breaking")) {
                                                 BlockRuleManager.setBreakingRule(Material.getMaterial(args[2].toUpperCase()), Rule.valueOf(args[4].toUpperCase()));
+                                                BlockRuleManager.saveConfigFile();
+                                                commandSender.sendMessage(ChatColor.GREEN + "Breaking rule of " +
+                                                                ChatColor.BLUE + args[2] + ChatColor.GREEN + " set to" + args[4].toUpperCase() + "!"
+                                                );
                                             } else if (args[3].equalsIgnoreCase("placing")) {
                                                 BlockRuleManager.setPlacingRule(Material.getMaterial(args[2].toUpperCase()), Rule.valueOf(args[4].toUpperCase()));
+                                                BlockRuleManager.saveConfigFile();
+                                                commandSender.sendMessage(ChatColor.GREEN + "Placing rule of " +
+                                                                ChatColor.BLUE + args[2] + ChatColor.GREEN + " set to" + args[4].toUpperCase() + "!"
+                                                );
                                             } else {
                                                 commandSender.sendMessage(ChatColor.RED + "Error : Expected argument to be placing or breaking but found \"" + args[3] + "\"!");
                                             }
@@ -131,8 +146,8 @@ public class TalesZCommand implements CommandExecutor {
                                 commandSender.sendMessage(ChatColor.RED + "Error : Invalid arguments.");
                             }
                         } else if (args[1].equalsIgnoreCase("load")) {
-                            commandSender.sendMessage(ChatColor.GREEN + "Rule Config file reloaded.");
                             BlockRuleManager.readConfigFile();
+                            commandSender.sendMessage(ChatColor.GREEN + "Rule Config file reloaded.");
                         } else if (args[1].equalsIgnoreCase("save")) {
                             BlockRuleManager.saveConfigFile();
                             commandSender.sendMessage(ChatColor.GREEN + "Rule Config file saved.");

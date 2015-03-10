@@ -27,7 +27,6 @@ public class ItemConsumeListener implements Listener {
                     @Override
                     public void run() {
                         ThirstDamage.removeFromList(event.getPlayer().getName());
-                        Thirst.resetThirst(event.getPlayer().getName());
                         Thirst.updateExpBar(event.getPlayer());
                     }
                 });
@@ -35,15 +34,15 @@ public class ItemConsumeListener implements Listener {
         }
         MaterialComparator comparator = new MaterialComparator(new FoodComparator());
         // is food?
-        if (comparator.containThisMaterial(material)) {
+        if (comparator.containThisMaterial(material) || material.equals(Material.POTION)) {
             // thirst food
             Thirst.setThirst(
-                    event.getPlayer().getName(), Thirst.getThirst(event.getPlayer().getName()) -
+                    event.getPlayer().getName(), Thirst.getThirst(event.getPlayer().getName()) +
                             Thirst.getThirstRule().getFoodRule(material)
             );
             Thirst.updateExpBar(event.getPlayer());
             // except rotten flesh and spider eye
-            if (!(material.equals(Material.ROTTEN_FLESH) || material.equals(Material.SPIDER_EYE))) {
+            if (!(material.equals(Material.ROTTEN_FLESH) || material.equals(Material.SPIDER_EYE) || material.equals(Material.POTION))) {
                 TalesZItemUtil.heal(event.getPlayer(), 1.0, false);
             }
         }

@@ -31,12 +31,12 @@ public class TalesZItemListener implements Listener {
         if (currentItem instanceof MaxStackableInterface) {
             if (((MaxStackableInterface) currentItem).getMaxStackSize() > 0) {
                 final Player player = Bukkit.getPlayer(event.getWhoClicked().getName());
-                Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
+                Bukkit.getScheduler().runTaskLater(Main.getPlugin(), new Runnable() {
                     @Override
                     public void run() {
                         player.updateInventory();
                     }
-                });
+                }, 1L);
             }
         }
         // pass event to item class

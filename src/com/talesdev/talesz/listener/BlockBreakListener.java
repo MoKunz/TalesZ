@@ -26,6 +26,7 @@ public class BlockBreakListener implements Listener {
         // restrict block
         if (!BlockRuleManager.isBreakable(block.getType())) {
             event.setCancelled(true);
+            return;
         }
         // restrict item
         if (isRestrictedBlockType(RestrictedBlock.HOE, block)) {

@@ -1,6 +1,7 @@
 package com.talesdev.talesz.thirst;
 
 import com.talesdev.talesz.Main;
+import com.talesdev.talesz.event.TalesZThirstChangeEvent;
 import com.talesdev.talesz.exp.ExpBarUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -23,15 +24,15 @@ public class Thirst {
     private static YamlConfiguration configuration;
     private static File dir;
     private static File file;
-    public static final int FULL_THIRST = 100;
-    public static final int THIRST_UPDATE_VALUE = 1;
+    public static final double FULL_THIRST = 100;
+    public static final double THIRST_UPDATE_VALUE = 1;
     public static final String DOT = ".";
     private static ThirstRule thirstRule;
     /**
      * String : player name
      * Integer : thirst value
      */
-    protected static HashMap<String, Integer> thirst;
+    protected static HashMap<String, Double> thirst;
 
     public static void start() {
         file = new File("plugins/TalesZ/thirst.yml");
@@ -72,18 +73,25 @@ public class Thirst {
         }
     }
 
-    public static void setThirst(String player, int value) {
+    public static void setThirst(String player, double value) {
+        TalesZThirstChangeEvent event = new TalesZThirstChangeEvent(Bukkit.getPlayer(player), value);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+        value = event.getAmountChanged();
         // prevent overflow
-        if (value <= FULL_THIRST && value > 0) {
+        if (value > 0) {
             ThirstDamage.removeFromList(player);
-            thirst.put(player, value);
+            if (value > FULL_THIRST) {
+                thirst.put(player, FULL_THIRST);
+            } else {
+                thirst.put(player, value);
+            }
         } else {
             ThirstDamage.addToList(player);
-            thirst.put(player, 0);
+            thirst.put(player, 0.0);
         }
     }
 
-    public static int getThirst(String player) {
+    public static double getThirst(String player) {
         if (thirst.get(player) == null) {
             return 0;
         }
@@ -118,7 +126,7 @@ public class Thirst {
     }
 
     public static void updateExpBar(Player p) {
-        ExpBarUtil.apply(p, p.getLevel(), (double) Thirst.getThirst(p.getName()));
+        ExpBarUtil.apply(p, p.getLevel(), Thirst.getThirst(p.getName()));
     }
 
     public static YamlConfiguration getConfig() {
@@ -154,7 +162,7 @@ public class Thirst {
 
     public static void loadData(String playerName) {
         // load thirst data of specific player
-        int thirst = getConfig().getInt("Thirst" + DOT + playerName);
+        double thirst = getConfig().getDouble("Thirst" + DOT + playerName);
         setThirst(playerName, thirst);
     }
 
