@@ -1,5 +1,6 @@
 package com.talesdev.talesz.listener;
 
+import com.talesdev.talesz.world.BlockRegenerator;
 import com.talesdev.talesz.world.BlockRuleManager;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -51,6 +52,10 @@ public class BlockBreakListener implements Listener {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(ChatColor.RED + "You need a stone axe to break this block!");
             }
+        }
+        // you have bypassed all protection
+        if (BlockRegenerator.getDatabase().isRegenerable(block.getType())) {
+            BlockRegenerator.breakBlock(block);
         }
     }
 

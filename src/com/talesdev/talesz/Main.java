@@ -15,7 +15,10 @@ import com.talesdev.talesz.mobsystem.MobRuleManager;
 import com.talesdev.talesz.thirst.Thirst;
 import com.talesdev.talesz.thirst.ThirstDamageTask;
 import com.talesdev.talesz.thirst.ThirstUpdateTask;
+import com.talesdev.talesz.world.BlockRegenerationTask;
+import com.talesdev.talesz.world.BlockRegenerator;
 import com.talesdev.talesz.world.BlockRuleManager;
+import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -57,6 +60,9 @@ public class Main extends JavaPlugin {
         // world system
         BlockRuleManager.start();
         BlockRuleManager.readConfigFile();
+        BlockRegenerator.getDatabase().setRegenerationTime(Material.RED_MUSHROOM, 10);
+        BlockRegenerator.getDatabase().setRegenerationTime(Material.BROWN_MUSHROOM, 10);
+        BlockRegenerator.getDatabase().setRegenerationTime(Material.MELON_BLOCK, 30);
         // thirst , thirst rule
         Thirst.start();
         // mob
@@ -101,6 +107,7 @@ public class Main extends JavaPlugin {
         TalesZTask.setTask("thirstDamageTask", getServer().getScheduler().runTaskTimer(this, new ThirstDamageTask(), 0, 60));
         TalesZTask.setTask("bleedingTask", getServer().getScheduler().runTaskTimer(this, new BleedingUpdateTask(), 0, 20));
         TalesZTask.setTask("ironDoorTask", getServer().getScheduler().runTaskTimer(this, new IronDoorUpdateTask(), 0, 20));
+        TalesZTask.setTask("blockRegenerationTask", getServer().getScheduler().runTaskTimer(this, new BlockRegenerationTask(), 0, 20));
     }
 
     private void initItem() {
