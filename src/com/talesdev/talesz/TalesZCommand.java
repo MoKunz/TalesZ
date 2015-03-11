@@ -1,5 +1,6 @@
 package com.talesdev.talesz;
 
+import com.talesdev.talesz.itemsystem.TalesZItemFactory;
 import com.talesdev.talesz.itemsystem.TalesZItemUtil;
 import com.talesdev.talesz.mobsystem.MobRuleManager;
 import com.talesdev.talesz.thirst.Thirst;
@@ -13,6 +14,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
 
@@ -65,6 +67,28 @@ public class TalesZCommand implements CommandExecutor {
                         BlockRuleManager.readConfigFile();
                         Thirst.getThirstRule().loadRule();
                         commandSender.sendMessage(ChatColor.GREEN + "Config reloaded!");
+                    } else if (args[0].equalsIgnoreCase("giveItem")) {
+                        if (args.length > 2 && PlayerUtil.isValidPlayer(args[1])) {
+                            ItemStack itemStack = TalesZItemFactory.createItem(args[2]);
+                            if (itemStack.getType() != Material.AIR) {
+                                Bukkit.getPlayer(args[1]).getInventory().addItem(itemStack);
+                                commandSender.sendMessage(ChatColor.GREEN + "Give " + ChatColor.BLUE + args[2] + ChatColor.GREEN + " to " + args[1]);
+                            }
+                        } else if (args.length > 1) {
+                            if (commandSender instanceof Player) {
+                                Player player = (Player) commandSender;
+                                ItemStack itemStack = TalesZItemFactory.createItem(args[2]);
+                                if (itemStack.getType() != Material.AIR) {
+                                    player.getInventory().addItem(itemStack);
+                                    commandSender.sendMessage(ChatColor.GREEN + "Give " + ChatColor.BLUE + args[2] + ChatColor.GREEN + " to you");
+                                }
+                            }
+                            if (TalesZItemUtil.isValidMaterialString(args[1])) {
+
+                            }
+                        } else {
+                            commandSender.sendMessage(ChatColor.RED + "Error : Too few arguments!");
+                        }
                     } else if (args[0].equalsIgnoreCase("updateInventory")) {
                         if (commandSender instanceof Player) {
                             if (args.length > 1) {
