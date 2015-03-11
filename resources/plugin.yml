@@ -1,7 +1,7 @@
 # TalesZ Plugin
 #§
 name: TalesZ
-version: 1.4.1
+version: 1.4.2
 author: MoKunz
 main: com.talesdev.talesz.Main
 depend: [ProtocolLib]

@@ -14,7 +14,8 @@ import java.util.logging.Level;
 public class AutoSaveTask implements Runnable {
     @Override
     public void run() {
-        Main.getPlugin().getLogger().info("Saving data...");
+        boolean showMessage = TalesZMainConfig.getConfig().getBoolean("autosave.showmessage");
+        if (showMessage) Main.getPlugin().getLogger().info("Saving data...");
         Thirst.getThirstRule().saveRule();
         try {
             Thirst.saveAll();
@@ -28,6 +29,6 @@ public class AutoSaveTask implements Runnable {
         MobRuleManager.saveConfigFile();
         // main config
         TalesZMainConfig.save();
-        Main.getPlugin().getLogger().info("Saving done!");
+        if (showMessage) Main.getPlugin().getLogger().info("Saving done!");
     }
 }
