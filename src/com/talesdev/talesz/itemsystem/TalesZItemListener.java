@@ -55,6 +55,12 @@ public class TalesZItemListener implements Listener {
 
     @EventHandler
     public void OnPlayerInteract(PlayerInteractEvent event) {
+        if (event.getClickedBlock() != null) {
+            MaterialComparator comparator = new MaterialComparator(material -> material.equals(Material.BED) || material.equals(Material.ENCHANTMENT_TABLE));
+            if (comparator.containThisMaterial(event.getClickedBlock().getType())) {
+                event.setCancelled(true);
+            }
+        }
         TalesZItem item = TalesZItemFactory.getTalesZItemFromItemStack(event.getItem());
         if (item != null) {
             item.handleEvent(event);
