@@ -73,11 +73,7 @@ public class Bandage implements TalesZToolItem, MaxStackableInterface {
     @Override
     public void handleEvent(PlayerInteractEvent event) {
         boolean isRightClickable;
-        if (event.getClickedBlock() != null) {
-            isRightClickable = TalesZItemUtil.getRightClickableComparator().notContainThisMaterial(event.getClickedBlock().getType());
-        } else {
-            isRightClickable = true;
-        }
+        isRightClickable = event.getClickedBlock() == null || TalesZItemUtil.getRightClickableComparator().notContainThisMaterial(event.getClickedBlock().getType());
         if (TalesZItemUtil.isActionRightClick(event.getAction()) && isRightClickable) {
             event.setUseInteractedBlock(Event.Result.DENY);
             event.setUseItemInHand(Event.Result.DENY);
@@ -107,7 +103,7 @@ public class Bandage implements TalesZToolItem, MaxStackableInterface {
 
     @Override
     public boolean compare(ItemStack itemStack) {
-        if (itemStack.hasItemMeta()) {
+        if (itemStack.hasItemMeta() && itemStack.getType().equals(Material.PAPER)) {
             if (itemStack.getItemMeta().hasDisplayName()) {
                 if (ChatColor.stripColor(itemStack.getItemMeta().getDisplayName()).equals("Bandage")) {
                     return true;
@@ -119,7 +115,7 @@ public class Bandage implements TalesZToolItem, MaxStackableInterface {
 
     private void heal(Player player) {
         if (Bleeding.isBleeding(player.getName())) {
-            Bleeding.removeBleedingPlayer(player.getName());
+            Bleeding.removeBleedingPlayer(player.getName(), true);
             TalesZItemUtil.heal(player, 1);
         } else {
             TalesZItemUtil.heal(player, 2);

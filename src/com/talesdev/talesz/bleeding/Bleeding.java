@@ -29,19 +29,19 @@ public class Bleeding {
         }
     }
 
-    public static void removeBleedingPlayer(String player) {
+    public static void removeBleedingPlayer(String player, boolean notifyPlayer) {
         if (bleedingPlayer.contains(player)) {
             bleedingPlayer.remove(player);
-            Bukkit.getPlayer(player).sendMessage(ChatColor.GREEN + "You are no longer bleeding.");
+            if (notifyPlayer) Bukkit.getPlayer(player).sendMessage(ChatColor.GREEN + "You are no longer bleeding.");
         }
     }
 
+    public static void removeBleedingPlayer(String player) {
+        removeBleedingPlayer(player, false);
+    }
+
     public static boolean isBleeding(String player) {
-        if (bleedingPlayer.contains(player)) {
-            return true;
-        } else {
-            return false;
-        }
+        return bleedingPlayer.contains(player);
     }
 
     public static void updateAll(double damage) {

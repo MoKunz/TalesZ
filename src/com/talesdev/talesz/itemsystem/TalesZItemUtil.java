@@ -3,7 +3,10 @@ package com.talesdev.talesz.itemsystem;
 import com.talesdev.talesz.ReflectionUtils;
 import com.talesdev.talesz.bleeding.Bleeding;
 import me.captainbern.bukkittool.BukkitTool;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.entity.Fish;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
@@ -39,17 +42,11 @@ public class TalesZItemUtil {
         }
     }
     public static boolean isValidMaterialString(String material) {
-        if (Material.getMaterial(material) != null) {
-            return true;
-        }
-        return false;
+        return Material.getMaterial(material) != null;
     }
 
     public static boolean isValidRuleString(String rule) {
-        if (rule.toUpperCase().equalsIgnoreCase("ALLOW") || rule.toUpperCase().equalsIgnoreCase("DENY")) {
-            return true;
-        }
-        return false;
+        return rule.toUpperCase().equalsIgnoreCase("ALLOW") || rule.toUpperCase().equalsIgnoreCase("DENY");
     }
     public static boolean isActionRightClick(Action action) {
         return action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK);
@@ -96,12 +93,35 @@ public class TalesZItemUtil {
         }
         return itemStack;
     }
+
+    public static void setMaxStackSize(Material material, int maxStackSize) {
+        ReflectionUtils.RefClass NMSItemClass = ReflectionUtils.getRefClass(BukkitTool.getNMSClass("Item"));
+        ReflectionUtils.RefMethod getByIdMethod = NMSItemClass.getMethod("getById", Integer.TYPE);
+        // Item class
+        Object nmsItem = getByIdMethod.of(null).call(material.getId());
+        // field
+        ReflectionUtils.RefField refField = NMSItemClass.getField("maxStackSize");
+        refField.of(nmsItem).set(maxStackSize);
+    }
+
+    public static boolean isHookLanded(Fish hook) {
+        if (hook.getVelocity().length() > 1.2) {
+            return false;
+        } else {
+            Location loc = hook.getLocation();
+            World w = hook.getWorld();
+            return !(!w.getBlockAt(loc.add(0.0, -0.25, 0.0)).getType().isSolid() && w.getBlockAt(loc.add(0.0, -0.25, 0.0)).getType() != Material.GRASS) || (!(!w.getBlockAt(loc.add(0.25, -0.25, 0.0)).getType().isSolid() && w.getBlockAt(loc.add(-0.25, -0.25, 0.0)).getType() != Material.GRASS) || w.getBlockAt(loc.add(0.0, -0.25, 0.25)).getType().isSolid() || w.getBlockAt(loc.add(0.0, -0.25, -0.25)).getType() == Material.GRASS);
+        }
+    }
+
+
     public static MaterialComparator getRightClickableComparator() {
         return new MaterialComparator(material -> material.equals(Material.DISPENSER) ||
                 material.equals(Material.NOTE_BLOCK) ||
                 material.equals(Material.BED) ||
                 material.equals(Material.CHEST) ||
                 material.equals(Material.WORKBENCH) ||
+
                 material.equals(Material.FURNACE) ||
                 material.equals(Material.BURNING_FURNACE) ||
                 material.equals(Material.WOODEN_DOOR) ||

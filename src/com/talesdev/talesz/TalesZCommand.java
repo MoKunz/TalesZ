@@ -5,6 +5,7 @@ import com.talesdev.talesz.mobsystem.MobRuleManager;
 import com.talesdev.talesz.thirst.Thirst;
 import com.talesdev.talesz.thirst.ThirstDamage;
 import com.talesdev.talesz.world.BlockRuleManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
@@ -64,25 +65,64 @@ public class TalesZCommand implements CommandExecutor {
                         BlockRuleManager.readConfigFile();
                         Thirst.getThirstRule().loadRule();
                         commandSender.sendMessage(ChatColor.GREEN + "Config reloaded!");
-                    } else if (args[0].equalsIgnoreCase("setMaxStack")) {
-                        if (args.length > 1) {
-                            int maxStackSize = 0;
-                            try {
-                                maxStackSize = Integer.parseInt(args[1]);
-                            } catch (NumberFormatException exception) {
-                                commandSender.sendMessage(ChatColor.RED + "Error : Invalid number format");
-                                return true;
-                            }
-                            if (commandSender instanceof Player) {
-                                Player p = (Player) commandSender;
-                                if (p.getItemInHand() != null && p.getItemInHand().getType() != Material.AIR) {
-                                    p.setItemInHand(TalesZItemUtil.setMaxStackSize(p.getItemInHand(), maxStackSize));
-                                    commandSender.sendMessage(ChatColor.GREEN + "Max stack size changed to " + ChatColor.BLUE + maxStackSize);
-                                } else {
-                                    commandSender.sendMessage(ChatColor.RED + "Error : Item in the hand ");
+                    } else if (args[0].equalsIgnoreCase("updateInventory")) {
+                        if (commandSender instanceof Player) {
+                            if (args.length > 1) {
+                                if (PlayerUtil.isValidPlayer(args[1])) {
+                                    Bukkit.getScheduler().runTask(Main.getPlugin(), Bukkit.getPlayer(args[1])::updateInventory);
+                                    commandSender.sendMessage(ChatColor.GREEN + args[1] + "\'s inventory has been updated!");
                                 }
                             } else {
-                                commandSender.sendMessage(ChatColor.RED + "Error : Invalid sender");
+                                Player player = (Player) commandSender;
+                                Bukkit.getScheduler().runTask(Main.getPlugin(), player::updateInventory);
+                                player.sendMessage(ChatColor.GREEN + "Your inventory has been updated!");
+                            }
+                        } else {
+                            if (args.length > 1) {
+                                if (PlayerUtil.isValidPlayer(args[1])) {
+                                    Bukkit.getScheduler().runTask(Main.getPlugin(), Bukkit.getPlayer(args[1])::updateInventory);
+                                    commandSender.sendMessage(ChatColor.GREEN + args[1] + "\'s inventory has been updated!");
+                                }
+                            } else {
+                                commandSender.sendMessage("You must specific the player to update inventory!");
+                            }
+                        }
+                    } else if (args[0].equalsIgnoreCase("setMaxStack")) {
+                        if (args.length > 1) {
+                            // max stack size
+                            int maxStackSize = 0;
+                            if (TalesZItemUtil.isValidMaterialString(args[1])) {
+                                try {
+                                    maxStackSize = Integer.parseInt(args[2]);
+                                } catch (NumberFormatException exception) {
+                                    commandSender.sendMessage(ChatColor.RED + "Error : Invalid number format");
+                                    return true;
+                                }
+                                Material material = Material.getMaterial(args[1].toUpperCase());
+                                TalesZItemUtil.setMaxStackSize(material, maxStackSize);
+                                commandSender.sendMessage(
+                                        ChatColor.GREEN + "Max stack size of " +
+                                                ChatColor.BLUE + material.toString() +
+                                                ChatColor.GREEN + "changed to " + ChatColor.BLUE + maxStackSize
+                                );
+                            } else {
+                                try {
+                                    maxStackSize = Integer.parseInt(args[1]);
+                                } catch (NumberFormatException exception) {
+                                    commandSender.sendMessage(ChatColor.RED + "Error : Invalid number format");
+                                    return true;
+                                }
+                                if (commandSender instanceof Player) {
+                                    Player p = (Player) commandSender;
+                                    if (p.getItemInHand() != null && p.getItemInHand().getType() != Material.AIR) {
+                                        p.setItemInHand(TalesZItemUtil.setMaxStackSize(p.getItemInHand(), maxStackSize));
+                                        commandSender.sendMessage(ChatColor.GREEN + "Max stack size changed to " + ChatColor.BLUE + maxStackSize);
+                                    } else {
+                                        commandSender.sendMessage(ChatColor.RED + "Error : You must have item in the hand ");
+                                    }
+                                } else {
+                                    commandSender.sendMessage(ChatColor.RED + "Error : Invalid sender");
+                                }
                             }
                         }
                     } else if (args[0].equalsIgnoreCase("FoodRule")) {

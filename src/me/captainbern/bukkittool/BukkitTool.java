@@ -6,7 +6,7 @@ public class BukkitTool {
 
     public static enum ClassType {
         NMS,
-        CB;
+        CB
     }
 
     public static String getNMSPackageName() {

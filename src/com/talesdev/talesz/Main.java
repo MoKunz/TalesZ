@@ -4,9 +4,7 @@ import com.talesdev.talesz.bleeding.BleedingCommand;
 import com.talesdev.talesz.bleeding.BleedingUpdateTask;
 import com.talesdev.talesz.exp.ExpCommand;
 import com.talesdev.talesz.item.*;
-import com.talesdev.talesz.itemsystem.TalesZItemCommand;
-import com.talesdev.talesz.itemsystem.TalesZItemListener;
-import com.talesdev.talesz.itemsystem.TalesZItemRegistry;
+import com.talesdev.talesz.itemsystem.*;
 import com.talesdev.talesz.listener.*;
 import com.talesdev.talesz.mob.MineZCustomZombie;
 import com.talesdev.talesz.mobsystem.CustomEntityType;
@@ -56,6 +54,8 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
         // init item
         initItem();
+        // post init item
+        setTalesZItemMaxStack();
         // world system
         BlockRuleManager.start();
         BlockRuleManager.readConfigFile();
@@ -100,7 +100,7 @@ public class Main extends JavaPlugin {
     }
 
     private void initTask() {
-        TalesZTask.setTask("thirstTask", getServer().getScheduler().runTaskTimer(this, new ThirstUpdateTask(), 0, 180));
+        TalesZTask.setTask("thirstTask", getServer().getScheduler().runTaskTimer(this, new ThirstUpdateTask(), 0, 20));
         TalesZTask.setTask("thirstDamageTask", getServer().getScheduler().runTaskTimer(this, new ThirstDamageTask(), 0, 60));
         TalesZTask.setTask("bleedingTask", getServer().getScheduler().runTaskTimer(this, new BleedingUpdateTask(), 0, 20));
         TalesZTask.setTask("ironDoorTask", getServer().getScheduler().runTaskTimer(this, new IronDoorUpdateTask(), 0, 20));
@@ -113,6 +113,16 @@ public class Main extends JavaPlugin {
         TalesZItemRegistry.registerTalesZItem(new HealingOintment());
         TalesZItemRegistry.registerTalesZItem(new Sugar());
         TalesZItemRegistry.registerTalesZItem(new Antibiotics());
+        TalesZItemRegistry.registerTalesZItem(new Poultice());
+    }
+
+    private void setTalesZItemMaxStack() {
+        for (TalesZItem item : TalesZItemRegistry.getAllTalesZItem()) {
+            if (item instanceof MaxStackableInterface) {
+                System.out.println(item.getName() + " " + ((MaxStackableInterface) item).getMaxStackSize());
+                TalesZItemUtil.setMaxStackSize(item.getType(), ((MaxStackableInterface) item).getMaxStackSize());
+            }
+        }
     }
 
     private void cancelTask() {

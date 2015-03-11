@@ -1,5 +1,9 @@
 package com.talesdev.talesz.itemsystem;
 
+import com.talesdev.talesz.Main;
+import org.bukkit.Bukkit;
+import org.bukkit.event.Listener;
+
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -28,6 +32,9 @@ public class TalesZItemRegistry {
 
     public static void registerTalesZItem(TalesZItem item) {
         itemHashMap.put(item.getName(), item);
+        if (item instanceof Listener) {
+            Bukkit.getPluginManager().registerEvents(((Listener) item), Main.getPlugin());
+        }
     }
 
     public static void unregisterTalesZItem(String itemName) {

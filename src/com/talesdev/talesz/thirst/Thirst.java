@@ -24,15 +24,15 @@ public class Thirst {
     private static YamlConfiguration configuration;
     private static File dir;
     private static File file;
-    public static final double FULL_THIRST = 100;
-    public static final double THIRST_UPDATE_VALUE = 1;
+    public static final double FULL_THIRST = 100.0;
+    public static final double THIRST_UPDATE_VALUE = 0.11;
     public static final String DOT = ".";
     private static ThirstRule thirstRule;
     /**
      * String : player name
      * Integer : thirst value
      */
-    protected static HashMap<String, Double> thirst;
+    protected static HashMap<String, Double> thirst = new HashMap<>();
 
     public static void start() {
         file = new File("plugins/TalesZ/thirst.yml");
@@ -54,8 +54,6 @@ public class Thirst {
         if (!configuration.isSet("Thirst")) {
             configuration.set("Thirst", null);
         }
-        // create new hash map
-        thirst = new HashMap<>();
         // create thirst rule
         thirstRule = new ThirstRule();
         thirstRule.loadRule();
@@ -105,7 +103,9 @@ public class Thirst {
     }
 
     public static void updateAll() {
-        thirst.keySet().forEach(com.talesdev.talesz.thirst.Thirst::updatePlayer);
+        if (thirst.keySet() != null) {
+            thirst.keySet().forEach(com.talesdev.talesz.thirst.Thirst::updatePlayer);
+        }
     }
 
     public static void updatePlayer(String player) {
@@ -118,7 +118,7 @@ public class Thirst {
             // update data
             setThirst(player, getThirst(player) - getThirstRule().getBiomeRule(biome));
             // update bar
-            ExpBarUtil.apply(p, p.getLevel(), (double) getThirst(player));
+            ExpBarUtil.apply(p, p.getLevel(), getThirst(player));
         } catch (Exception e) {
             Main.getPlugin().getLogger().log(Level.WARNING, "Thirst system encountered a problem while updating thirst of \"" + player + "\" !");
             e.printStackTrace();
