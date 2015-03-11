@@ -114,12 +114,12 @@ public class Main extends JavaPlugin {
         TalesZItemRegistry.registerTalesZItem(new Sugar());
         TalesZItemRegistry.registerTalesZItem(new Antibiotics());
         TalesZItemRegistry.registerTalesZItem(new Poultice());
+        TalesZItemRegistry.registerTalesZItem(new GrapplingHook());
     }
 
     private void setTalesZItemMaxStack() {
         for (TalesZItem item : TalesZItemRegistry.getAllTalesZItem()) {
             if (item instanceof MaxStackableInterface) {
-                System.out.println(item.getName() + " " + ((MaxStackableInterface) item).getMaxStackSize());
                 TalesZItemUtil.setMaxStackSize(item.getType(), ((MaxStackableInterface) item).getMaxStackSize());
             }
         }

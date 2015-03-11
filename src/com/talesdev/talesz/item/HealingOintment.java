@@ -74,10 +74,8 @@ public class HealingOintment implements TalesZToolItem {
 
     @Override
     public void handleEvent(PlayerInteractEvent event) {
-        boolean isRightClickable = false;
-        if (event.getClickedBlock() != null) {
-            isRightClickable = TalesZItemUtil.getRightClickableComparator().notContainThisMaterial(event.getClickedBlock().getType());
-        }
+        boolean isRightClickable;
+        isRightClickable = event.getClickedBlock() == null || TalesZItemUtil.getRightClickableComparator().notContainThisMaterial(event.getClickedBlock().getType());
         if (TalesZItemUtil.isActionRightClick(event.getAction()) && isRightClickable) {
             event.setUseItemInHand(Event.Result.DENY);
             event.setUseInteractedBlock(Event.Result.DENY);
