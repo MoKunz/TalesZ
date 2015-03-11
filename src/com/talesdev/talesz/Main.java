@@ -33,6 +33,8 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         // instance
         plugin = this;
+        // main config
+        TalesZMainConfig.start();
         // register update task
         initTask();
         // cmd listener
@@ -91,6 +93,8 @@ public class Main extends JavaPlugin {
         BlockRuleManager.saveConfigFile();
         // save mob rule
         MobRuleManager.saveConfigFile();
+        // last
+        TalesZMainConfig.save();
         // disabled
         getLogger().info("TalesZ has been disabled!");
     }
@@ -105,6 +109,14 @@ public class Main extends JavaPlugin {
         TalesZTask.setTask("bleedingTask", getServer().getScheduler().runTaskTimer(this, new BleedingUpdateTask(), 0, 20));
         TalesZTask.setTask("ironDoorTask", getServer().getScheduler().runTaskTimer(this, new IronDoorUpdateTask(), 0, 20));
         TalesZTask.setTask("blockRegenerationTask", getServer().getScheduler().runTaskTimer(this, new BlockRegenerationTask(), 0, 20));
+        if (TalesZMainConfig.getConfig().getBoolean("autosave.enable")) {
+            int interval = TalesZMainConfig.getConfig().getInt("autosave.interval");
+            if (interval > 30) {
+                TalesZTask.setTask("autoSaveTask", getServer().getScheduler().runTaskTimer(this, new AutoSaveTask(), 0, interval * 20));
+            } else {
+                getLogger().log(Level.WARNING, "Auto save interval is too small. Disabling it.");
+            }
+        }
     }
 
     private void initItem() {

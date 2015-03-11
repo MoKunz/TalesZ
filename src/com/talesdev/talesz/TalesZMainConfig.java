@@ -15,7 +15,7 @@ public class TalesZMainConfig {
     private static YamlConfiguration config;
     private static String fileName;
 
-    static {
+    public static void start() {
         config = new YamlConfiguration();
         // load
         load("plugins/TalesZ/config.yml");

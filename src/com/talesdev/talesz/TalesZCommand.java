@@ -77,10 +77,10 @@ public class TalesZCommand implements CommandExecutor {
                         } else if (args.length > 1) {
                             if (commandSender instanceof Player) {
                                 Player player = (Player) commandSender;
-                                ItemStack itemStack = TalesZItemFactory.createItem(args[2]);
+                                ItemStack itemStack = TalesZItemFactory.createItem(args[1]);
                                 if (itemStack.getType() != Material.AIR) {
                                     player.getInventory().addItem(itemStack);
-                                    commandSender.sendMessage(ChatColor.GREEN + "Give " + ChatColor.BLUE + args[2] + ChatColor.GREEN + " to you");
+                                    commandSender.sendMessage(ChatColor.GREEN + "Give " + ChatColor.BLUE + args[1] + ChatColor.GREEN + " to you");
                                 }
                             }
                             if (TalesZItemUtil.isValidMaterialString(args[1])) {
