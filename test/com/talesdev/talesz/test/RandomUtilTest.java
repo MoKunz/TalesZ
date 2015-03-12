@@ -29,4 +29,12 @@ public class RandomUtilTest {
             fail("Number range must between 0 and 100");
         }
     }
+
+    @Test
+    public void testRandomAllZero() throws Exception {
+        int randomNumber = RandomUtil.randomRange(0, 0);
+        if (randomNumber != 0) {
+            fail("Number can only be 0!");
+        }
+    }
 }

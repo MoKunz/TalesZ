@@ -10,10 +10,6 @@ import java.util.HashMap;
  */
 public class TalesZTask {
     private static HashMap<String, BukkitTask> task = new HashMap<>();
-    // Thirst task
-    public static BukkitTask thirstTask;
-    // Bleeding task
-    public static BukkitTask bleedingTask;
 
     public static void setTask(String taskName, BukkitTask bukkitTask) {
         task.put(taskName, bukkitTask);

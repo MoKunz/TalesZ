@@ -1,5 +1,6 @@
 package com.talesdev.talesz.world;
 
+import com.talesdev.talesz.RandomUtil;
 import com.talesdev.talesz.TalesZMainConfig;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -40,7 +41,7 @@ public class SpawnPointManager {
     }
 
     public Location randomSpawnLocation() {
-        return getFallbackSpawnLocation();
+        return getAllSpawnPoint().get(RandomUtil.randomRange(spawnLocation.size() - 1));
     }
 
     private YamlConfiguration getConfig() {
@@ -51,7 +52,7 @@ public class SpawnPointManager {
         return getSpawnWorld().getSpawnLocation();
     }
 
-    private List getAllSpawnPoint() {
+    private List<Location> getAllSpawnPoint() {
         return spawnLocation;
     }
 

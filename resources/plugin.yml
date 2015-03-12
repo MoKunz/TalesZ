@@ -3,7 +3,7 @@
 name: TalesZ
 version: 1.4.2
 author: MoKunz
-main: com.talesdev.talesz.Main
+main: com.talesdev.talesz.TalesZ
 depend: [ProtocolLib]
 softdepend: [WorldGuard]
 commands:
@@ -11,19 +11,29 @@ commands:
         description: "Commands of Xp System module"
         usage: "Usage : /xptest <operation> <args>"
         permission: talesz.command.xputil
-        permission-message: "§4You don't have permission to use this command."
+        permission-message: "§cYou don't have permission to use this command."
     bleeding:
         description: "Commands of Bleeding System module"
         usage: "Usage : /bleeding <operation> <args>"
         permission: talesz.command.bleeding
-        permission-message: "§4You don't have permission to use this command."
+        permission-message: "§cYou don't have permission to use this command."
     talesz:
         description: "TalesZ(MineZ) - A multiplayer zombie survival plugin system.\nAuthor : MoKunz (talesdev.com)"
         usage: "/talesz <subcommand> <args>"
         permission: talesz.command.talesz
-        permission-message: "§4You don't have permission to use this command."
+        permission-message: "§cYou don't have permission to use this command."
     taleszitem:
         description: "TalesZ(MineZ) Item System"
         usage: "Usage : /taleszitem <operation> <args>"
         permission: talesz.command.taleszitem
-        permission-message: "§4You don't have permission to use this command."
+        permission-message: "§cYou don't have permission to use this command."
+    taleszworld:
+        description: "TalesZ World command"
+        usage: "/taleszworld spawn [player] - Warp you to random spawn location of TalesZ World"
+        permission: talesz.commmand.taleszworld
+        permission-message: "§cYou don't have permission to use this commnd."
+permissions:
+  talesz.*:
+    description: "Give you access to all function of TalesZ"
+    default: op
+  talesz.command
