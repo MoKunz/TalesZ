@@ -1,6 +1,6 @@
 package com.talesdev.talesz.mob;
 
-import com.talesdev.talesz.Main;
+import com.talesdev.talesz.TalesZ;
 import com.talesdev.talesz.mobsystem.MobDecoratorInterface;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -29,7 +29,7 @@ public class MineZCustomZombie implements MobDecoratorInterface {
         if (entity instanceof Zombie) {
             Zombie zombie = (Zombie) entity;
             zombie.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, true, false));
-            zombie.setMetadata("MineZCustomZombie", new FixedMetadataValue(Main.getPlugin(), true));
+            zombie.setMetadata("MineZCustomZombie", new FixedMetadataValue(TalesZ.getPlugin(), true));
             zombie.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true, false));
             zombie.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, true, false));
             zombie.setMaxHealth(30.0D);

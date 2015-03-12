@@ -25,9 +25,9 @@ import java.util.logging.Level;
  * Plugin main class
  * Created by MoKunz on 17/10/2557.
  */
-public class Main extends JavaPlugin {
+public class TalesZ extends JavaPlugin {
     // plugin instance
-    private static Main plugin;
+    private static TalesZ plugin;
 
     @Override
     public void onEnable() {
@@ -99,7 +99,7 @@ public class Main extends JavaPlugin {
         getLogger().info("TalesZ has been disabled!");
     }
 
-    public static Main getPlugin() {
+    public static TalesZ getPlugin() {
         return plugin;
     }
 

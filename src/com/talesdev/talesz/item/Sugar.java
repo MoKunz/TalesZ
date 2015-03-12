@@ -1,7 +1,7 @@
 package com.talesdev.talesz.item;
 
-import com.talesdev.talesz.Main;
 import com.talesdev.talesz.PlayerTaskManager;
+import com.talesdev.talesz.TalesZ;
 import com.talesdev.talesz.itemsystem.TalesZItem;
 import com.talesdev.talesz.itemsystem.TalesZItemUtil;
 import org.bukkit.Bukkit;
@@ -81,7 +81,7 @@ public class Sugar implements TalesZItem {
             if (!(p.hasPotionEffect(PotionEffectType.SPEED) || p.hasPotionEffect(PotionEffectType.BLINDNESS) || p.hasPotionEffect(PotionEffectType.SLOW))) {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 600, 1));
                 TalesZItemUtil.removeOneItemFromPlayer(event.getPlayer(), event.getItem());
-                PlayerTaskManager.getPlayerTask(event.getPlayer()).add("Sugar", Bukkit.getScheduler().runTaskLater(Main.getPlugin(), new Runnable() {
+                PlayerTaskManager.getPlayerTask(event.getPlayer()).add("Sugar", Bukkit.getScheduler().runTaskLater(TalesZ.getPlugin(), new Runnable() {
                     @Override
                     public void run() {
                         p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0));

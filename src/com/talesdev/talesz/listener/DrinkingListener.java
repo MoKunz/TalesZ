@@ -1,6 +1,6 @@
 package com.talesdev.talesz.listener;
 
-import com.talesdev.talesz.Main;
+import com.talesdev.talesz.TalesZ;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -23,7 +23,7 @@ public class DrinkingListener implements Listener {
         ItemStack itemStack = event.getItem();
         if (itemStack.getType().equals(Material.POTION)) {
             if (itemStack.getDurability() != 0) {
-                Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
+                Bukkit.getScheduler().runTask(TalesZ.getPlugin(), new Runnable() {
                     @Override
                     public void run() {
                         event.getPlayer().setItemInHand(new ItemStack(Material.AIR));

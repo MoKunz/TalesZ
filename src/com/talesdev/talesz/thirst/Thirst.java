@@ -1,6 +1,6 @@
 package com.talesdev.talesz.thirst;
 
-import com.talesdev.talesz.Main;
+import com.talesdev.talesz.TalesZ;
 import com.talesdev.talesz.event.TalesZThirstChangeEvent;
 import com.talesdev.talesz.exp.ExpBarUtil;
 import org.bukkit.Bukkit;
@@ -120,7 +120,7 @@ public class Thirst {
             // update bar
             ExpBarUtil.apply(p, p.getLevel(), getThirst(player));
         } catch (Exception e) {
-            Main.getPlugin().getLogger().log(Level.WARNING, "Thirst system encountered a problem while updating thirst of \"" + player + "\" !");
+            TalesZ.getPlugin().getLogger().log(Level.WARNING, "Thirst system encountered a problem while updating thirst of \"" + player + "\" !");
             e.printStackTrace();
         }
     }

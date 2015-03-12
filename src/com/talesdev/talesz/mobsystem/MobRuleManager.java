@@ -1,7 +1,7 @@
 package com.talesdev.talesz.mobsystem;
 
-import com.talesdev.talesz.Main;
 import com.talesdev.talesz.Rule;
+import com.talesdev.talesz.TalesZ;
 import com.talesdev.talesz.itemsystem.TalesZItemUtil;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -86,7 +86,7 @@ public class MobRuleManager {
         try {
             configuration.save(file);
         } catch (IOException e) {
-            Main.getPlugin().getLogger().log(Level.WARNING, "Error while saving config file!");
+            TalesZ.getPlugin().getLogger().log(Level.WARNING, "Error while saving config file!");
             e.printStackTrace();
         }
     }

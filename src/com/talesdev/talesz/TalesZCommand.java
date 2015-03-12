@@ -94,18 +94,18 @@ public class TalesZCommand implements CommandExecutor {
                         if (commandSender instanceof Player) {
                             if (args.length > 1) {
                                 if (PlayerUtil.isValidPlayer(args[1])) {
-                                    Bukkit.getScheduler().runTask(Main.getPlugin(), Bukkit.getPlayer(args[1])::updateInventory);
+                                    Bukkit.getScheduler().runTask(TalesZ.getPlugin(), Bukkit.getPlayer(args[1])::updateInventory);
                                     commandSender.sendMessage(ChatColor.GREEN + args[1] + "\'s inventory has been updated!");
                                 }
                             } else {
                                 Player player = (Player) commandSender;
-                                Bukkit.getScheduler().runTask(Main.getPlugin(), player::updateInventory);
+                                Bukkit.getScheduler().runTask(TalesZ.getPlugin(), player::updateInventory);
                                 player.sendMessage(ChatColor.GREEN + "Your inventory has been updated!");
                             }
                         } else {
                             if (args.length > 1) {
                                 if (PlayerUtil.isValidPlayer(args[1])) {
-                                    Bukkit.getScheduler().runTask(Main.getPlugin(), Bukkit.getPlayer(args[1])::updateInventory);
+                                    Bukkit.getScheduler().runTask(TalesZ.getPlugin(), Bukkit.getPlayer(args[1])::updateInventory);
                                     commandSender.sendMessage(ChatColor.GREEN + args[1] + "\'s inventory has been updated!");
                                 }
                             } else {

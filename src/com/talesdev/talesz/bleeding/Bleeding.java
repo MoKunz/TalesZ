@@ -1,6 +1,6 @@
 package com.talesdev.talesz.bleeding;
 
-import com.talesdev.talesz.Main;
+import com.talesdev.talesz.TalesZ;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
@@ -21,7 +21,7 @@ public class Bleeding {
     public static void addBleedingPlayer(String player) {
         if (!bleedingPlayer.contains(player)) {
             bleedingPlayer.add(player);
-            Bukkit.getScheduler().runTaskLater(Main.getPlugin(), () -> {
+            Bukkit.getScheduler().runTaskLater(TalesZ.getPlugin(), () -> {
                 if (Bukkit.getPlayer(player) != null && isBleeding(player)) {
                     Bukkit.getPlayer(player).sendMessage(ChatColor.RED + "You are now bleeding. Hurry up and find some bandage to stop bleeding!");
                 }

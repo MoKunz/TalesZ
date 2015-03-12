@@ -27,29 +27,29 @@ public class TalesZMainConfig {
         // create new file if not exist
         if (!file.exists()) {
             try {
-                Main.getPlugin().getLogger().log(Level.INFO, "Creating new config file.");
+                TalesZ.getPlugin().getLogger().log(Level.INFO, "Creating new config file.");
                 file.createNewFile();
-                Main.getPlugin().getLogger().log(Level.INFO, "Creating new config file success!");
+                TalesZ.getPlugin().getLogger().log(Level.INFO, "Creating new config file success!");
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         // try loading config file
         try {
-            Main.getPlugin().getLogger().log(Level.INFO, "Loading config file.");
+            TalesZ.getPlugin().getLogger().log(Level.INFO, "Loading config file.");
             getConfig().load(file);
         } catch (IOException | InvalidConfigurationException e) {
-            Main.getPlugin().getLogger().log(Level.WARNING, "Error while loading config file.");
+            TalesZ.getPlugin().getLogger().log(Level.WARNING, "Error while loading config file.");
             e.printStackTrace();
         }
     }
 
     public static void save() {
         try {
-            Main.getPlugin().getLogger().log(Level.INFO, "Saving config to disk...");
+            TalesZ.getPlugin().getLogger().log(Level.INFO, "Saving config to disk...");
             getConfig().save(fileName);
         } catch (IOException e) {
-            Main.getPlugin().getLogger().log(Level.WARNING, "Error while saving config!");
+            TalesZ.getPlugin().getLogger().log(Level.WARNING, "Error while saving config!");
             e.printStackTrace();
         }
     }

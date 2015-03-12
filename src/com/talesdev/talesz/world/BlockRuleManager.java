@@ -1,7 +1,7 @@
 package com.talesdev.talesz.world;
 
-import com.talesdev.talesz.Main;
 import com.talesdev.talesz.Rule;
+import com.talesdev.talesz.TalesZ;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -34,7 +34,7 @@ public class BlockRuleManager {
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                Main.getPlugin().getLogger().log(Level.INFO, "Creating Rule config file success!");
+                TalesZ.getPlugin().getLogger().log(Level.INFO, "Creating Rule config file success!");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -45,7 +45,7 @@ public class BlockRuleManager {
         try {
             configuration.load(file);
         } catch (IOException | InvalidConfigurationException e) {
-            Main.getPlugin().getLogger().log(Level.WARNING, "Error while loading Rule config file");
+            TalesZ.getPlugin().getLogger().log(Level.WARNING, "Error while loading Rule config file");
             e.printStackTrace();
         }
         if (configuration.isSet("DefaultPlacing")) {
@@ -75,7 +75,7 @@ public class BlockRuleManager {
                 try {
                     rule.put(material, Rule.valueOf(blockRule));
                 } catch (IllegalArgumentException ignored) {
-                    Main.getPlugin().getLogger().log(Level.WARNING, "Invalid config value for Material \"" + material.toString() + "\"!");
+                    TalesZ.getPlugin().getLogger().log(Level.WARNING, "Invalid config value for Material \"" + material.toString() + "\"!");
                 }
             }
 
@@ -90,8 +90,8 @@ public class BlockRuleManager {
                 rule = Rule.valueOf(value);
                 return rule;
             } catch (Exception e) {
-                Main.getPlugin().getLogger().log(Level.WARNING, "Error while reading config value for Material \"" + blockMaterial.toString() + "\"!");
-                Main.getPlugin().getLogger().log(Level.WARNING, "Plugin will use default value instead!");
+                TalesZ.getPlugin().getLogger().log(Level.WARNING, "Error while reading config value for Material \"" + blockMaterial.toString() + "\"!");
+                TalesZ.getPlugin().getLogger().log(Level.WARNING, "Plugin will use default value instead!");
                 if (sectionName.equalsIgnoreCase("breaking")) {
                     return breaking;
                 } else if (sectionName.equalsIgnoreCase("placing")) {
@@ -131,7 +131,7 @@ public class BlockRuleManager {
         try {
             configuration.save(file);
         } catch (IOException e) {
-            Main.getPlugin().getLogger().log(Level.WARNING, "Error while saving Rule config file");
+            TalesZ.getPlugin().getLogger().log(Level.WARNING, "Error while saving Rule config file");
             e.printStackTrace();
         }
     }

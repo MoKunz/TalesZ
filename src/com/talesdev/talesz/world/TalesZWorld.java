@@ -9,8 +9,12 @@ import java.util.List;
  */
 public class TalesZWorld {
     public static String WORLD_NAME = "world";
-    protected static List<String> playerList = new ArrayList<>();
+    private static List<String> playerList = new ArrayList<>();
+    private static SpawnPointManager spawnPointManager;
 
+    public static void init(SpawnPointManager manager) {
+        spawnPointManager = manager;
+    }
     public static void setWorldName(String worldName) {
         WORLD_NAME = worldName;
     }
@@ -26,4 +30,9 @@ public class TalesZWorld {
     public static boolean containPlayer(String player) {
         return playerList.contains(player);
     }
+
+    public static SpawnPointManager getSpawnPointManager() {
+        return spawnPointManager;
+    }
+
 }

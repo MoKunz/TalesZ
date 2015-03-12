@@ -15,12 +15,12 @@ public class AutoSaveTask implements Runnable {
     @Override
     public void run() {
         boolean showMessage = TalesZMainConfig.getConfig().getBoolean("autosave.showmessage");
-        if (showMessage) Main.getPlugin().getLogger().info("Saving data...");
+        if (showMessage) TalesZ.getPlugin().getLogger().info("Saving data...");
         Thirst.getThirstRule().saveRule();
         try {
             Thirst.saveAll();
         } catch (IOException e) {
-            Main.getPlugin().getLogger().log(Level.SEVERE, "Unable to save thirst data to disk!");
+            TalesZ.getPlugin().getLogger().log(Level.SEVERE, "Unable to save thirst data to disk!");
             e.printStackTrace();
         }
         // save block rule
@@ -29,6 +29,6 @@ public class AutoSaveTask implements Runnable {
         MobRuleManager.saveConfigFile();
         // main config
         TalesZMainConfig.save();
-        if (showMessage) Main.getPlugin().getLogger().info("Saving done!");
+        if (showMessage) TalesZ.getPlugin().getLogger().info("Saving done!");
     }
 }

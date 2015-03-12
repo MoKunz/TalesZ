@@ -1,6 +1,6 @@
 package com.talesdev.talesz.world;
 
-import com.talesdev.talesz.Main;
+import com.talesdev.talesz.TalesZ;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -27,7 +27,7 @@ public class BlockRegenerationDatabase {
         try {
             configuration.load(file);
         } catch (IOException | InvalidConfigurationException e) {
-            Main.getPlugin().getLogger().log(Level.WARNING, "Error while loading BlockRegen config file");
+            TalesZ.getPlugin().getLogger().log(Level.WARNING, "Error while loading BlockRegen config file");
             e.printStackTrace();
         }
         // build cache

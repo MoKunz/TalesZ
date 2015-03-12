@@ -1,6 +1,6 @@
 package com.talesdev.talesz.itemsystem;
 
-import com.talesdev.talesz.Main;
+import com.talesdev.talesz.TalesZ;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -31,7 +31,7 @@ public class TalesZItemListener implements Listener {
         if (currentItem instanceof MaxStackableInterface) {
             if (((MaxStackableInterface) currentItem).getMaxStackSize() > 0) {
                 final Player player = Bukkit.getPlayer(event.getWhoClicked().getName());
-                Bukkit.getScheduler().runTaskLater(Main.getPlugin(), new Runnable() {
+                Bukkit.getScheduler().runTaskLater(TalesZ.getPlugin(), new Runnable() {
                     @Override
                     public void run() {
                         player.updateInventory();

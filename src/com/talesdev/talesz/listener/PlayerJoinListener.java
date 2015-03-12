@@ -1,7 +1,7 @@
 package com.talesdev.talesz.listener;
 
-import com.talesdev.talesz.Main;
 import com.talesdev.talesz.PlayerTaskManager;
+import com.talesdev.talesz.TalesZ;
 import com.talesdev.talesz.thirst.Thirst;
 import com.talesdev.talesz.thirst.ThirstDamage;
 import org.bukkit.GameMode;
@@ -37,7 +37,7 @@ public class PlayerJoinListener implements Listener {
         try {
             Thirst.saveDataToDisk(event.getPlayer().getName());
         } catch (IOException e) {
-            Main.getPlugin().getLogger().log(Level.WARNING, "Unable to save data to disk!");
+            TalesZ.getPlugin().getLogger().log(Level.WARNING, "Unable to save data to disk!");
             e.printStackTrace();
         }
         ThirstDamage.removeFromList(event.getPlayer().getName());
