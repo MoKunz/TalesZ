@@ -28,11 +28,10 @@ public class MineZCustomZombie implements MobDecoratorInterface {
     public Entity decorate(Entity entity) {
         if (entity instanceof Zombie) {
             Zombie zombie = (Zombie) entity;
-            zombie.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, true, false));
+            zombie.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true, false));
             zombie.setMetadata("MineZCustomZombie", new FixedMetadataValue(TalesZ.getPlugin(), true));
-            zombie.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true, false));
             zombie.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, true, false));
-            zombie.setMaxHealth(30.0D);
+            zombie.setMaxHealth(20.0D);
         }
         return entity;
     }
