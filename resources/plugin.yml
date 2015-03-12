@@ -36,4 +36,5 @@ permissions:
   talesz.*:
     description: "Give you access to all function of TalesZ"
     default: op
-  talesz.command
+    children:
+      talesz.command: true
