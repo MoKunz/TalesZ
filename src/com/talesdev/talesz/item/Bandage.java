@@ -51,7 +51,7 @@ public class Bandage implements TalesZToolItem, MaxStackableInterface {
 
     @Override
     public ItemMeta configItemMeta(ItemMeta itemMeta) {
-        itemMeta.setDisplayName(ChatColor.GRAY + "Bandage");
+        itemMeta.setDisplayName(ChatColor.WHITE + "Bandage");
         return itemMeta;
     }
 
