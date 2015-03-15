@@ -6,6 +6,7 @@ import com.talesdev.talesz.exp.ExpCommand;
 import com.talesdev.talesz.item.*;
 import com.talesdev.talesz.itemsystem.*;
 import com.talesdev.talesz.listener.*;
+import com.talesdev.talesz.loot.CivilianCommonChest;
 import com.talesdev.talesz.mob.MineZCustomZombie;
 import com.talesdev.talesz.mobsystem.CustomEntityType;
 import com.talesdev.talesz.mobsystem.MobDecorator;
@@ -13,9 +14,8 @@ import com.talesdev.talesz.mobsystem.MobRuleManager;
 import com.talesdev.talesz.thirst.Thirst;
 import com.talesdev.talesz.thirst.ThirstDamageTask;
 import com.talesdev.talesz.thirst.ThirstUpdateTask;
-import com.talesdev.talesz.world.BlockRegenerationTask;
-import com.talesdev.talesz.world.BlockRegenerator;
-import com.talesdev.talesz.world.BlockRuleManager;
+import com.talesdev.talesz.world.*;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -42,6 +42,7 @@ public class TalesZ extends JavaPlugin {
         getCommand("bleeding").setExecutor(new BleedingCommand());
         getCommand("taleszitem").setExecutor(new TalesZItemCommand());
         getCommand("talesz").setExecutor(new TalesZCommand());
+        getCommand("taleszspawn").setExecutor(new TalesZSpawnCommand());
         getServer().getPluginManager().registerEvents(new TalesZItemListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new ExpListener(), this);
@@ -59,6 +60,8 @@ public class TalesZ extends JavaPlugin {
         // post init item
         setTalesZItemMaxStack();
         // world system
+        TalesZWorld.init(new SpawnPointManager(Bukkit.getServer().getWorlds().get(0)));
+        TalesZWorld.addLootChest(new CivilianCommonChest());
         BlockRuleManager.start();
         BlockRuleManager.readConfigFile();
         BlockRegenerator.getDatabase().readFromFile();
@@ -117,6 +120,7 @@ public class TalesZ extends JavaPlugin {
                 getLogger().log(Level.WARNING, "Auto save interval is too small. Disabling it.");
             }
         }
+        TalesZTask.setTask("grapplingHookTask", getServer().getScheduler().runTaskTimer(this, GrapplingHookDamageManager::update, 0, 20));
     }
 
     private void initItem() {

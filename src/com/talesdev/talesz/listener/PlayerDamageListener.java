@@ -2,6 +2,7 @@ package com.talesdev.talesz.listener;
 
 import com.talesdev.talesz.RandomUtil;
 import com.talesdev.talesz.bleeding.Bleeding;
+import com.talesdev.talesz.item.GrapplingHookDamageManager;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,6 +26,10 @@ public class PlayerDamageListener implements Listener {
                         Bleeding.addBleedingPlayer(p.getName());
                     }
                 }
+            }
+            if (GrapplingHookDamageManager.contains(p.getName())) {
+                event.setDamage(event.getDamage() / 2);
+                GrapplingHookDamageManager.removeReduceDamage(p.getName());
             }
         }
     }

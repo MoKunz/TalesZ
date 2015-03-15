@@ -18,13 +18,13 @@ public class BlockRegenerator {
         if (blockList.size() > 0) {
             for (Iterator<BlockInfo> iterator = blockList.iterator(); iterator.hasNext(); ) {
                 BlockInfo blockInfo = iterator.next();
-                // update time
+                // update regenerationTime
                 if (blockInfo.getTime() - 1 > 0) {
                     blockInfo.setTime(blockInfo.getTime() - 1);
                 } else {
                     blockInfo.setTime(0);
                 }
-                // check time
+                // check regenerationTime
                 if (blockInfo.getTime() <= 0) {
                     World world = blockInfo.getBlockLocation().getWorld();
                     world.getBlockAt(blockInfo.getBlockLocation()).setType(blockInfo.getBlock());

@@ -21,11 +21,16 @@ public class SpawnPointManager {
         // get default world
         this.spawnWorld = world;
         // begin config reading
-        List<String> locationString = getConfig().getStringList("spawnpoint");
+        loadSpawnLocation(loadSpawnLocationList());
+    }
+
+    public void loadSpawnLocation(List<String> spawnLocationList) {
+        // clear
+        spawnLocation.clear();
         // add
-        if (locationString != null) {
-            if (locationString.size() > 0) {
-                for (String locString : locationString) {
+        if (spawnLocationList != null) {
+            if (spawnLocationList.size() > 0) {
+                for (String locString : spawnLocationList) {
                     spawnLocation.add(LocationString.fromString(locString).getLocation());
                 }
             }
@@ -34,6 +39,10 @@ public class SpawnPointManager {
         if (spawnLocation.size() < 1) {
             spawnLocation.add(getFallbackSpawnLocation());
         }
+    }
+
+    public List<String> loadSpawnLocationList() {
+        return getConfig().getStringList("spawnpoint");
     }
 
     public World getSpawnWorld() {

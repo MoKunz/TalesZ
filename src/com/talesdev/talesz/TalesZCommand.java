@@ -66,7 +66,7 @@ public class TalesZCommand implements CommandExecutor {
                         MobRuleManager.start();
                         BlockRuleManager.readConfigFile();
                         Thirst.getThirstRule().loadRule();
-                        TalesZMainConfig.save();
+                        TalesZMainConfig.load("plugins/TalesZ/config.yml");
                         commandSender.sendMessage(ChatColor.GREEN + "Config reloaded!");
                     } else if (args[0].equalsIgnoreCase("giveItem")) {
                         if (args.length > 2 && PlayerUtil.isValidPlayer(args[1])) {

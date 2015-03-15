@@ -1,10 +1,10 @@
 # TalesZ Plugin
 #§
 name: TalesZ
-version: 1.4.2
+version: 1.5.1
 author: MoKunz
 main: com.talesdev.talesz.TalesZ
-depend: [ProtocolLib]
+depend: [ProtocolLib,WorldEdit]
 softdepend: [WorldGuard]
 commands:
     xputil:
@@ -27,14 +27,32 @@ commands:
         usage: "Usage : /taleszitem <operation> <args>"
         permission: talesz.command.taleszitem
         permission-message: "§cYou don't have permission to use this command."
-    taleszworld:
+    taleszspawn:
         description: "TalesZ World command"
-        usage: "/taleszworld spawn [player] - Warp you to random spawn location of TalesZ World"
-        permission: talesz.commmand.taleszworld
+        usage: "/taleszspawn - Warp you to random spawn location of TalesZ World"
+        permission: talesz.commmand.taleszspawn
         permission-message: "§cYou don't have permission to use this commnd."
 permissions:
-  talesz.*:
-    description: "Give you access to all function of TalesZ"
-    default: op
-    children:
-      talesz.command: true
+    talesz.*:
+        description: "Give you access to all function of TalesZ"
+        default: op
+        children:
+            talesz.command.*:
+                description: "Give you access to all command of TalesZ"
+                default: op
+                children:
+                    talesz.command.xputil:
+                        description: "Give you access to /xputil command"
+                        default: false
+                    talesz.command.bleeding:
+                        description: "Give you access to /xputil command"
+                        default: false
+                    talesz.command.talesz:
+                        description: "Give you access to /xputil command"
+                        default: false
+                    talesz.command.taleszitem:
+                        description: "Give you access to /xputil command"
+                        default: false
+                    talesz.command.taleszspawn:
+                        description: "Give you access to /xputil command"
+                        default: true

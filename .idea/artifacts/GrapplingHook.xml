@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="GrapplingHook">
+    <output-path>$PROJECT_DIR$/out/artifacts/GrapplingHook</output-path>
+    <root id="archive" name="GrapplingHook.jar">
+      <element id="module-output" name="GrapplingHook" />
+    </root>
+  </artifact>
+</component>

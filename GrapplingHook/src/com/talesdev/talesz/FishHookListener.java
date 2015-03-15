@@ -1,88 +1,20 @@
-package com.talesdev.talesz.item;
+package com.talesdev.talesz;
 
-import com.talesdev.talesz.itemsystem.MaxStackableInterface;
-import com.talesdev.talesz.itemsystem.TalesZItem;
-import com.talesdev.talesz.itemsystem.TalesZItemUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.*;
+import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 import org.bukkit.util.Vector;
 
 /**
- * Grappling Hook
- * Created by MoKunz on 3/11/2015.
+ * Listener
+ * Created by MoKunz on 3/12/2015.
  */
-public class GrapplingHook implements TalesZItem, Listener, MaxStackableInterface {
-    @Override
-    public String getName() {
-        return "GrapplingHook";
-    }
-
-    @Override
-    public Material getType() {
-        return Material.FISHING_ROD;
-    }
-
-    @Override
-    public int getAmount() {
-        return 1;
-    }
-
-    @Override
-    public short getDurability() {
-        return 0;
-    }
-
-    @Override
-    public ItemMeta configItemMeta(ItemMeta itemMeta) {
-        itemMeta.setDisplayName(ChatColor.BLUE + "Grappling Hook");
-        return itemMeta;
-    }
-
-    @Override
-    public MaterialData configMaterialData(MaterialData materialData) {
-        return null;
-    }
-
-    @Override
-    public void handleEvent(InventoryClickEvent event) {
-
-    }
-
-    @Override
-    public void handleEvent(PlayerInteractEntityEvent event) {
-
-    }
-
-    @Override
-    public void handleEvent(PlayerInteractEvent event) {
-
-    }
-
-    @Override
-    public void handleEvent(PlayerItemConsumeEvent event) {
-
-    }
-
-    @Override
-    public void handleEvent(PlayerDropItemEvent event) {
-
-    }
-
-    @Override
-    public void handleEvent(EntityDamageByEntityEvent event) {
-
-    }
-
+public class FishHookListener implements Listener {
     @EventHandler
     public void onFish(PlayerFishEvent event) {
         if (compare(event.getPlayer().getItemInHand())) {
@@ -122,12 +54,10 @@ public class GrapplingHook implements TalesZItem, Listener, MaxStackableInterfac
                     player.setVelocity(v);
                     // end
                 }
-                GrapplingHookDamageManager.addReduceDamage(event.getPlayer().getName());
             }
         }
     }
 
-    @Override
     public boolean compare(ItemStack itemStack) {
         if (itemStack.hasItemMeta() && itemStack.getType().equals(Material.FISHING_ROD)) {
             if (itemStack.getItemMeta().hasDisplayName()) {
@@ -137,10 +67,5 @@ public class GrapplingHook implements TalesZItem, Listener, MaxStackableInterfac
             }
         }
         return false;
-    }
-
-    @Override
-    public int getMaxStackSize() {
-        return 1;
     }
 }

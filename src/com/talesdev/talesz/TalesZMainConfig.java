@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 
 /**
@@ -42,6 +43,11 @@ public class TalesZMainConfig {
             TalesZ.getPlugin().getLogger().log(Level.WARNING, "Error while loading config file.");
             e.printStackTrace();
         }
+        // set default
+        getConfig().addDefault("autosave", null);
+        getConfig().addDefault("autosave.enable", true);
+        getConfig().addDefault("autosave.interval", 300);
+        getConfig().addDefault("spawnpoint", new ArrayList<>());
     }
 
     public static void save() {
