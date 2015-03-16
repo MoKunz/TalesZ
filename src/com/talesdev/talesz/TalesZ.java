@@ -131,6 +131,7 @@ public class TalesZ extends JavaPlugin {
         TalesZItemRegistry.registerTalesZItem(new Antibiotics());
         TalesZItemRegistry.registerTalesZItem(new Poultice());
         TalesZItemRegistry.registerTalesZItem(new GrapplingHook());
+        TalesZItemRegistry.registerTalesZItem(new CocoaBean());
         TalesZItemUtil.setMaxStackSize(Material.APPLE,1);
         TalesZItemUtil.setMaxStackSize(Material.BAKED_POTATO,1);
         TalesZItemUtil.setMaxStackSize(Material.BREAD,3);
