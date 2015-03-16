@@ -131,6 +131,28 @@ public class TalesZ extends JavaPlugin {
         TalesZItemRegistry.registerTalesZItem(new Antibiotics());
         TalesZItemRegistry.registerTalesZItem(new Poultice());
         TalesZItemRegistry.registerTalesZItem(new GrapplingHook());
+        TalesZItemUtil.setMaxStackSize(Material.APPLE,1);
+        TalesZItemUtil.setMaxStackSize(Material.BAKED_POTATO,1);
+        TalesZItemUtil.setMaxStackSize(Material.BREAD,3);
+        TalesZItemUtil.setMaxStackSize(Material.CARROT,1);
+        TalesZItemUtil.setMaxStackSize(Material.GRILLED_PORK,1);
+        TalesZItemUtil.setMaxStackSize(Material.PORK,1);
+        TalesZItemUtil.setMaxStackSize(Material.COOKIE,8);
+        TalesZItemUtil.setMaxStackSize(Material.GOLDEN_APPLE,1);
+        TalesZItemUtil.setMaxStackSize(Material.GOLDEN_CARROT,1);
+        TalesZItemUtil.setMaxStackSize(Material.MELON,4);
+        TalesZItemUtil.setMaxStackSize(Material.RAW_BEEF,1);
+        TalesZItemUtil.setMaxStackSize(Material.COOKED_BEEF,1);
+        TalesZItemUtil.setMaxStackSize(Material.RAW_FISH,1);
+        TalesZItemUtil.setMaxStackSize(Material.COOKED_FISH,1);
+        TalesZItemUtil.setMaxStackSize(Material.ROTTEN_FLESH,1);
+        TalesZItemUtil.setMaxStackSize(Material.SUGAR,3);
+        TalesZItemUtil.setMaxStackSize(Material.BOWL,1);
+        TalesZItemUtil.setMaxStackSize(Material.STONE_BUTTON,3);
+        TalesZItemUtil.setMaxStackSize(Material.GLASS_BOTTLE,1);
+        TalesZItemUtil.setMaxStackSize(Material.SULPHUR,1);
+        TalesZItemUtil.setMaxStackSize(Material.WHEAT,3);
+
     }
 
     private void setTalesZItemMaxStack() {
