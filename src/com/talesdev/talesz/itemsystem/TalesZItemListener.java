@@ -73,11 +73,19 @@ public class TalesZItemListener implements Listener {
         if (item != null) {
             item.handleEvent(event);
         }
-        // loot chest
+        // right clicked block
         if ((event.getClickedBlock() != null) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE))) {
-            LootChest lootChest = TalesZWorld.getLootChest(event.getClickedBlock());
-            if (lootChest != null) {
-                lootChest.fillChest(event.getClickedBlock());
+            if (event.getClickedBlock().getType().equals(Material.CHEST)) {
+                LootChest lootChest = TalesZWorld.getLootChest(event.getClickedBlock());
+                if (lootChest != null) {
+                    lootChest.fillChest(event.getClickedBlock());
+                }
+            } else if (event.getClickedBlock().getType().equals(Material.DIRT) ||
+                    event.getClickedBlock().getType().equals(Material.GRASS) ||
+                    event.getClickedBlock().getType().equals(Material.MYCEL)) {
+                if (event.getPlayer().getItemInHand().getType().equals(Material.WOOD_HOE)) {
+                    event.setCancelled(true);
+                }
             }
         }
     }

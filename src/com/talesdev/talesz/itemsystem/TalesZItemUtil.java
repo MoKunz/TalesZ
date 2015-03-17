@@ -101,7 +101,9 @@ public class TalesZItemUtil {
         Object nmsItem = getByIdMethod.of(null).call(material.getId());
         // field
         ReflectionUtils.RefField refField = NMSItemClass.getField("maxStackSize");
-        refField.of(nmsItem).set(maxStackSize);
+        if (nmsItem != null) {
+            refField.of(nmsItem).set(maxStackSize);
+        }
     }
 
     public static boolean isHookLanded(Fish hook) {

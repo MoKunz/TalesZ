@@ -16,6 +16,7 @@ import com.talesdev.talesz.thirst.ThirstDamageTask;
 import com.talesdev.talesz.thirst.ThirstUpdateTask;
 import com.talesdev.talesz.world.*;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -134,7 +135,7 @@ public class TalesZ extends JavaPlugin {
         TalesZItemUtil.setMaxStackSize(Material.APPLE,1);
         TalesZItemUtil.setMaxStackSize(Material.BAKED_POTATO,1);
         TalesZItemUtil.setMaxStackSize(Material.BREAD,3);
-        TalesZItemUtil.setMaxStackSize(Material.CARROT,1);
+        TalesZItemUtil.setMaxStackSize(Material.CARROT_ITEM, 1);
         TalesZItemUtil.setMaxStackSize(Material.GRILLED_PORK,1);
         TalesZItemUtil.setMaxStackSize(Material.PORK,1);
         TalesZItemUtil.setMaxStackSize(Material.COOKIE,8);

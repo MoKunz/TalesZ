@@ -1,5 +1,6 @@
 package com.talesdev.talesz.loot;
 
+import com.talesdev.talesz.RandomUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -8,6 +9,7 @@ import org.bukkit.block.Chest;
 import org.bukkit.inventory.Inventory;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Loot chest type
@@ -16,10 +18,34 @@ import java.util.List;
 public abstract class LootChest {
     private String typeName;
     private LootItemCollection itemCollection;
+    private int minLootSize;
+    private int maxLootSize;
 
     public LootChest(String name, LootItemCollection collection) {
         this.typeName = name;
         this.itemCollection = collection;
+        this.minLootSize = 1;
+        this.maxLootSize = 54;
+    }
+
+    public int getMinLootSize() {
+        return minLootSize;
+    }
+
+    public void setMinLootSize(int size) {
+        if (size >= 0 && size <= maxLootSize) {
+            this.minLootSize = size;
+        }
+    }
+
+    public int getMaxLootSize() {
+        return minLootSize;
+    }
+
+    public void setMaxLootSize(int size) {
+        if (size >= minLootSize) {
+            this.minLootSize = size;
+        }
     }
 
     public String getTypeName() {
@@ -51,10 +77,12 @@ public abstract class LootChest {
     }
 
     public void fillChest(Inventory inventory) {
-        List<LootItem> lootItemList = getItemCollection().randomlyPickUp();
-        if (lootItemList.size() > 0) {
-            for (LootItem item : getItemCollection().randomlyPickUp()) {
-                inventory.addItem(item.getItem());
+        List<LootItem> lootItemList = getItemCollection().randomlyPickUp(getMinLootSize(), getMaxLootSize());
+        List<Integer> inventoryIndex = RandomUtil.randomNumberList(0, 26, lootItemList.size());
+        Map<Integer, LootItem> mappedLootItem = new MappedItem(inventoryIndex, lootItemList).getMappedLootItem();
+        if (mappedLootItem.size() > 0) {
+            for (Map.Entry<Integer, LootItem> entry : mappedLootItem.entrySet()) {
+                inventory.setItem(entry.getKey(), entry.getValue().getItem());
             }
         }
     }

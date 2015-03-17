@@ -24,15 +24,32 @@ public class LootItemCollection {
         return lootItemList;
     }
 
-    public List<LootItem> randomlyPickUp() {
+    public List<LootItem> randomlyPickUp(int minimumSize, int maximumSize) {
         List<LootItem> lootCollection = new ArrayList<>();
         if (getAllLootItem().size() > 0) {
-            for (LootItem item : getAllLootItem()) {
-                if (RandomUtil.randomPercent(item.getProbability())) {
-                    lootCollection.add(item);
+            int limitCounter = 0;
+            do {
+                if (limitCounter > 8) {
+                    break;
+                }
+                for (LootItem item : getAllLootItem()) {
+                    if (RandomUtil.randomPercent(item.getProbability())) {
+                        if (lootCollection.size() >= maximumSize) {
+                            break;
+                        }
+                        lootCollection.add(item);
+                    }
+                }
+                if (lootCollection.size() < minimumSize) {
+                    limitCounter++;
                 }
             }
+            while (lootCollection.size() < minimumSize);
         }
         return lootCollection;
+    }
+
+    public List<LootItem> randomlyPickUp() {
+        return randomlyPickUp(1, 54);
     }
 }
