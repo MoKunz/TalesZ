@@ -3,6 +3,7 @@ package com.talesdev.talesz.loot;
 import com.talesdev.talesz.RandomUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,7 +33,9 @@ public class LootItemCollection {
                 if (limitCounter > 8) {
                     break;
                 }
-                for (LootItem item : getAllLootItem()) {
+                List<LootItem> shuffledList = getAllLootItem();
+                Collections.shuffle(shuffledList);
+                for (LootItem item : shuffledList) {
                     if (RandomUtil.randomPercent(item.getProbability())) {
                         if (lootCollection.size() >= maximumSize) {
                             break;

@@ -99,6 +99,7 @@ public class TalesZItemListener implements Listener {
             LootChest lootChest = TalesZWorld.getLootChest(event.getInventory());
             if (lootChest != null) {
                 Chest chest = (Chest) event.getInventory().getHolder();
+                chest.getInventory().clear();
                 chest.getBlock().setType(Material.AIR);
                 chest.getBlock().getWorld().playEffect(chest.getBlock().getLocation(), Effect.STEP_SOUND, Material.CHEST);
             }

@@ -14,6 +14,7 @@ public class CivilianCommonChest extends LootChest {
         super("Civ_Common", new LootItemCollection());
         setMinLootSize(5);
         getItemCollection().addLootItem(new LootItem(new ItemStack(Material.WOOD_SWORD, 1, (short) RandomUtil.randomRange(40)), 45));
+        getItemCollection().addLootItem(new OldLootItem(new ItemStack(Material.WOOD_AXE, 1), 10, 30));
         getItemCollection().addLootItem(new LootItem(new ItemStack(Material.LEATHER_HELMET), 30));
         getItemCollection().addLootItem(new LootItem(new ItemStack(Material.LEATHER_CHESTPLATE), 20));
         getItemCollection().addLootItem(new LootItem(new ItemStack(Material.LEATHER_LEGGINGS), 20));

@@ -7,6 +7,7 @@ import com.talesdev.talesz.item.*;
 import com.talesdev.talesz.itemsystem.*;
 import com.talesdev.talesz.listener.*;
 import com.talesdev.talesz.loot.CivilianCommonChest;
+import com.talesdev.talesz.loot.LootingSystemListener;
 import com.talesdev.talesz.mob.MineZCustomZombie;
 import com.talesdev.talesz.mobsystem.CustomEntityType;
 import com.talesdev.talesz.mobsystem.MobDecorator;
@@ -56,6 +57,7 @@ public class TalesZ extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerExpChangeListener(), this);
         getServer().getPluginManager().registerEvents(new CreatureSpawnListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
+        getServer().getPluginManager().registerEvents(new LootingSystemListener(), this);
         // init item
         initItem();
         // post init item

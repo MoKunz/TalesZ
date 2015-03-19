@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
  * Created by MoKunz on 3/15/2015.
  */
 public class LootItem {
-    private ItemStack itemStack;
+    protected ItemStack itemStack;
     private double probability = 0;
 
     public LootItem(ItemStack itemStack, double prob) {
@@ -16,8 +16,12 @@ public class LootItem {
         setProbability(prob);
     }
 
-    public ItemStack getItem() {
+    public ItemStack beforeGiveItem(ItemStack itemStack) {
         return itemStack;
+    }
+
+    public ItemStack getItem() {
+        return beforeGiveItem(this.itemStack.clone());
     }
 
     public void setItem(ItemStack itemStack) {
@@ -33,7 +37,7 @@ public class LootItem {
     }
 
     public void setProbability(double prob) {
-        if (prob > 0) {
+        if (prob > 0 && prob <= 100) {
             this.probability = prob;
         }
     }

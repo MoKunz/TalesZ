@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * class for mapping slot number with itemstack
+ * class for mapping slot number with item stack
  * Created by MoKunz on 3/16/2015.
  */
 public class MappedItem {

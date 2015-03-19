@@ -1,5 +1,8 @@
 package com.talesdev.talesz.world;
 
+import com.talesdev.talesz.event.TalesZBlockInfoCreatedEvent;
+import com.talesdev.talesz.event.TalesZBlockRegenerateEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
@@ -27,7 +30,13 @@ public class BlockRegenerator {
                 // check regenerationTime
                 if (blockInfo.getTime() <= 0) {
                     World world = blockInfo.getBlockLocation().getWorld();
-                    world.getBlockAt(blockInfo.getBlockLocation()).setType(blockInfo.getBlock());
+                    Block block = world.getBlockAt(blockInfo.getBlockLocation());
+                    // event
+                    TalesZBlockRegenerateEvent event = new TalesZBlockRegenerateEvent(block, blockInfo);
+                    Bukkit.getPluginManager().callEvent(event);
+                    if (!event.isCancelled()) {
+                        block.setType(event.getBlockInfo().getBlock());
+                    }
                     iterator.remove();
                 }
             }
@@ -35,7 +44,11 @@ public class BlockRegenerator {
     }
 
     public static void breakBlock(Block block) {
-        blockList.add(getDatabase().createBlockInfo(block));
+        BlockInfo blockInfo = getDatabase().createBlockInfo(block);
+        // event
+        TalesZBlockInfoCreatedEvent event = new TalesZBlockInfoCreatedEvent(blockInfo);
+        Bukkit.getPluginManager().callEvent(event);
+        blockList.add(event.getBlockInfo());
     }
 
     public static BlockRegenerationDatabase getDatabase() {
