@@ -7,6 +7,7 @@ import com.talesdev.talesz.item.*;
 import com.talesdev.talesz.itemsystem.*;
 import com.talesdev.talesz.listener.*;
 import com.talesdev.talesz.loot.CivilianCommonChest;
+import com.talesdev.talesz.loot.LootChest;
 import com.talesdev.talesz.loot.LootingSystemListener;
 import com.talesdev.talesz.mob.MineZCustomZombie;
 import com.talesdev.talesz.mobsystem.CustomEntityType;
@@ -65,6 +66,7 @@ public class TalesZ extends JavaPlugin {
         // world system
         TalesZWorld.init(new SpawnPointManager(Bukkit.getServer().getWorlds().get(0)));
         TalesZWorld.addLootChest(new CivilianCommonChest());
+        // block system
         BlockRuleManager.start();
         BlockRuleManager.readConfigFile();
         BlockRegenerator.getDatabase().readFromFile();
@@ -94,6 +96,10 @@ public class TalesZ extends JavaPlugin {
         } catch (IOException e) {
             getLogger().log(Level.SEVERE, "Unable to save thirst data to disk!");
             e.printStackTrace();
+        }
+        // world
+        for (LootChest lootChest : TalesZWorld.getAllLootChest()) {
+            TalesZWorld.getChestLocationList().save(lootChest.getTypeName());
         }
         // save block rule
         BlockRuleManager.saveConfigFile();

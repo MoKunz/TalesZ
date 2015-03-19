@@ -44,15 +44,16 @@ public class TalesZMainConfig {
             e.printStackTrace();
         }
         // set default
-        getConfig().addDefault("autosave", null);
-        getConfig().addDefault("autosave.enable", true);
-        getConfig().addDefault("autosave.interval", 300);
-        getConfig().addDefault("spawnpoint", new ArrayList<>());
+        if (!getConfig().isSet("autosave.enable")) getConfig().set("autosave.enable", true);
+        if (!getConfig().isSet("autosave.interval")) getConfig().set("autosave.interval", 300);
+        if (!getConfig().isSet("spawnpoint")) getConfig().set("spawnpoint", new ArrayList<>());
+        if (!getConfig().isSet("chestmapping")) getConfig().set("chestmapping", new ArrayList<>());
     }
 
     public static void save() {
+        boolean showMessage = TalesZMainConfig.getConfig().getBoolean("autosave.showmessage");
         try {
-            TalesZ.getPlugin().getLogger().log(Level.INFO, "Saving config to disk...");
+            if (showMessage) TalesZ.getPlugin().getLogger().log(Level.INFO, "Saving config to disk...");
             getConfig().save(fileName);
         } catch (IOException e) {
             TalesZ.getPlugin().getLogger().log(Level.WARNING, "Error while saving config!");

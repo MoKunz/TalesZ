@@ -6,10 +6,14 @@ import com.talesdev.talesz.mobsystem.MobRuleManager;
 import com.talesdev.talesz.thirst.Thirst;
 import com.talesdev.talesz.thirst.ThirstDamage;
 import com.talesdev.talesz.world.BlockRuleManager;
+import com.talesdev.talesz.world.LocationString;
+import com.talesdev.talesz.world.TalesZWorld;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,6 +21,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * TalesZ Main Command
@@ -84,9 +90,6 @@ public class TalesZCommand implements CommandExecutor {
                                     commandSender.sendMessage(ChatColor.GREEN + "Give " + ChatColor.BLUE + args[1] + ChatColor.GREEN + " to you");
                                 }
                             }
-                            if (TalesZItemUtil.isValidMaterialString(args[1])) {
-
-                            }
                         } else {
                             commandSender.sendMessage(ChatColor.RED + "Error : Too few arguments!");
                         }
@@ -112,6 +115,77 @@ public class TalesZCommand implements CommandExecutor {
                                 commandSender.sendMessage("You must specific the player to update inventory!");
                             }
                         }
+                    } else if (args[0].equalsIgnoreCase("chest")) {
+                        if (args.length > 1) {
+                            if (args[1].equalsIgnoreCase("get")) {
+                                if (args.length > 2) {
+                                    if (TalesZWorld.getChestLocationList().containsChest(args[2])) {
+                                        List<Location> locationList = TalesZWorld.getChestLocationList().getChest(args[2]);
+                                        List<String> locationString = locationList.stream().map(loc -> new LocationString(loc).toString()).collect(Collectors.toList());
+                                        commandSender.sendMessage(ChatColor.YELLOW + "Locations of " + ChatColor.BLUE + args[2]);
+                                        for (String locString : locationString) {
+                                            commandSender.sendMessage(ChatColor.YELLOW + "- " + ChatColor.BLUE + locString);
+                                        }
+                                    } else {
+                                        commandSender.sendMessage(ChatColor.RED + "Error : Chest type not found!");
+                                    }
+                                }
+                            } else if (args[1].equalsIgnoreCase("add")) {
+                                if (args.length > 2) {
+                                    if (commandSender instanceof Player) {
+                                        Player p = (Player) commandSender;
+                                        Block block = PlayerUtil.getTargetBlock(p, 6);
+                                        if (TalesZWorld.getChestLocationList().containsChest(args[2])) {
+                                            if (block.getType().equals(Material.CHEST)) {
+                                                Location location = block.getLocation();
+                                                if (!TalesZWorld.getChestLocationList().containsLocation(args[2], location)) {
+                                                    TalesZWorld.getChestLocationList().addLocation(args[2], location);
+                                                    p.sendMessage(ChatColor.GREEN + "Location added to " + ChatColor.BLUE + args[2]);
+                                                } else {
+                                                    p.sendMessage(ChatColor.RED + "Location already exist!");
+                                                }
+                                            } else {
+                                                p.sendMessage(ChatColor.RED + "Error : Block type isn't CHEST!");
+                                            }
+                                        } else {
+                                            p.sendMessage(ChatColor.RED + "Error : Chest type not found!");
+                                        }
+                                    } else {
+                                        if (args.length > 3) {
+                                            Location location = LocationString.fromString(args[3]).getLocation();
+                                            if (TalesZWorld.getChestLocationList().containsChest(args[2])) {
+                                                if (location.getBlock().getType().equals(Material.CHEST)) {
+                                                    TalesZWorld.getChestLocationList().addLocation(args[2], location);
+                                                    commandSender.sendMessage(ChatColor.GREEN + "Location added to " + ChatColor.BLUE + args[2]);
+                                                } else {
+                                                    commandSender.sendMessage(ChatColor.RED + "Error : Block type isn't CHEST!");
+                                                }
+                                            } else {
+                                                commandSender.sendMessage(ChatColor.RED + "Error : Chest type not found!");
+                                            }
+                                        } else {
+                                            commandSender.sendMessage(ChatColor.RED + "Error : Too few arguments!");
+                                        }
+                                    }
+                                } else {
+                                    commandSender.sendMessage(ChatColor.RED + "Error : Too few arguments!");
+                                }
+                            } else {
+                                commandSender.sendMessage(ChatColor.RED + "Error : Invalid arguments!");
+                            }
+                        } else {
+                            commandSender.sendMessage(ChatColor.RED + "Error : Too few arguments!");
+                        }
+                    } else if (args[0].equalsIgnoreCase("debug")) {
+                        // for debug purpose only
+                        long t1 = System.nanoTime();
+                        // code start
+                        System.out.println(TalesZWorld.getChestLocationList().getChestType(LocationString.fromString("0.0,100.0,0.0").getLocation()));
+                        // code end
+                        long t2 = System.nanoTime() - t1;
+                        System.out.println("Execution time : " + (t2 / 1000000D) + " MS");
+                        // end
+                        commandSender.sendMessage(ChatColor.GREEN + "Debug output printed to console!");
                     } else if (args[0].equalsIgnoreCase("setMaxStack")) {
                         if (args.length > 1) {
                             // max stack size

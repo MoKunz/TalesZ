@@ -51,6 +51,11 @@ public class BlockRegenerator {
         blockList.add(event.getBlockInfo());
     }
 
+    public static void breakBlock(BlockInfo blockInfo) {
+        TalesZBlockInfoCreatedEvent event = new TalesZBlockInfoCreatedEvent(blockInfo);
+        Bukkit.getPluginManager().callEvent(event);
+        blockList.add(event.getBlockInfo());
+    }
     public static BlockRegenerationDatabase getDatabase() {
         return database;
     }

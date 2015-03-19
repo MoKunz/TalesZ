@@ -69,6 +69,12 @@ public class BlockRegenerationDatabase {
         }
     }
 
+    /**
+     * Create BlockInfo object
+     *
+     * @param block The block to be regenerated
+     * @return BlockInfo object contains information about the block to be regenerated or null if given material isn't regenerable
+     */
     public BlockInfo createBlockInfo(Block block) {
         if (!isRegenerable(block.getType())) {
             return null;
@@ -76,6 +82,22 @@ public class BlockRegenerationDatabase {
         return new BlockInfo(block.getType(), block.getLocation(), getRegenerationTime(block.getType()));
     }
 
+    /**
+     * Create BlockInfo object for material that isn't regenerable
+     *
+     * @param block     The block to be regenerated
+     * @param regenTime The time used to regen this block
+     * @return BlockInfo object contains information about the block to be regenerated
+     */
+    public BlockInfo createBlockInfo(Block block, int regenTime) {
+        return new BlockInfo(block.getType(), block.getLocation(), regenTime);
+    }
+
+    /**
+     * Check if this material is regenerable
+     * @param material
+     * @return Return true if this material is regenerable
+     */
     public boolean isRegenerable(Material material) {
         return blockMap.containsKey(material);
     }

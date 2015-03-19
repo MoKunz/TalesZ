@@ -2,6 +2,7 @@ package com.talesdev.talesz.itemsystem;
 
 import com.talesdev.talesz.TalesZ;
 import com.talesdev.talesz.loot.LootChest;
+import com.talesdev.talesz.world.BlockRegenerator;
 import com.talesdev.talesz.world.TalesZWorld;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
@@ -102,6 +103,7 @@ public class TalesZItemListener implements Listener {
                 chest.getInventory().clear();
                 chest.getBlock().setType(Material.AIR);
                 chest.getBlock().getWorld().playEffect(chest.getBlock().getLocation(), Effect.STEP_SOUND, Material.CHEST);
+                BlockRegenerator.breakBlock(BlockRegenerator.getDatabase().createBlockInfo(chest.getBlock(), 10));
             }
         }
     }

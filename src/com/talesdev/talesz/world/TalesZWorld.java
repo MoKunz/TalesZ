@@ -1,5 +1,6 @@
 package com.talesdev.talesz.world;
 
+import com.talesdev.talesz.loot.ChestLocationList;
 import com.talesdev.talesz.loot.LootChest;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.Inventory;
@@ -17,10 +18,15 @@ public class TalesZWorld {
     private static SpawnPointManager spawnPointManager;
     private static List<BlockZone> blockZoneList = new ArrayList<>();
     private static List<LootChest> lootChestList = new ArrayList<>();
+    private static ChestLocationList chestLocationList;
     public static void init(SpawnPointManager manager) {
         spawnPointManager = manager;
+        chestLocationList = new ChestLocationList();
     }
 
+    public static ChestLocationList getChestLocationList() {
+        return chestLocationList;
+    }
     public static void addBlockZone(BlockZone blockZone) {
         blockZoneList.add(blockZone);
     }
@@ -40,6 +46,8 @@ public class TalesZWorld {
 
     public static void addLootChest(LootChest lootChest) {
         getAllLootChest().add(lootChest);
+        getChestLocationList().createChest(lootChest.getTypeName());
+        getChestLocationList().load(lootChest.getTypeName());
     }
 
     public static LootChest getLootChest(Block block) {

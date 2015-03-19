@@ -40,6 +40,18 @@ public class TalesZItemFactory {
         return itemStack;
     }
 
+    /**
+     * Create A new TalesZItem from itemsystem registry
+     *
+     * @param itemName name of the itemsystem
+     * @param amount   amount of item stack
+     * @return ItemStack or null if itemName is not found in the registry
+     */
+    public static ItemStack createItem(String itemName, int amount) {
+        ItemStack itemStack = createItem(itemName);
+        itemStack.setAmount(amount);
+        return itemStack;
+    }
     public static TalesZItem getTalesZItemFromItemStack(ItemStack itemStack) {
         if (itemStack == null) {
             return null;
