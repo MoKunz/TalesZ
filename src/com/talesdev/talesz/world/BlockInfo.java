@@ -50,6 +50,10 @@ public class BlockInfo {
         userData.put(key, value);
     }
 
+    public boolean hasUserData(String key) {
+        return userData.containsKey(key);
+    }
+
     public Object getUserData(String key) {
         return userData.get(key);
     }

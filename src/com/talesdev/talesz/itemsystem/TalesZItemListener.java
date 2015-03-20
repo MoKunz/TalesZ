@@ -2,6 +2,7 @@ package com.talesdev.talesz.itemsystem;
 
 import com.talesdev.talesz.TalesZ;
 import com.talesdev.talesz.loot.LootChest;
+import com.talesdev.talesz.world.BlockInfo;
 import com.talesdev.talesz.world.BlockRegenerator;
 import com.talesdev.talesz.world.TalesZWorld;
 import org.bukkit.Bukkit;
@@ -98,12 +99,17 @@ public class TalesZItemListener implements Listener {
         }
         if (event.getInventory().getType().equals(InventoryType.CHEST)) {
             LootChest lootChest = TalesZWorld.getLootChest(event.getInventory());
-            if (lootChest != null) {
+            if (lootChest != null && event.getInventory().getHolder() instanceof Chest) {
+                event.getInventory().clear();
                 Chest chest = (Chest) event.getInventory().getHolder();
-                chest.getInventory().clear();
+                org.bukkit.material.Chest chestData = (org.bukkit.material.Chest) chest.getData();
+                BlockInfo blockInfo = BlockRegenerator.getDatabase().createBlockInfo(chest.getBlock(), 10);
+                blockInfo.setBlock(Material.CHEST);
+                blockInfo.setUserData("chestType", lootChest.getTypeName());
+                blockInfo.setUserData("chestFace", chestData.getFacing());
                 chest.getBlock().setType(Material.AIR);
                 chest.getBlock().getWorld().playEffect(chest.getBlock().getLocation(), Effect.STEP_SOUND, Material.CHEST);
-                BlockRegenerator.breakBlock(BlockRegenerator.getDatabase().createBlockInfo(chest.getBlock(), 10));
+                BlockRegenerator.breakBlock(blockInfo);
             }
         }
     }
