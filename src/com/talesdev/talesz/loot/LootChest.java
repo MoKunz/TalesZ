@@ -69,6 +69,10 @@ public abstract class LootChest {
         return ChatColor.stripColor(inventory.getName()).equalsIgnoreCase(typeName);
     }
 
+    public boolean isLootChest(String inventoryName) {
+        return ChatColor.stripColor(inventoryName).equalsIgnoreCase(typeName);
+    }
+
     public void fillChest(Block block) {
         if (block.getType().equals(Material.CHEST)) {
             Chest chest = (Chest) block.getState();

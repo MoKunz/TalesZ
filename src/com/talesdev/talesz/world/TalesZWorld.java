@@ -3,6 +3,8 @@ package com.talesdev.talesz.world;
 import com.talesdev.talesz.loot.ChestLocationList;
 import com.talesdev.talesz.loot.LootChest;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Chest;
 import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
@@ -51,27 +53,28 @@ public class TalesZWorld {
     }
 
     public static LootChest getLootChest(Block block) {
-        if (getAllLootChest().size() > 0) {
-            for (LootChest lootChest : getAllLootChest()) {
-                if (lootChest.isLootChest(block)) {
-                    return lootChest;
-                }
-            }
+        BlockState blockState = block.getState();
+        if (blockState instanceof Chest) {
+            Chest chest = (Chest) blockState;
+            return getLootChest(chest.getInventory().getName());
         }
         return null;
     }
 
     public static LootChest getLootChest(Inventory inventory) {
+        return getLootChest(inventory.getName());
+    }
+
+    public static LootChest getLootChest(String chestType) {
         if (getAllLootChest().size() > 0) {
             for (LootChest lootChest : getAllLootChest()) {
-                if (lootChest.isLootChest(inventory)) {
+                if (lootChest.isLootChest(chestType)) {
                     return lootChest;
                 }
             }
         }
         return null;
     }
-
     public static List<LootChest> getAllLootChest() {
         return lootChestList;
     }
