@@ -47,7 +47,7 @@ public class TalesZMainConfig {
         if (!getConfig().isSet("autosave.enable")) getConfig().set("autosave.enable", true);
         if (!getConfig().isSet("autosave.interval")) getConfig().set("autosave.interval", 300);
         if (!getConfig().isSet("spawnpoint")) getConfig().set("spawnpoint", new ArrayList<>());
-        if (!getConfig().isSet("chestmapping")) getConfig().set("chestmapping", new ArrayList<>());
+        if (!getConfig().isSet("chest.regentime")) getConfig().set("chest.regentime", 10);
     }
 
     public static void save() {

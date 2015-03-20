@@ -1,6 +1,7 @@
 package com.talesdev.talesz.itemsystem;
 
 import com.talesdev.talesz.TalesZ;
+import com.talesdev.talesz.TalesZMainConfig;
 import com.talesdev.talesz.loot.LootChest;
 import com.talesdev.talesz.world.BlockInfo;
 import com.talesdev.talesz.world.BlockRegenerator;
@@ -103,7 +104,7 @@ public class TalesZItemListener implements Listener {
                 event.getInventory().clear();
                 Chest chest = (Chest) event.getInventory().getHolder();
                 org.bukkit.material.Chest chestData = (org.bukkit.material.Chest) chest.getData();
-                BlockInfo blockInfo = BlockRegenerator.getDatabase().createBlockInfo(chest.getBlock(), 10);
+                BlockInfo blockInfo = BlockRegenerator.getDatabase().createBlockInfo(chest.getBlock(), TalesZMainConfig.getConfig().getInt("chest.regentime"));
                 blockInfo.setBlock(Material.CHEST);
                 blockInfo.setUserData("chestType", lootChest.getTypeName());
                 blockInfo.setUserData("chestFace", chestData.getFacing());

@@ -1,7 +1,7 @@
 # TalesZ Plugin
 #§
 name: TalesZ
-version: 1.5.1
+version: 1.6.1
 author: MoKunz
 main: com.talesdev.talesz.TalesZ
 depend: [ProtocolLib,WorldEdit]
@@ -45,14 +45,14 @@ permissions:
                         description: "Give you access to /xputil command"
                         default: false
                     talesz.command.bleeding:
-                        description: "Give you access to /xputil command"
+                        description: "Give you access to /bleeding command"
                         default: false
                     talesz.command.talesz:
-                        description: "Give you access to /xputil command"
+                        description: "Give you access to /talesz command"
                         default: false
                     talesz.command.taleszitem:
-                        description: "Give you access to /xputil command"
+                        description: "Give you access to /taleszitem command"
                         default: false
                     talesz.command.taleszspawn:
-                        description: "Give you access to /xputil command"
+                        description: "Give you access to /taleszspawn command"
                         default: true

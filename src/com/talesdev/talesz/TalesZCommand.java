@@ -10,10 +10,8 @@ import com.talesdev.talesz.world.LocationString;
 import com.talesdev.talesz.world.TalesZWorld;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
-import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,8 +19,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * TalesZ Main Command
@@ -120,52 +116,19 @@ public class TalesZCommand implements CommandExecutor {
                             if (args[1].equalsIgnoreCase("get")) {
                                 if (args.length > 2) {
                                     if (TalesZWorld.getChestLocationList().containsChest(args[2])) {
-                                        List<Location> locationList = TalesZWorld.getChestLocationList().getChest(args[2]);
-                                        List<String> locationString = locationList.stream().map(loc -> new LocationString(loc).toString()).collect(Collectors.toList());
-                                        commandSender.sendMessage(ChatColor.YELLOW + "Locations of " + ChatColor.BLUE + args[2]);
-                                        for (String locString : locationString) {
-                                            commandSender.sendMessage(ChatColor.YELLOW + "- " + ChatColor.BLUE + locString);
-                                        }
+                                        // TODO : Rewrite /talesz chest get command
+                                        commandSender.sendMessage(ChatColor.RED + "Command not implemented!");
                                     } else {
                                         commandSender.sendMessage(ChatColor.RED + "Error : Chest type not found!");
                                     }
                                 }
                             } else if (args[1].equalsIgnoreCase("add")) {
-                                if (args.length > 2) {
+                                if (args.length > 3) {
                                     if (commandSender instanceof Player) {
-                                        Player p = (Player) commandSender;
-                                        Block block = PlayerUtil.getTargetBlock(p, 6);
-                                        if (TalesZWorld.getChestLocationList().containsChest(args[2])) {
-                                            if (block.getType().equals(Material.CHEST)) {
-                                                Location location = block.getLocation();
-                                                if (!TalesZWorld.getChestLocationList().containsLocation(args[2], location)) {
-                                                    TalesZWorld.getChestLocationList().addLocation(args[2], location);
-                                                    p.sendMessage(ChatColor.GREEN + "Location added to " + ChatColor.BLUE + args[2]);
-                                                } else {
-                                                    p.sendMessage(ChatColor.RED + "Location already exist!");
-                                                }
-                                            } else {
-                                                p.sendMessage(ChatColor.RED + "Error : Block type isn't CHEST!");
-                                            }
-                                        } else {
-                                            p.sendMessage(ChatColor.RED + "Error : Chest type not found!");
-                                        }
+                                        // TODO : Rewrite /talesz chest add command
+                                        commandSender.sendMessage(ChatColor.RED + "Command not implemented!");
                                     } else {
-                                        if (args.length > 3) {
-                                            Location location = LocationString.fromString(args[3]).getLocation();
-                                            if (TalesZWorld.getChestLocationList().containsChest(args[2])) {
-                                                if (location.getBlock().getType().equals(Material.CHEST)) {
-                                                    TalesZWorld.getChestLocationList().addLocation(args[2], location);
-                                                    commandSender.sendMessage(ChatColor.GREEN + "Location added to " + ChatColor.BLUE + args[2]);
-                                                } else {
-                                                    commandSender.sendMessage(ChatColor.RED + "Error : Block type isn't CHEST!");
-                                                }
-                                            } else {
-                                                commandSender.sendMessage(ChatColor.RED + "Error : Chest type not found!");
-                                            }
-                                        } else {
-                                            commandSender.sendMessage(ChatColor.RED + "Error : Too few arguments!");
-                                        }
+                                        commandSender.sendMessage(ChatColor.RED + "Error : Invalid sender!");
                                     }
                                 } else {
                                     commandSender.sendMessage(ChatColor.RED + "Error : Too few arguments!");
