@@ -63,6 +63,7 @@ public class TalesZ extends JavaPlugin {
         initItem();
         // post init item
         setTalesZItemMaxStack();
+        // craft
         // world system
         TalesZWorld.init(new SpawnPointManager(Bukkit.getServer().getWorlds().get(0)));
         TalesZWorld.addLootChest(new CivilianCommonChest());
